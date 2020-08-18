@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  
+<main>
+    <section class="maininfos">
+        <div class="photos">
+            <ul id="lightSlider">
+                {% for img in object.images.all %}
+                <li data-thumb="{{ img.image.url }}">
+                    <img src="{{ img.image.url }}">
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="infos">
+            <p class="title">
+                {{ object.title }}
+            </p>
+            <p class="price">
+                Price: 
+                {% if object.discount_price %}
+                <span class="amount">{{ object.discount_price }}$</span>
+                {% else %}
+                <span class="amount">{{ object.price }}$</span>
+                {% endif %}
+            </p>
+            <div class="sizes">
+                {% if object.sizes %}
+                {% for size in object.sizes.all %}
+                <input type="radio" name="size" value="{{ size.get_size_display }}" id="{{ size.size }}" {% if not size.quantity %} disabled {% endif %}>
+                <label for="{{ size.size }}"><span>{{ size.size }}</span></label>
+                {% endfor %}
+                {% endif %}
+                <button type="submit">Add to cart<i class="fas fa-cart-arrow-down"></i></button>
+            </div>
+            <table>
+                <tbody>
+                    <tr><th>Availability:</th><td>
+                        Shipping in 48 hours</td></tr>
+                    {% if object.get_my_model_name == 'wear' %}
+                    <tr><th>Type:</th><td>{{ object.get_category_display }}</td></tr>
+                    <tr><th>Color:</th><td>{{ object.color }}</td></tr>
+                    {% else %}
+                    <tr><th>Type:</th><td>{{ object.get_category_display }}</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="tabs">
+        <button class="tablinks active">Description</button>
+        <button class="tablinks">Shipment and Returns</button>
+    </section>
+    <div class="decription-shipment">
+        <div class="description active">
+            <p class="title"><strong>{{ object.title }}</strong></p>
+            <p class="text">{{ object.description|safe }}</p>
+        </div>
+        <div class="shipment">
+            <p class="text">
+                {{ company.delivery|safe }}
+                <hr>
+                {{ company.returns|safe }}
+            </p>
+        </div>
+    </div>
+    <div class="others">
+        <button class="active">Others</button>
+        <ul id="responsive">
+            {% for item in item_list %}
+                <li class="card">
+                    {% include "item_snippet.html" %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</main>
+{% endblock content %}
+
+{% block extra_body %}
+<script src="{% static 'js/detailSliders.js' %}"></script>
+{% endblock extra_body %}

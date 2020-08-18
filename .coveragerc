@@ -1,0 +1,10 @@
+[run]
+branch = True
+source = serious_shop
+omit = */migrations/* 
+  */manage.py
+  */asgi.py
+  */wsgi.py
+  */settings/*
+  */__init__.py
+  */pypoetry/*

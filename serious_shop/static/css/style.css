@@ -1,0 +1,948 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+    color:black;
+}
+
+/* ul {
+    list-style: none outside none;
+    padding-left: 0;
+    margin-bottom:0;
+}
+li {
+    display: block;
+    float: left;
+    margin-right: 6px;
+    cursor:pointer;
+}
+ul li img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+} */
+
+input:disabled+label {
+    color: #bcbcbc;
+    background-color: #f1f1f1;
+}
+
+input[type=text] {
+    padding-left: 10px;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+}
+/*****************NAVBAR*****************/
+nav {
+    flex-basis: 35px;
+    width: 100%;
+    background-color: #000;
+    position: relative;
+}
+
+nav p.number {
+    position: absolute;
+    line-height: 35px;
+    font-size: 16px;
+    color: red;
+    padding-left: 10px;
+    font-weight: 600;
+    width: 100%;
+}
+
+nav p.number span.nrinfo {
+    padding-left: 10px;
+    font-size: 12px;
+    color: white;
+    font-weight: 300;
+    word-wrap: none;
+}
+
+nav p.infos {
+    position: absolute;
+    line-height: 35px;
+    text-align: right;
+    width: 100%;
+    overflow: hidden;
+    margin:0;
+}
+
+nav p.infos a {
+    padding: 7px 20px;
+    color: white;
+}
+
+nav p.infos a.basket {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+nav p.infos a.basket i {
+    padding-right: 15px;
+    font-size: 22px;
+}
+
+nav p.infos a.basket:hover,
+nav p.infos a.join:hover,
+nav p.infos a.register:hover {
+    background-color: white;
+    color: black;
+}
+
+nav p.infos a.basket:hover i{
+    animation: basketPos .5s forwards;
+}
+
+@keyframes basketPos {
+    49% {
+        transform: translateY(-150%);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(150%);
+    }
+    100% {
+        transform: translateY(0%);
+        color: red;
+    }
+}
+
+/*****************HEADER*****************/
+header {
+    flex-basis: 90px;
+    width: 90%;
+    background-color: #fff;
+}
+
+header p.name {
+    position: absolute;
+    width: 100%;
+    line-height: 90px;
+    margin:0;
+    text-align: center;
+    font-weight: 900;
+    font-size: 40px;
+}
+
+header p.name span.first {
+    padding-right: 10px;
+    color:red;
+    font-family: 'Anton', sans-serif;
+    letter-spacing: 3px;
+}
+
+header p.name span.second {
+    padding-right: 20px;
+    font-family: 'Anton', sans-serif;
+}
+
+header p.name span.third {
+    font-size: 20px;
+}
+
+header div.logo {
+    height: 90px;
+    position: relative;
+    width: 200px;
+    padding: 0 20px;
+}
+
+
+/*****************SECTION-SEARCH*****************/
+section.search {
+    width: 100%;
+    flex-basis: 70px;
+    background-image: linear-gradient(#d19494, rgb(182, 0, 0));
+    position: relative;
+}
+
+section.search form {
+    position: relative;
+    text-align: right;
+    right: 5vw;
+    line-height: 70px;
+}
+
+section.search form input[type=text] {
+    width: 80%;
+    height: 30px;
+    border:none;
+    vertical-align: middle;
+}
+
+section.search form input[type=text]:focus {
+    outline:none;
+}
+
+section.search form button {
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border: none;
+    transition: .3s;
+    padding: 1px 2px;
+    margin:0;
+    vertical-align: middle;
+    position: relative;
+}
+
+section.search form button i {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+section.search form button:hover {
+    background-color: #000;
+    color: white;
+    cursor: pointer;
+}
+
+/*****************SECTION-SEARCH*****************/
+section.choice {
+    flex-basis: 40px;
+    width: 100%;
+    background-color: rgb(182, 0, 0);
+    line-height: 40px;
+    position: relative;
+}
+
+section.choice div.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+section.choice i.fa-bars {
+    display: none;
+}
+
+section.choice div.wrapper a {
+    font-size:32px;
+    color: white;
+    font-family: 'Teko', sans-serif;
+    margin:0 40px;
+    padding:0 40px;
+}
+
+section.choice div.wrapper .dropdown {
+  position: relative;
+}
+
+section.choice div.wrapper .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+    z-index: 1;
+    left:50%;
+    transform: translateX(-50%);
+}
+
+
+section.choice div.wrapper .dropdown-content a {
+  color: black;
+  padding: 6px 16px;
+  display: block;
+  font-size: 20px;
+  margin:0;
+  transition: .2s;
+}
+
+section.choice div.wrapper .dropdown-content a:hover{
+    background-color: #ddd; 
+}
+
+/* ****************SLIDER*****************/
+section.slider {
+    width: 90%;
+    flex-basis: 430px;
+    position: relative;
+    overflow: hidden;
+}
+
+section.slider img {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+section.slider .dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%)
+}
+
+section.slider .dots span {
+      display: inline-block;
+      background-color: transparent;
+      margin: 0 20px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px white;
+      cursor: pointer;
+}
+
+section.slider .dots span.active {
+    background-color: white;
+}
+
+/* ****************MAIN*****************/
+main div.product-list {
+    height: 50px;
+    background-color: #fff;
+    z-index: 1;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    padding: 10px;
+    font-weight: 700;
+}
+
+main {
+    background-color: #fff;
+    width: 90%;
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+main div.row {
+    margin: 60px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+main div.row div.card,
+div.others div.card {
+    height: 400px;
+    width: 230px;
+    margin:20px 10px;
+    position: relative;
+    padding:5px;
+    font-family: 'Jura', sans-serif;
+    border: none;
+}
+
+main div.row div.card div.photo,
+div.others li.card div.photo {
+    position: absolute;
+    height: 60%;
+    width: 100%;
+    left:50%;
+    transform: translateX(-50%);
+}
+
+main div.row div.card div.photo img,
+div.others li.card div.photo img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+main div.row div.card div.body,
+div.others li.card div.body {
+    position: absolute;
+    top:63%;
+    color: black;
+    font-weight: 600;
+    width:100%;
+}
+
+main div.row div.card div.body p.category {
+    font-size: 12px;
+    margin-bottom:9px;
+    color: #7c7c7c;
+    font-weight: 300;
+}
+
+main div.row div.card div.body p.item-name,
+div.others li.card div.body p.item-name {
+    font-size:16px;
+    line-height: 16px;
+    margin-bottom: 0;
+    height: 32px;
+}
+
+main div.row div.card div.body p.price:nth-of-type(1),
+div.others li.card div.body p.price:nth-of-type(1) {
+    float: left;
+    text-decoration: line-through;
+    margin-right: 15px;
+}
+
+main div.row div.card div.body hr,
+div.others li.card div.body hr {
+    width: 30%;
+    margin-bottom: 0;
+}
+
+/* ****************DETAIL-ITEM*****************/
+section.maininfos {
+    display: flex;
+    height: 550px;
+    width: 100%;
+}
+
+section.maininfos div.photos {
+    width: 49%;
+    height: 100%;
+    padding-top: 10px;
+}
+
+ul#lightSlider {
+    list-style: none outside none;
+    padding-left: 0;
+    margin-bottom:0;
+}
+
+ul#lightSlider li {
+    display: block;
+    float: left;
+    margin-right: 7px;
+    cursor:pointer;
+    max-height: 100%;
+}
+
+ul#lightSlider li img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+section.maininfos div.infos {
+    height: 100%;
+    width: 50%;
+    position: relative;
+    font-weight: 600;
+    text-align: center;
+    line-height: 37px;
+    padding:0 10px;
+    overflow: hidden;
+}
+
+section.maininfos div.infos p.title {
+    position: absolute;
+    top:5%;
+    font-size: 35px;
+    word-wrap: break-word;
+    padding:10px;
+    width: 100%;
+    text-align: center;
+}
+
+section.maininfos div.infos p.price {
+    position: absolute;
+    top:37%;
+    width:100%;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+section.maininfos div.infos p.price span {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+section.maininfos div.infos div.sizes {
+    top:45%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+section.maininfos div.infos div.sizes label {
+    display: inline-block;
+    height: 40px;
+    width: calc(100% / 5 + 1px);
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    margin: -1px 0 0 -1px;
+    font-size: 18px;
+    line-height: 40px;
+
+}
+
+section.maininfos div.infos div.sizes input {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+section.maininfos div.infos div.sizes input:checked + label {
+    background-color:#000;
+    color: white;
+}
+
+section.maininfos div.infos div.sizes input[type=radio].disabled {
+    cursor: none;
+}
+
+section.maininfos div.infos div.sizes button {
+    position: absolute;
+    left:50%;
+    top:56px;
+    transform: translateX(-50%);
+    width: 80%;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+    background-color: rgb(182, 0, 0);
+    font-weight: 600;
+    transition: .2s;
+}
+
+section.maininfos div.infos div.sizes button:hover {
+    background-color: black;
+}
+
+section.maininfos div.infos div.sizes button i {
+    position: absolute;
+    top:50%;
+    left:100%;
+    transform: translate(-200%, -50%);
+    font-size: 30px;
+}
+
+section.maininfos table {
+    top:70%;
+    position: absolute;
+    width: 100%;
+    text-align: left;
+}
+
+section.maininfos table, th, td {
+  border-bottom: 1px solid black;
+  border-color: grey;
+  padding-left: 10px;
+  line-height: 22px;
+}
+
+section.maininfos td {
+    font-weight: 400;
+}
+
+section.tabs {
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+section.tabs button,
+div.others button {
+    height: 40px;
+    border: 1px solid grey;
+    background-color: #fff;
+    padding: 0 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transition: .3s;
+}
+
+section.tabs button:hover {
+    background-color:rgb(216, 214, 214);
+}
+
+section.tabs button:focus,
+div.others button:focus {
+    outline: none;
+}
+
+section.tabs button.active,
+div.others button {
+    background-color: rgb(216, 214, 214);
+    pointer-events: none; 
+}
+
+div.description p.title,
+div.shipment p.title {
+    text-align: center;
+    margin-top: 40px;
+}
+
+div.description p.text,
+div.shipment p.text  {
+    text-align: justify;
+    margin:40px 30px;
+}
+
+div.description, div.shipment {
+    display:none
+}
+
+div.description.active, div.shipment.active {
+    display: block;
+    animation: .5s showText;
+}
+
+@keyframes showText {
+    0% {opacity:0}
+    100% {opacity:1}
+}
+
+li.card {
+    border:none;
+}
+
+/* ****************GENERIC_INFO*****************/
+.generic-info {
+    width:90%;
+    background-color: #fff;
+    padding:50px 30px;
+}
+
+/* ****************FOOTER*****************/
+footer {
+    min-height: 65vh;
+    background-image: linear-gradient(#a7a7a7, #3d3d3d);
+    width: 100%;
+}
+
+footer hr {
+    width:90%;
+    margin: 20px auto;
+}
+
+footer div.upper {
+    display:flex;
+}
+
+footer div.upper div {
+    flex-basis: 25%;
+    height:45vh;
+    padding: 10px 5px;
+}
+
+footer div.upper div:nth-of-type(2n) {
+    text-align: center;
+}
+
+footer div.upper div.about a {
+    border: 1px solid white;
+    background-color: inherit;
+    padding: 8px 25px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    margin: 0 0 10px 10px;
+    display: block;
+    transition: .3s;
+    font-weight: 600;
+}
+
+footer div.upper div.about a:hover {
+    color: rgb(182, 0, 0);
+    border-color: rgb(182, 0, 0);
+}
+
+footer div.upper div.about a:focus {
+    outline: none;
+}
+
+footer div.upper div a:hover {
+    color: rgb(182, 0, 0);
+}
+
+footer div.upper h3 {
+    text-align: center;
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    padding: 20px 0;
+}
+
+footer div.upper div.icons i{
+    font-size: 25px;
+    padding-right: 10px;
+}
+
+footer div.upper p,
+footer div.upper li {
+    font-size: 14px;
+}
+
+footer div.lower {
+    height: 10vh;
+    text-align: center;
+}
+
+footer div.lower div.lastinfo,
+footer div.lower div.social {
+    height: 4vh;
+
+}
+
+footer div.lower div.lastinfo p {
+    color: white;
+    font-weight: 700;
+}
+
+footer div.lower div.lastinfo p span {
+    color: rgb(182, 0, 0);
+}
+
+footer div.lower div.social span {
+    display: inline-block;
+    font-size: 30px;
+    height:45px;
+    width: 45px;
+    position: relative;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+
+footer div.lower div.social span i {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+footer div.lower div.social span.facebook {
+    background-color: #2a5aa2;
+}
+
+footer div.lower div.social span.linkedin {
+    background-color: #005e93;
+}
+
+footer div.lower div.social span.instagram {
+    background-color: #375989;
+}
+
+@media (min-width: 370px) and (max-width: 650px) {
+
+    /*****************NAVBAR*****************/
+    nav {
+        flex-basis: 80px;
+    }
+    nav p.infos {
+        top:35px;
+        line-height: 45px;
+        text-align: center;
+    }
+    nav p.number {
+        text-align: center;
+        padding-left: 2px;
+    }
+    nav p.infos a {
+        padding-bottom: 12px;
+    }
+
+    /*****************HEADER*****************/
+    header {
+        flex-basis: 120px;
+        width: 100%;
+    }
+    header p.name span.third {
+        position: absolute;
+        width: 100%;
+        top:50%;
+        left:0;
+    }
+
+    header div.logo {
+        margin-top:50px;
+        height: 70px;
+    }
+
+    /*****************SECTION-CHOICE*****************/
+
+    section.choice div.wrapper {
+        display: none;
+    }
+    section.choice div.wrapper.show {
+        display: block;
+        display: flex;
+        flex-direction: column;
+    }
+
+    section.choice i.fa-bars {
+        display: block;
+        color: white;
+        padding:10px; 
+        font-size: 25px;
+    }
+
+    div.dropdown div.dropdown-content {
+        display: none !important;
+    }
+    /*****************SLIDER*****************/
+    section.slider {
+        width: 100%;
+    }
+    /*****************MAIN*****************/
+    main,
+    main a,
+    .generic-info { 
+        width: 100%;
+    }
+
+    main div.row a div.card {
+        width: 95%;
+    }
+    /*****************DETAIL_ITEM*****************/
+
+    section.maininfos {
+        flex-direction: column;
+        height: 980px;
+    }
+
+    section.maininfos div.infos,
+    section.maininfos div.photos {
+        width: 100%;
+    }
+
+    section.maininfos div.photos {
+        height: auto;
+    }
+
+    /*****************FOOTER*****************/
+    footer div.upper {
+        flex-direction: column;
+    }
+
+    footer div.upper h3 {
+        padding: 0;
+    }
+    footer div.lower div.lastinfo {
+        height: 6vh;
+    }
+
+    footer div.upper div {
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 369px) {
+    /*****************HEADER*****************/
+
+    nav {
+        flex-basis: 90px;
+    }
+    nav p.number span.nrinfo {
+        position: absolute;
+        top:50%;
+        text-align: left;
+        left:0;
+    }
+    nav p.infos {
+        position: absolute;
+        top:45px;
+        line-height: 50px;
+        text-align: left;
+    }
+    nav p.infos a {
+        padding-left: 10px;
+    }
+    header {
+        flex-basis: 120px;
+        width: 100%;
+    }
+    header p.name span.third {
+        position: absolute;
+        width: 100%;
+        top:50%;
+        left:0;
+    }
+
+    /*****************SECTION-CHOICE*****************/
+    section.choice div.wrapper {
+        display: none;
+    }
+
+    section.choice div.wrapper.show {
+        display: block;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    section.choice i.fa-bars {
+        display: block;
+        color: white;
+        padding:10px;
+        font-size: 25px;
+    }
+
+    div.dropdown div.dropdown-content {
+        display: none !important;
+    }
+    /*****************SLIDER*****************/
+    section.slider {
+        width: 100%;
+    }
+    /*****************MAIN*****************/
+    main,
+    main a,
+    div.generic-info { 
+        width: 100%;
+    }
+
+    main div.row a div.card {
+        width: 95%;
+    }
+    /*****************DETAIL_ITEM*****************/
+    section.maininfos {
+        flex-direction: column;
+        height: 1000px;
+    }
+
+    section.maininfos div.infos,
+    section.maininfos div.photos {
+        width: 100%;
+    }
+
+    section.maininfos div.photos {
+        height: auto;
+    }
+
+    div.others div.card {
+        width: auto;
+    }
+
+    /*****************FOOTER*****************/
+    footer div.upper {
+        flex-direction: column;
+    }
+
+    footer div.upper h3 {
+        padding: 0;
+    }
+    footer div.lower div.lastinfo {
+        height: 6vh;
+    }
+} 
