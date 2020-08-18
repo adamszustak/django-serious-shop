@@ -4,7 +4,6 @@ from ckeditor.fields import RichTextField
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
-from django.core.exceptions import ValidationError
 
 from lib.utils import image_directory_path
 

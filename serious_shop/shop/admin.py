@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django import forms
 from django.db.models import Q
 from .models.item import SubCategory, Item, WearSize, ItemImage, WearProxy
 from .models.company_info import CompanyInfo

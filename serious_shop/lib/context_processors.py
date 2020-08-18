@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from shop.models.item import Category, SubCategory, Item
+from shop.models.item import Category, SubCategory
 from shop.models.company_info import CompanyInfo
 
 

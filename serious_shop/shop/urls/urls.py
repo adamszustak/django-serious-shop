@@ -1,6 +1,4 @@
-from django.urls import path, include
-from django.conf import settings
-from django.views.generic import TemplateView
+from django.urls import path
 
 from ..views import (
     HomeView,
