@@ -11,14 +11,20 @@ The project is still under development, so far without full functionality implem
 * Comprehensively covered with tests
 
 ## Todo list
-
-- [ ] add products to the basket
+- [X] add products to the basket
 - [ ] create an order summary
 - [ ] handle payments
 - [ ] add user support
 - [ ] support for multiple addresses
+- [ ] add localization and internationalization support
 - [ ] and many others
+
+## Small Piece of Work
+
+![web1](https://user-images.githubusercontent.com/58914643/90765939-0fe3ca00-e2eb-11ea-97ce-ab69b74a4a7d.jpg)
+![web2](https://user-images.githubusercontent.com/58914643/90765943-1114f700-e2eb-11ea-92d1-ffe9ea5bb04e.jpg)
+![web3](https://user-images.githubusercontent.com/58914643/90765945-11ad8d80-e2eb-11ea-82e6-5ca5b72b17df.jpg)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
