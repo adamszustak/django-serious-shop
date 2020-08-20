@@ -91,14 +91,21 @@ def test_commonview_list_GET(start_setup, client):
 
 @pytest.mark.django_db
 def test_add_to_cart_GET(start_setup, user_client, client):
-    item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00)
-    item1.sizes.add(WearSizeFactory(item=item1, size="M", quantity=10))
+    item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00, category="M")
+    wear_size = WearSizeFactory(item=item1, size="M", quantity=10)
+    item1.sizes.add(wear_size)
     url = reverse("shop:add-to-cart", kwargs={"slug": item1.slug})
     response = user_client.get(url)
     messages = [m.message for m in get_messages(response.wsgi_request)]
     assert response.status_code == 302
-    assert "Item has been added to cart" in messages
-    assert len(messages) == 1
+    assert "You have to choose size" == messages[0]
+
+    url = reverse(
+        "shop:add-to-cart-size", kwargs={"slug": item1.slug, "size": wear_size.size}
+    )
+    response = user_client.get(url)
+    messages = [m.message for m in get_messages(response.wsgi_request)]
+    assert "Item has been added to cart" == messages[1]
 
 
 # ........
