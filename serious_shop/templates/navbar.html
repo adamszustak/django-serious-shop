@@ -3,9 +3,16 @@
     {% load common_tags %}
     <nav>
         <p class="number"><span class="nr" type=>{{ company.phone }}</span><span class="nrinfo">(Helpline opening hours: {{ company.start_time }} - {{ company.end_time }})</span></p>
-        <p class="infos"><a href="" class="basket"><i class="fa fa-shopping-basket" aria-hidden="true"></i>Basket</a><span class="forusers"><a style="display:none" href="" class="join">Join</a><a style="display:none" href="" class="register">Register</a></span></p>
+        <p class="infos"><a href="{% url 'shop:cart-summary' %}" class="basket"><i class="fa fa-shopping-basket" aria-hidden="true"></i>Basket</a><span class="forusers"><a style="display:none" href="" class="join">Join</a><a style="display:none" href="" class="register">Register</a></span></p>
     </nav>
     <header>
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}<span class="close">x</span></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
         <a href="{% url 'shop:home' %}" class="logo">
         <p class="name"><span class="first">Serious</span><span class="second">Shop</span><span class="third">We care...</span></p></a>
     </header>

@@ -3,9 +3,16 @@ import pytest
 from django.urls import reverse, resolve
 from django.conf import settings
 from django.db import IntegrityError
+from django.contrib.messages import get_messages
 
 from shop.models.item import Category, Item
-from .factories import ItemFactory, WearProxyFactory, WearSizeFactory
+from .factories import (
+    ItemFactory,
+    WearProxyFactory,
+    WearSizeFactory,
+    OrderFactory,
+    OrderItemFactory,
+)
 
 
 @pytest.mark.django_db
@@ -80,3 +87,18 @@ def test_commonview_list_GET(start_setup, client):
         url = reverse("shop:generic-info", kwargs={"topic": generic})
         response = client.get(url)
         assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_add_to_cart_GET(start_setup, user_client, client):
+    item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00)
+    item1.sizes.add(WearSizeFactory(item=item1, size="M", quantity=10))
+    url = reverse("shop:add-to-cart", kwargs={"slug": item1.slug})
+    response = user_client.get(url)
+    messages = [m.message for m in get_messages(response.wsgi_request)]
+    assert response.status_code == 302
+    assert "Item has been added to cart" in messages
+    assert len(messages) == 1
+
+
+# ........

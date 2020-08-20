@@ -28,9 +28,9 @@ class Item(models.Model):
     category = models.CharField(max_length=2, choices=Category.choices)
     title = models.CharField(max_length=50)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     discount_price = models.DecimalField(
-        max_digits=5, decimal_places=2, blank=True, null=True
+        max_digits=5, decimal_places=2, blank=True, null=True, default=0
     )
     description = RichTextField()
     color = models.CharField(max_length=10, blank=True)
@@ -79,7 +79,7 @@ class Item(models.Model):
 class WearProxy(Item):
     class Meta:
         proxy = True
-        verbose_name = "Wear Item"
+        verbose_name = "Wear"
 
 
 class WearSize(models.Model):
@@ -104,6 +104,7 @@ class WearSize(models.Model):
 
     class Meta:
         unique_together = (("item", "size"),)
+        ordering = ["item__title"]
 
     def __str__(self):
         return f"{self.item.title} - {self.size}"

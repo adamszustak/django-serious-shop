@@ -28,12 +28,15 @@
             </p>
             <div class="sizes">
                 {% if object.sizes %}
-                {% for size in object.sizes.all %}
-                <input type="radio" name="size" value="{{ size.get_size_display }}" id="{{ size.size }}" {% if not size.quantity %} disabled {% endif %}>
-                <label for="{{ size.size }}"><span>{{ size.size }}</span></label>
-                {% endfor %}
+                <form action="{% url 'shop:add-to-cart' object.slug %}" method="GET">
+                    {% csrf_token %}
+                    {% for size in object.sizes.all %}
+                    <input type="radio" name="size" value="{{ size.size }}" id="{{ size.size }}" {% if not size.quantity %} disabled {% endif %}>
+                    <label for="{{ size.size }}"><span>{{ size.size }}</span></label>
+                    {% endfor %}
                 {% endif %}
-                <button type="submit">Add to cart<i class="fas fa-cart-arrow-down"></i></button>
+                <button class='submit' type="submit">Add to cart<i class="fas fa-cart-arrow-down"></i></button>
+                </form>
             </div>
             <table>
                 <tbody>
@@ -77,6 +80,27 @@
         </ul>
     </div>
 </main>
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
 {% endblock content %}
 
 {% block extra_body %}

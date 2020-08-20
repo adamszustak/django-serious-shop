@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="generic-info">
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Item title</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Item Price</th>
+        </tr>
+        {% for order_item in object.items.all %}
+        <tr>
+            <th>{{ forloop.counter }}</th>
+            <td><a href="{% url 'shop:detail-item' order_item.item.slug %}">{{ order_item.item.title }}</a>{% if order_item.size %} - {{ order_item.size }}{% endif %}</td>
+            {% if order_item.item.discount_price %}
+            <td>{{ order_item.item.discount_price }}</td>
+            {% else %}
+            <td>{{ order_item.item.price }}</td>
+            {% endif %}
+            {% if order_item.size %}
+            <td class=>
+            <a href="{% url 'shop:remove-one-cart-size' order_item.item.slug order_item.size %}"><i class="fas fa-minus"></i></a>
+                {{ order_item.quantity }}
+            <a href="{% url 'shop:add-to-cart-size' order_item.item.slug order_item.size %}"><i class="fas fa-plus"></i></a>
+            </td>
+            {% else %}
+            <td class='quantiy'>
+            <a href="{% url 'shop:remove-one-cart' order_item.item.slug %}"><i class="fas fa-minus"></i></a>
+                {{ order_item.quantity }}
+            <a href="{% url 'shop:add-to-cart' order_item.item.slug %}"><i class="fas fa-plus"></i></a>
+            {% endif %}
+            </td>
+            <td>${{ order_item.get_final_price }}
+                {% if order_item.item.discount_price %}
+                    <span class="saving">Saving ${{ order_item.get_amount_saved }}</span>
+                {% endif %}
+            </td>
+            {% if order_item.size %}
+            <td><a href="{% url 'shop:remove-item-from-cart-size' order_item.item.slug order_item.size %}"><i class="far fa-trash-alt"></i></a></td>
+            {% else %}
+            <td><a href="{% url 'shop:remove-item-from-cart' order_item.item.slug %}"><i class="far fa-trash-alt"></i></a></td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Your cart is empty</td>
+        <td></td>
+        <td></td>
+        {% endfor %}
+        {% if object.get_total %}
+        <tr class="total">
+            <td></td>
+            <td><b>Order Total</b></td>
+            <td></td>
+            <td class='tot-quantity'>
+                <b>{{ object.items_quantity }}</b>
+            </td>
+            <td><b>${{ object.get_total }}</b></td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <div class="tablebuttons">
+        <a class="continue" href='/'>Continue Shopping</a>
+        <a class="checkout" href='#'>Procced to CheckOut</a>
+    </div>
+</div>
+{% endblock content %}

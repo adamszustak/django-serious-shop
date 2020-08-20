@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.core.files import File
 
 from shop.models.item import WearSize, WearProxy, Item, Category, SubCategory, ItemImage
+from shop.models.order import OrderItem, Order
 
 
 FAKE = faker.Faker()
@@ -77,3 +78,20 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     username = factory.Sequence(lambda n: "user-%d" % n)
     password = "secret"
+
+
+class OrderItemFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = OrderItem
+
+    user = factory.SubFactory(UserFactory)
+    item = factory.SubFactory(ItemFactory)
+    size = None
+
+
+class OrderFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Order
+
+    user = factory.SubFactory(UserFactory)
+    ordered_date = FAKE.future_date()

@@ -13,13 +13,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
 
     {% include 'navbar.html' %}
 
@@ -43,5 +36,6 @@
     <script src="{% static 'js/menuHam.js' %}"></script>
     <script src="{% static 'js/dropNav.js' %}"></script>
     <script src="{% static 'js/buttonTabs.js' %}"></script>
+    <script src="{% static 'js/closeBaner.js' %}"></script>
 </body>
 </html>
