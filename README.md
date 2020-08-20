@@ -22,8 +22,11 @@ The project is still under development, so far without full functionality implem
 ## Small Piece of Work
 
 ![web1](https://user-images.githubusercontent.com/58914643/90765939-0fe3ca00-e2eb-11ea-97ce-ab69b74a4a7d.jpg)
+___
 ![web2](https://user-images.githubusercontent.com/58914643/90765943-1114f700-e2eb-11ea-92d1-ffe9ea5bb04e.jpg)
+___
 ![web3](https://user-images.githubusercontent.com/58914643/90765945-11ad8d80-e2eb-11ea-82e6-5ca5b72b17df.jpg)
+___
 
 ## License
 
