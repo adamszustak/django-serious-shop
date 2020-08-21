@@ -13,6 +13,7 @@ from .factories import (
     UserFactory,
     OrderFactory,
     OrderItemFactory,
+    WearSizeFactory,
 )
 
 
@@ -37,6 +38,15 @@ def start_setup(db):
 
 
 @pytest.fixture()
+def cart_helper():
+    item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00, category="M")
+    wear_size = WearSizeFactory(item=item1, size="M", quantity=10)
+    item1.sizes.add(wear_size)
+    item2 = ItemFactory(category="A")
+    return item1, wear_size, item2
+
+
+@pytest.fixture()
 def admin_user(db, django_user_model, django_username_field):
     user = UserFactory(
         email="admin@example.com",
@@ -56,7 +66,7 @@ def admin_client(db, admin_user):
 
 
 @pytest.fixture
-def user_client(db, django_user_model, django_username_field):
+def user_user(db, django_user_model, django_username_field):
     user = UserFactory(
         username="user",
         password=make_password("secret"),
@@ -64,6 +74,11 @@ def user_client(db, django_user_model, django_username_field):
         last_name="User",
         is_active=True,
     )
+    return user
+
+
+@pytest.fixture()
+def user_client(db, user_user):
     client = Client()
-    client.login(username=user.username, password="secret")
+    client.login(username=user_user.username, password="secret")
     return client

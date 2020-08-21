@@ -4,8 +4,10 @@ from django.urls import reverse, resolve
 from django.conf import settings
 from django.db import IntegrityError
 from django.contrib.messages import get_messages
+from django.core.exceptions import ObjectDoesNotExist
 
 from shop.models.item import Category, Item
+from shop.models.order import Order, OrderItem
 from .factories import (
     ItemFactory,
     WearProxyFactory,
@@ -90,22 +92,81 @@ def test_commonview_list_GET(start_setup, client):
 
 
 @pytest.mark.django_db
-def test_add_to_cart_GET(start_setup, user_client, client):
-    item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00, category="M")
-    wear_size = WearSizeFactory(item=item1, size="M", quantity=10)
-    item1.sizes.add(wear_size)
-    url = reverse("shop:add-to-cart", kwargs={"slug": item1.slug})
-    response = user_client.get(url)
+def test_add_to_cart_GET(start_setup, user_client, user_user, cart_helper, client):
+    item1, wear_size, item2 = cart_helper
+    url1 = reverse("shop:add-to-cart", kwargs={"slug": item1.slug})
+    response = user_client.get(url1)
     messages = [m.message for m in get_messages(response.wsgi_request)]
     assert response.status_code == 302
     assert "You have to choose size" == messages[0]
+    with pytest.raises(ObjectDoesNotExist):
+        assert not OrderItem.objects.get(user=user_user, ordered=False, item=item1)
 
-    url = reverse(
+    url2 = reverse(
         "shop:add-to-cart-size", kwargs={"slug": item1.slug, "size": wear_size.size}
     )
-    response = user_client.get(url)
+    response = user_client.get(url2)
     messages = [m.message for m in get_messages(response.wsgi_request)]
+    order_item = OrderItem.objects.get(user=user_user, ordered=False, item=item1)
+    order = Order.objects.get(user=user_user)
     assert "Item has been added to cart" == messages[1]
+    assert item1 == order_item.item
+    assert order_item.quantity == 1
+    assert order_item in order.items.all()
+
+    response = user_client.get(url2)
+    messages = [m.message for m in get_messages(response.wsgi_request)]
+    order_item = OrderItem.objects.get(user=user_user, ordered=False, item=item1)
+    assert response.status_code == 302
+    assert "Item quantity has been updated" == messages[2]
+    assert order_item.quantity == 2
+    assert order.items.count() == 1
+
+    url3 = reverse("shop:add-to-cart", kwargs={"slug": item2.slug})
+    response = user_client.get(url3)
+    messages = [m.message for m in get_messages(response.wsgi_request)]
+    order = Order.objects.get(user=user_user)
+    assert response.status_code == 302
+    assert "This item has been added" == messages[3]
+    assert order.items.count() == 2
 
 
-# ........
+@pytest.mark.django_db
+def test_remove_from_cart_GET(start_setup, user_client, user_user, cart_helper, client):
+    item1, wear_size, item2 = cart_helper
+    url = reverse("shop:add-to-cart", kwargs={"slug": item2.slug})
+    user_client.get(url)
+    user_client.get(url)
+    assert (
+        OrderItem.objects.get(user=user_user, ordered=False, item=item2).quantity == 2
+    )
+    url = reverse("shop:remove-one-cart", kwargs={"slug": item2.slug})
+    response = user_client.get(url)
+    order_item = OrderItem.objects.get(user=user_user, ordered=False, item=item2)
+    messages = [m.message for m in get_messages(response.wsgi_request)]
+    assert response.status_code == 302
+    assert order_item.quantity == 1
+
+    response = user_client.get(url)
+    assert response.status_code == 302
+    with pytest.raises(ObjectDoesNotExist):
+        assert not OrderItem.objects.get(user=user_user, ordered=False, item=item2)
+    with pytest.raises(ObjectDoesNotExist):
+        assert not Order.objects.get(user=user_user, ordered=False)
+
+    url2 = reverse(
+        "shop:add-to-cart-size", kwargs={"slug": item1.slug, "size": wear_size.size}
+    )
+    user_client.get(url2)
+    user_client.get(url2)
+    assert (
+        OrderItem.objects.get(user=user_user, ordered=False, item=item1).quantity == 2
+    )
+    url2 = reverse(
+        "shop:remove-item-from-cart-size",
+        kwargs={"slug": item1.slug, "size": wear_size.size},
+    )
+    response = user_client.get(url2)
+    assert response.status_code == 302
+    with pytest.raises(ObjectDoesNotExist):
+        assert not OrderItem.objects.get(user=user_user, ordered=False, item=item1)

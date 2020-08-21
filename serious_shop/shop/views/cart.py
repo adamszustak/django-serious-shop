@@ -54,7 +54,10 @@ def remove_one_from_cart(request, slug, size=None):
     if order_item.quantity > 1:
         order_item.quantity -= 1
     else:
-        order.items.remove(order_item)
+        order_item.delete()
+        if order.items.count() == 0:
+            order.delete()
+            return redirect("shop:cart-summary")
     order_item.save()
     messages.success(request, "Item quantity has been updated")
     return redirect("shop:cart-summary")
@@ -66,7 +69,7 @@ def remove_item_from_cart(request, slug, size=None):
         OrderItem, user=request.user, item=item, ordered=False, size=size
     )
     order = Order.objects.filter(user=request.user, ordered=False)[0]
-    order.items.remove(order_item)
+    order_item.delete()
     order.save()
     messages.success(request, "Item deleted from cart")
     return redirect("shop:cart-summary")

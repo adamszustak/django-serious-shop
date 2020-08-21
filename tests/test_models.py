@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import IntegrityError
 
 from shop.models.item import Category
+from lib.utils import image_directory_path
 from .factories import (
     ItemFactory,
     WearProxyFactory,

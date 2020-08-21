@@ -30,8 +30,8 @@ urlpatterns = [
     path("search/", SearchResultsView.as_view(), name="search-results"),
     path("info/<str:topic>/", CommonView.as_view(), name="generic-info"),
     path("add-to-cart/<slug>", add_to_card, name="add-to-cart"),
-    path("remove-one-from-cart/<slug>", remove_one_from_cart, name="remove-one-cart"),
     path("add-to-cart/<slug>/<size>", add_to_card, name="add-to-cart-size"),
+    path("remove-one-from-cart/<slug>", remove_one_from_cart, name="remove-one-cart"),
     path(
         "remove-one-cart-size/<slug>/<size>",
         remove_one_from_cart,
