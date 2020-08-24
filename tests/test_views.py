@@ -34,11 +34,11 @@ def test_sectionlistitemview__GET(start_setup, client):
     WearProxyFactory(category="M", subcategory__name="glasses")
     ItemFactory(category="A", subcategory__name="glasses")
     url = reverse(
-        "shop:category-subcategory-list-item",
+        "shop:category_subcategory_list_item",
         kwargs={"category": "male", "subcategory": "glasses"},
     )
     url1 = reverse(
-        "shop:category-subcategory-list-item",
+        "shop:category_subcategory_list_item",
         kwargs={"category": "male", "subcategory": "glasses"},
     )
     response = client.get(url)
@@ -46,32 +46,32 @@ def test_sectionlistitemview__GET(start_setup, client):
     assert response.context["object_list"].count() == 1
     assert response1.context["object_list"].count() == 1
 
-    url2 = reverse("shop:category-list-item", kwargs={"category": "male"})
+    url2 = reverse("shop:category_list_item", kwargs={"category": "male"})
     response2 = client.get(url2)
     assert response2.status_code == 200
     assert response2.context["object_list"].count() == 2
 
     resolver = resolve("/section/male/")
     resolver1 = resolve("/section/male/glasses")
-    assert resolver.view_name == "shop:category-list-item"
-    assert resolver1.view_name == "shop:category-subcategory-list-item"
+    assert resolver.view_name == "shop:category_list_item"
+    assert resolver1.view_name == "shop:category_subcategory_list_item"
 
 
 @pytest.mark.django_db
 def test_searchresultview_list_GET(start_setup, client):
-    url = reverse("shop:search-results")
+    url = reverse("shop:search_results")
     response = client.get(url, {"search": "Product_W"})
     assert response.status_code == 200
     assert response.context["object_list"].count() == 1
 
     resolver = resolve("/search/")
-    assert resolver.view_name == "shop:search-results"
+    assert resolver.view_name == "shop:search_results"
 
 
 @pytest.mark.django_db
 def test_itemdetailview_list_GET(start_setup, client):
     wear, accessory = start_setup
-    url = reverse("shop:detail-item", kwargs={"slug": wear.slug})
+    url = reverse("shop:detail_item", kwargs={"slug": wear.slug})
     response = client.get(url)
     assert response.status_code == 200
 
@@ -79,14 +79,14 @@ def test_itemdetailview_list_GET(start_setup, client):
     assert list(response.context["item_list"]) == list(qs)
 
     resolver = resolve("/item/pierwszy/")
-    assert resolver.view_name == "shop:detail-item"
+    assert resolver.view_name == "shop:detail_item"
 
 
 @pytest.mark.django_db
 def test_commonview_list_GET(start_setup, client):
     generics = ["delivery", "privacy", "returns", " contact_us", " jobs", "about-us"]
     for generic in generics:
-        url = reverse("shop:generic-info", kwargs={"topic": generic})
+        url = reverse("shop:generic_info", kwargs={"topic": generic})
         response = client.get(url)
         assert response.status_code == 200
 
@@ -94,7 +94,7 @@ def test_commonview_list_GET(start_setup, client):
 @pytest.mark.django_db
 def test_add_to_cart_GET(start_setup, user_client, user_user, cart_helper, client):
     item1, wear_size, item2 = cart_helper
-    url1 = reverse("shop:add-to-cart", kwargs={"slug": item1.slug})
+    url1 = reverse("shop:add_to_cart", kwargs={"slug": item1.slug})
     response = user_client.get(url1)
     messages = [m.message for m in get_messages(response.wsgi_request)]
     assert response.status_code == 302
@@ -103,7 +103,7 @@ def test_add_to_cart_GET(start_setup, user_client, user_user, cart_helper, clien
         assert not OrderItem.objects.get(user=user_user, ordered=False, item=item1)
 
     url2 = reverse(
-        "shop:add-to-cart-size", kwargs={"slug": item1.slug, "size": wear_size.size}
+        "shop:add_to_cart_size", kwargs={"slug": item1.slug, "size": wear_size.size}
     )
     response = user_client.get(url2)
     messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -122,7 +122,7 @@ def test_add_to_cart_GET(start_setup, user_client, user_user, cart_helper, clien
     assert order_item.quantity == 2
     assert order.items.count() == 1
 
-    url3 = reverse("shop:add-to-cart", kwargs={"slug": item2.slug})
+    url3 = reverse("shop:add_to_cart", kwargs={"slug": item2.slug})
     response = user_client.get(url3)
     messages = [m.message for m in get_messages(response.wsgi_request)]
     order = Order.objects.get(user=user_user)
@@ -134,13 +134,13 @@ def test_add_to_cart_GET(start_setup, user_client, user_user, cart_helper, clien
 @pytest.mark.django_db
 def test_remove_from_cart_GET(start_setup, user_client, user_user, cart_helper, client):
     item1, wear_size, item2 = cart_helper
-    url = reverse("shop:add-to-cart", kwargs={"slug": item2.slug})
+    url = reverse("shop:add_to_cart", kwargs={"slug": item2.slug})
     user_client.get(url)
     user_client.get(url)
     assert (
         OrderItem.objects.get(user=user_user, ordered=False, item=item2).quantity == 2
     )
-    url = reverse("shop:remove-one-cart", kwargs={"slug": item2.slug})
+    url = reverse("shop:remove_one_cart", kwargs={"slug": item2.slug})
     response = user_client.get(url)
     order_item = OrderItem.objects.get(user=user_user, ordered=False, item=item2)
     messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -155,7 +155,7 @@ def test_remove_from_cart_GET(start_setup, user_client, user_user, cart_helper, 
         assert not Order.objects.get(user=user_user, ordered=False)
 
     url2 = reverse(
-        "shop:add-to-cart-size", kwargs={"slug": item1.slug, "size": wear_size.size}
+        "shop:add_to_cart_size", kwargs={"slug": item1.slug, "size": wear_size.size}
     )
     user_client.get(url2)
     user_client.get(url2)
@@ -163,7 +163,7 @@ def test_remove_from_cart_GET(start_setup, user_client, user_user, cart_helper, 
         OrderItem.objects.get(user=user_user, ordered=False, item=item1).quantity == 2
     )
     url2 = reverse(
-        "shop:remove-item-from-cart-size",
+        "shop:remove_item_from_cart_size",
         kwargs={"slug": item1.slug, "size": wear_size.size},
     )
     response = user_client.get(url2)

@@ -105,7 +105,9 @@ nav p.infos a.basket i {
 
 nav p.infos a.basket:hover,
 nav p.infos a.join:hover,
-nav p.infos a.register:hover {
+nav p.infos a.register:hover,
+nav p.infos a.logout:hover,
+nav p.infos a.history:hover {
     background-color: white;
     color: black;
 }
@@ -139,23 +141,23 @@ ul.messages {
 }
 
 ul.messages li.info {
-    background: #fff8c4; 
+    background: #fff8c4;
     border-color: #f7deae;
 }
 
 ul.messages li.success {
-    background: #e9ffd9; 
-    border-color: #D1FAB6; 
+    background: #e9ffd9;
+    border-color: #D1FAB6;
 }
 
 ul.messages li.warning {
-    background: #ffecec; 
+    background: #ffecec;
     border-color: #fad9d7;
 }
 
 ul.messages li.error {
-    background: #ffdbdb; 
-    border-color: #f8b4b1; 
+    background: #ffdbdb;
+    border-color: #f8b4b1;
 }
 
 ul.messages span.close {
@@ -310,7 +312,7 @@ section.choice div.wrapper .dropdown-content a {
 }
 
 section.choice div.wrapper .dropdown-content a:hover{
-    background-color: #ddd; 
+    background-color: #ddd;
 }
 
 /* ****************SLIDER*****************/
@@ -637,7 +639,7 @@ div.others button:focus {
 section.tabs button.active,
 div.others button {
     background-color: rgb(216, 214, 214);
-    pointer-events: none; 
+    pointer-events: none;
 }
 
 div.description p.title,
@@ -681,7 +683,7 @@ li.card {
 table.table {
     border-collapse: collapse;
     width: 90%;
-    margin-left:auto; 
+    margin-left:auto;
     margin-right:auto;
 }
 
@@ -698,7 +700,7 @@ table.table span.saving {
     margin-left:10px;
     border: 1px solid #cccccc;
     border-radius: 4px;
-    padding:3px; 
+    padding:3px;
 }
 table td a:hover {
     color:blue;
@@ -734,8 +736,8 @@ table tr.total {
 }
 
 .tablebuttons a.checkout {
-    background: #e9ffd9; 
-    border-color: #D1FAB6; 
+    background: #e9ffd9;
+    border-color: #D1FAB6;
 }
 
 .tablebuttons a.checkout:hover {
@@ -743,12 +745,48 @@ table tr.total {
 }
 
 .tablebuttons a.continue {
-    background: #fff8c4; 
+    background: #fff8c4;
     border-color: #f7deae;
 }
 
 .tablebuttons a.continue:hover {
     background: #f7deae;
+}
+
+/* ****************AUTH*****************/
+section.account {
+    width: 50%;
+    margin:50px auto;
+}
+
+section.account h1 {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+section.account a.signup,
+section.account p a.login {
+    color: royalblue;
+    font-weight: 600;
+}
+
+section.account form button,
+section.account form a,
+section.account form input[type=submit] {
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+    background-color: rgb(182, 0, 0);
+    font-weight: 600;
+    transition: .2s;
+}
+section.account form a {
+    float: right;
+}
+section.account form button:hover,
+section.account form input[type=submit]:hover {
+    background-color: #000;
 }
 /* ****************FOOTER*****************/
 footer {
@@ -920,7 +958,7 @@ footer div.lower div.social span.instagram {
     section.choice i.fa-bars {
         display: block;
         color: white;
-        padding:10px; 
+        padding:10px;
         font-size: 25px;
     }
 
@@ -934,7 +972,7 @@ footer div.lower div.social span.instagram {
     /*****************MAIN*****************/
     main,
     main a,
-    .generic-info { 
+    .generic-info {
         width: 100%;
     }
 
@@ -1029,7 +1067,7 @@ footer div.lower div.social span.instagram {
         display: flex;
         flex-direction: column;
     }
-    
+
     section.choice i.fa-bars {
         display: block;
         color: white;
@@ -1047,7 +1085,7 @@ footer div.lower div.social span.instagram {
     /*****************MAIN*****************/
     main,
     main a,
-    div.generic-info { 
+    div.generic-info {
         width: 100%;
     }
 
@@ -1100,4 +1138,4 @@ footer div.lower div.social span.instagram {
     footer div.lower div.lastinfo {
         height: 6vh;
     }
-} 
+}

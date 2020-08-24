@@ -3,6 +3,7 @@ import os
 import json
 
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import ugettext_lazy as _
 
 
 with open("serious_shop/conf/settings/config.json") as config_file:
@@ -41,11 +42,17 @@ INSTALLED_APPS = [
     "shop.apps.ShopConfig",
     "lib.apps.LibConfig",
     "ckeditor",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # 'django.middleware.locale.LocaleMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -100,6 +107,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = "en-us"
+# LANGUAGES = (
+#     ('en', _('English')),
+#     ('pl', _('Polish')),
+# )
+# LOCALE_PATHS = (
+#     os.path.join(MAIN_DIR, 'locale'),
+# )
 
 TIME_ZONE = "UTC"
 
@@ -116,6 +130,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(MAIN_DIR, "media")
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 CKEDITOR_CONFIGS = {
     "default": {
@@ -146,4 +161,19 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+
 COMPANY_NAME = "Serious Shop"
+
+SITE_ID = 1
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGOUT_ON_GET = True

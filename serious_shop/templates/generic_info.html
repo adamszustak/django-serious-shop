@@ -1,7 +1,25 @@
 {% extends "base.html" %}
-
+{% block extra_head %}
+  <style>
+      /* div.companyinfo {
+          display: none;
+      } */
+  </style>
+{% endblock extra_head %}
 {% block content %}
 <div class="generic-info">
-{{ company_info|safe }}
+    <div class="companyinfo">
+        {% if section == 'privacy' %}
+        {{ company.privacy|safe }}
+        {% elif section == 'delivery' %}
+        {{ company.delivery|safe }}
+        {% elif section == 'returns' %}
+        {{ company.returns|safe }}
+        {% elif section == 'contact_us' %}
+        {{ company.contact_us|safe }}
+        {% elif section == 'jobs' %}
+        {{ company.jobs|safe }}
+        {% endif %}
+    </div>
 </div>
 {% endblock content %}

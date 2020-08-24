@@ -2,8 +2,6 @@
 {% load static %}
 
 {% block content %}
-  
-<main>
     <section class="maininfos">
         <div class="photos">
             <ul id="lightSlider">
@@ -19,7 +17,7 @@
                 {{ object.title }}
             </p>
             <p class="price">
-                Price: 
+                Price:
                 {% if object.discount_price %}
                 <span class="amount">{{ object.discount_price }}$</span>
                 {% else %}
@@ -28,7 +26,7 @@
             </p>
             <div class="sizes">
                 {% if object.sizes %}
-                <form action="{% url 'shop:add-to-cart' object.slug %}" method="GET">
+                <form action="{% url 'shop:add_to_cart' object.slug %}" method="GET">
                     {% csrf_token %}
                     {% for size in object.sizes.all %}
                     <input type="radio" name="size" value="{{ size.size }}" id="{{ size.size }}" {% if not size.quantity %} disabled {% endif %}>
@@ -79,28 +77,6 @@
             {% endfor %}
         </ul>
     </div>
-</main>
-{% if is_paginated %}
-  <ul class="pagination">
-    {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
 {% endblock content %}
 
 {% block extra_body %}

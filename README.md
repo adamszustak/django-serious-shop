@@ -14,9 +14,10 @@ The project is still under development, so far without full functionality implem
 - [X] add products to the basket
 - [ ] create an order summary
 - [ ] handle payments
-- [ ] add user support
+- [X] add user support
 - [ ] support for multiple addresses
-- [ ] add localization and internationalization support
+- [ ] add localization and internationalization support 
+- [ ] panel for managing refunds and promo codes
 - [ ] and many others
 
 ## Small Piece of Work

@@ -277,7 +277,7 @@ section.choice div.wrapper .dropdown-content a {
 }
 
 section.choice div.wrapper .dropdown-content a:hover{
-    background-color: #ddd; 
+    background-color: #ddd;
 }
 
 /* ****************SLIDER*****************/
@@ -583,7 +583,7 @@ div.others button:focus {
 section.tabs button.active,
 div.others button {
     background-color: rgb(216, 214, 214);
-    pointer-events: none; 
+    pointer-events: none;
 }
 
 div.description p.title,
@@ -617,7 +617,7 @@ li.card {
 }
 
 /* ****************GENERIC_INFO*****************/
-.generic-info {
+.generic_info {
     width:90%;
     background-color: #fff;
     padding:50px 30px;
@@ -793,7 +793,7 @@ footer div.lower div.social span.instagram {
     section.choice i.fa-bars {
         display: block;
         color: white;
-        padding:10px; 
+        padding:10px;
         font-size: 25px;
     }
 
@@ -807,7 +807,7 @@ footer div.lower div.social span.instagram {
     /*****************MAIN*****************/
     main,
     main a,
-    .generic-info { 
+    .generic-info {
         width: 100%;
     }
 
@@ -890,7 +890,7 @@ footer div.lower div.social span.instagram {
         display: flex;
         flex-direction: column;
     }
-    
+
     section.choice i.fa-bars {
         display: block;
         color: white;
@@ -908,7 +908,7 @@ footer div.lower div.social span.instagram {
     /*****************MAIN*****************/
     main,
     main a,
-    div.generic-info { 
+    div.generic-info {
         width: 100%;
     }
 
@@ -945,4 +945,4 @@ footer div.lower div.social span.instagram {
     footer div.lower div.lastinfo {
         height: 6vh;
     }
-} 
+}

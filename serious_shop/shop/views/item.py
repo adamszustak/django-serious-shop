@@ -71,18 +71,7 @@ class ItemDetailView(DetailView):
 class CommonView(View):
     def get(self, *args, **kwargs):
         company = CompanyInfo.objects.get(name=settings.COMPANY_NAME)
-        if self.kwargs["topic"] == "delivery":
-            context = {"company_info": company.delivery}
-        elif self.kwargs["topic"] == "privacy":
-            context = {"company_info": company.privacy}
-        elif self.kwargs["topic"] == "returns":
-            context = {"company_info": company.returns}
-        elif self.kwargs["topic"] == "contact_us":
-            context = {"company_info": company.contact_us}
-        elif self.kwargs["topic"] == "jobs":
-            context = {"company_info": company.jobs}
-        elif self.kwargs["topic"] == "about-us":
-            context = {"company_info": company.about}
-        else:
-            context = {"company_info": "<h1>Page not found</h1>"}
-        return render(self.request, "generic_info.html", context)
+        section = self.kwargs["topic"]
+        return render(
+            self.request, "generic_info.html", {"company": company, "section": section}
+        )

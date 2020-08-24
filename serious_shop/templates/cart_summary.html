@@ -12,7 +12,7 @@
         {% for order_item in object.items.all %}
         <tr>
             <th>{{ forloop.counter }}</th>
-            <td><a href="{% url 'shop:detail-item' order_item.item.slug %}">{{ order_item.item.title }}</a>{% if order_item.size %} - {{ order_item.size }}{% endif %}</td>
+            <td><a href="{% url 'shop:detail_item' order_item.item.slug %}">{{ order_item.item.title }}</a>{% if order_item.size %} - {{ order_item.size }}{% endif %}</td>
             {% if order_item.item.discount_price %}
             <td>{{ order_item.item.discount_price }}</td>
             {% else %}
@@ -20,15 +20,15 @@
             {% endif %}
             {% if order_item.size %}
             <td class=>
-            <a href="{% url 'shop:remove-one-cart-size' order_item.item.slug order_item.size %}"><i class="fas fa-minus"></i></a>
+            <a href="{% url 'shop:remove_one_cart_size' order_item.item.slug order_item.size %}"><i class="fas fa-minus"></i></a>
                 {{ order_item.quantity }}
-            <a href="{% url 'shop:add-to-cart-size' order_item.item.slug order_item.size %}"><i class="fas fa-plus"></i></a>
+            <a href="{% url 'shop:add_to_cart_size' order_item.item.slug order_item.size %}"><i class="fas fa-plus"></i></a>
             </td>
             {% else %}
             <td class='quantiy'>
-            <a href="{% url 'shop:remove-one-cart' order_item.item.slug %}"><i class="fas fa-minus"></i></a>
+            <a href="{% url 'shop:remove_one_cart' order_item.item.slug %}"><i class="fas fa-minus"></i></a>
                 {{ order_item.quantity }}
-            <a href="{% url 'shop:add-to-cart' order_item.item.slug %}"><i class="fas fa-plus"></i></a>
+            <a href="{% url 'shop:add_to_cart' order_item.item.slug %}"><i class="fas fa-plus"></i></a>
             {% endif %}
             </td>
             <td>${{ order_item.get_final_price }}
@@ -37,9 +37,9 @@
                 {% endif %}
             </td>
             {% if order_item.size %}
-            <td><a href="{% url 'shop:remove-item-from-cart-size' order_item.item.slug order_item.size %}"><i class="far fa-trash-alt"></i></a></td>
+            <td><a href="{% url 'shop:remove_item_from_cart_size' order_item.item.slug order_item.size %}"><i class="far fa-trash-alt"></i></a></td>
             {% else %}
-            <td><a href="{% url 'shop:remove-item-from-cart' order_item.item.slug %}"><i class="far fa-trash-alt"></i></a></td>
+            <td><a href="{% url 'shop:remove_item_from_cart' order_item.item.slug %}"><i class="far fa-trash-alt"></i></a></td>
             {% endif %}
         </tr>
         {% empty %}

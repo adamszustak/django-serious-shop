@@ -5,7 +5,9 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("shop.urls.urls", namespace="shop")),
+    path("accounts/", include("allauth.urls")),
 ]
+
 
 if settings.DEBUG:
     import debug_toolbar

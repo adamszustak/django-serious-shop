@@ -1,9 +1,11 @@
 import itertools
-from ckeditor.fields import RichTextField
 
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
+
+from ckeditor.fields import RichTextField
 
 from lib.utils import image_directory_path
 
@@ -50,7 +52,7 @@ class Item(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("shop:detail-item", kwargs={"slug": self.slug})
+        return reverse("shop:detail_item", kwargs={"slug": self.slug})
 
     def _generate_slug(self):
         value = self.title
