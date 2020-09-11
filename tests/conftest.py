@@ -6,14 +6,13 @@ from django.contrib.auth.hashers import make_password
 from django.test.client import Client
 from django.shortcuts import reverse
 
-from shop.models.company_info import CompanyInfo
+from lib.models import CompanyInfo
+from items.models import Section
 from .factories import (
-    ItemFactory,
-    WearProxyFactory,
+    ItemWearFactory,
+    ItemAccessoryFactory,
     UserFactory,
-    OrderFactory,
-    OrderItemFactory,
-    WearSizeFactory,
+    CategoryFactory,
 )
 
 
@@ -32,18 +31,23 @@ def start_setup(db):
         contact_us="lol",
         jobs="lol",
     )
-    wear = WearProxyFactory(category="M")
-    accessory = ItemFactory()
-    return wear, accessory
 
 
 @pytest.fixture()
-def cart_helper():
-    item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00, category="M")
-    wear_size = WearSizeFactory(item=item1, size="M", quantity=10)
-    item1.sizes.add(wear_size)
-    item2 = ItemFactory(category="A")
-    return item1, wear_size, item2
+def base_items(db):
+    category = CategoryFactory(name="glasses")
+    wear = ItemWearFactory(section=Section.MALE, category=category)
+    item = ItemAccessoryFactory(category=category)
+    return wear, item, category
+
+
+# @pytest.fixture()
+# def cart_helper():
+#     item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00, category="M")
+#     wear_size = WearSizeFactory(item=item1, size="M", quantity=10)
+#     item1.sizes.add(wear_size)
+#     item2 = ItemFactory(category="A")
+#     return item1, wear_size, item2
 
 
 @pytest.fixture()

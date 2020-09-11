@@ -3,18 +3,18 @@
         <div class="about">
             <h3>ABOUT ECCOMERCE</h3>
             <p>{{ company.about|safe|truncatechars:193 }}</p>
-            <a href="{% url 'shop:generic_info' 'about-us' %}">About Us</a>
-            <a href="{% url 'shop:generic_info' 'contact_us' %}">Contact Us</a>
+            <a href="{% url 'items:generic_info' 'about-us' %}">About Us</a>
+            <a href="{% url 'items:generic_info' 'contact_us' %}">Contact Us</a>
         </div>
         <div class="customer">
             <h3>CUSTOMER SERVICES</h3>
             <ul>
                 <li><a href="#">My Account</a></li>
-                <li><a href="{% url 'shop:generic_info' 'delivery' %}">Delivery Information</a></li>
-                <li><a href="{% url 'shop:generic_info' 'privacy' %}">Privacy Policy</a></li>
-                <li><a href="{% url 'shop:generic_info' 'returns' %}">Returns & complaints</a></li>
-                <li><a href="{% url 'shop:generic_info' 'contact_us' %}">Contact us</a></li>
-                <li><a href="{% url 'shop:generic_info' 'jobs' %}">Jobs & recruitment</a></li>
+                <li><a href="{% url 'items:generic_info' 'delivery' %}">Delivery Information</a></li>
+                <li><a href="{% url 'items:generic_info' 'privacy' %}">Privacy Policy</a></li>
+                <li><a href="{% url 'items:generic_info' 'returns' %}">Returns & complaints</a></li>
+                <li><a href="{% url 'items:generic_info' 'contact_us' %}">Contact us</a></li>
+                <li><a href="{% url 'items:generic_info' 'jobs' %}">Jobs & recruitment</a></li>
             </ul>
         </div>
         <div class="icons">

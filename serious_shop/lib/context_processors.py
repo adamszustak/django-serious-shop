@@ -1,15 +1,16 @@
 from django.conf import settings
 
-from shop.models.item import Category, SubCategory
-from shop.models.company_info import CompanyInfo
+from items.models import Section, Category
+from lib.models import CompanyInfo
+from cart.cart import Cart
 
 
-def get_subcategory(request):
-    return {"subcategories": SubCategory.objects.all(), "request": request}
+def get_category(request):
+    return {"categories": Category.objects.all(), "request": request}
 
 
-def get_categories(request):
-    return {"categories": Category.choices, "request": request}
+def get_section(request):
+    return {"sections": Section.choices, "request": request}
 
 
 def get_company_info(request):
@@ -17,3 +18,7 @@ def get_company_info(request):
         "company": CompanyInfo.objects.get(name=settings.COMPANY_NAME),
         "request": request,
     }
+
+
+def cart(request):
+    return {"cart": Cart(request)}

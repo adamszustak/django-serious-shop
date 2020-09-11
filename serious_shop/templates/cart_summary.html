@@ -9,39 +9,23 @@
             <th>Quantity</th>
             <th>Total Item Price</th>
         </tr>
-        {% for order_item in object.items.all %}
+        {% for item in cart %}
+        {% with cart_item=item.item %}
         <tr>
             <th>{{ forloop.counter }}</th>
-            <td><a href="{% url 'shop:detail_item' order_item.item.slug %}">{{ order_item.item.title }}</a>{% if order_item.size %} - {{ order_item.size }}{% endif %}</td>
-            {% if order_item.item.discount_price %}
-            <td>{{ order_item.item.discount_price }}</td>
-            {% else %}
-            <td>{{ order_item.item.price }}</td>
-            {% endif %}
-            {% if order_item.size %}
-            <td class=>
-            <a href="{% url 'shop:remove_one_cart_size' order_item.item.slug order_item.size %}"><i class="fas fa-minus"></i></a>
-                {{ order_item.quantity }}
-            <a href="{% url 'shop:add_to_cart_size' order_item.item.slug order_item.size %}"><i class="fas fa-plus"></i></a>
+            <td><a href="{{ cart_item.get_absolute_url }}">{{ cart_item.title }}</a>{% if item.size %} - {{ item.size }}{% endif %}</td>
+            <td>{{ cart_item.actual_price }}</td>
+
+            <td class='quantity' data-objectid="{{ cart_item.id }}" data-size="{{ item.size }}">
+            <a class="remove_one" href="#" data-url="{% url 'cart:remove_one_cart' cart_item.id item.size %}"><i class="fas fa-minus"></i></a>
+                <span>{{ item.quantity }}</span>
+            <a class="add_to_cart" href="#" data-url="{% url 'cart:add_to_cart_size' cart_item.id item.size %}"><i class="fas fa-plus"></i></a>
             </td>
-            {% else %}
-            <td class='quantiy'>
-            <a href="{% url 'shop:remove_one_cart' order_item.item.slug %}"><i class="fas fa-minus"></i></a>
-                {{ order_item.quantity }}
-            <a href="{% url 'shop:add_to_cart' order_item.item.slug %}"><i class="fas fa-plus"></i></a>
-            {% endif %}
+            <td class="item_total">${{ item.total_price }}
             </td>
-            <td>${{ order_item.get_final_price }}
-                {% if order_item.item.discount_price %}
-                    <span class="saving">Saving ${{ order_item.get_amount_saved }}</span>
-                {% endif %}
-            </td>
-            {% if order_item.size %}
-            <td><a href="{% url 'shop:remove_item_from_cart_size' order_item.item.slug order_item.size %}"><i class="far fa-trash-alt"></i></a></td>
-            {% else %}
-            <td><a href="{% url 'shop:remove_item_from_cart' order_item.item.slug %}"><i class="far fa-trash-alt"></i></a></td>
-            {% endif %}
+            <td><a href="{% url 'cart:remove_item_cart' cart_item.id item.size %} "><i class="far fa-trash-alt"></i></a></td>
         </tr>
+        {% endwith %}
         {% empty %}
         <td></td>
         <td></td>
@@ -50,22 +34,20 @@
         <td></td>
         <td></td>
         {% endfor %}
-        {% if object.get_total %}
         <tr class="total">
             <td></td>
             <td><b>Order Total</b></td>
             <td></td>
-            <td class='tot-quantity'>
-                <b>{{ object.items_quantity }}</b>
+            <td class='tot-quantity' id='total_cart_quantity'>
+                <b>{{ cart|length }}</b>
             </td>
-            <td><b>${{ object.get_total }}</b></td>
+            <td id='total_cart_price'><b>${{ cart.get_final_price }}</b></td>
         </tr>
-        {% endif %}
         </tbody>
     </table>
     <div class="tablebuttons">
         <a class="continue" href='/'>Continue Shopping</a>
-        <a class="checkout" href='#'>Procced to CheckOut</a>
+        <a class="checkout" href='#'>Procced to Checkout</a>
     </div>
 </div>
 {% endblock content %}

@@ -26,25 +26,25 @@
             </p>
             <div class="sizes">
                 {% if object.sizes %}
-                <form action="{% url 'shop:add_to_cart' object.slug %}" method="GET">
+                <form action="{% url 'cart:add_to_cart' object.id %}" method="POST" id="addItemForm" data-id="{{ object.id }}">
                     {% csrf_token %}
                     {% for size in object.sizes.all %}
                     <input type="radio" name="size" value="{{ size.size }}" id="{{ size.size }}" {% if not size.quantity %} disabled {% endif %}>
                     <label for="{{ size.size }}"><span>{{ size.size }}</span></label>
                     {% endfor %}
                 {% endif %}
-                <button class='submit' type="submit">Add to cart<i class="fas fa-cart-arrow-down"></i></button>
+                <button class='submit' id="sizeBtn" type="submit">Add to cart<i class="fas fa-cart-arrow-down"></i></button>
                 </form>
             </div>
             <table>
                 <tbody>
                     <tr><th>Availability:</th><td>
                         Shipping in 48 hours</td></tr>
-                    {% if object.get_my_model_name == 'wear' %}
-                    <tr><th>Type:</th><td>{{ object.get_category_display }}</td></tr>
+                    {% if object.is_wear %}
+                    <tr><th>Type:</th><td>{{ object.get_section_display }}</td></tr>
                     <tr><th>Color:</th><td>{{ object.color }}</td></tr>
                     {% else %}
-                    <tr><th>Type:</th><td>{{ object.get_category_display }}</td></tr>
+                    <tr><th>Type:</th><td>{{ object.get_section_display }}</td></tr>
                     {% endif %}
                 </tbody>
             </table>

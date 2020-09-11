@@ -1,20 +1,16 @@
-from itertools import chain
-from operator import attrgetter
-
-from django.db.models import Q
-from django.shortcuts import render, HttpResponse, get_object_or_404
-from django.http import HttpResponseNotFound
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.conf import settings
 
-from shop.models.item import Item, Category
-from shop.models.company_info import CompanyInfo
+from items.models import Item, Section, Category
+from lib.models import CompanyInfo
 
 
 class HomeView(ListView):
     model = Item
     template_name = "home.html"
-    paginate_by = 5
+    paginate_by = 10
+    queryset = Item.objects.active()
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
@@ -28,34 +24,26 @@ class SectionListItemView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        category = self.kwargs["category"]
-        category_resolve = [
-            item[0] for item in Category.choices if item[1] == category.title()
+        section = self.kwargs["section"]
+        section_resolve = [
+            item[0] for item in Section.choices if item[1] == section.title()
         ]
         try:
-            subcategory = self.kwargs["subcategory"]
+            category = self.kwargs["slug"]
         except KeyError:
-            subcategory = None
-        if subcategory:
-            return Item.objects.filter(
-                category=category_resolve[0], subcategory__name__iexact=subcategory
-            )
-        return Item.objects.filter(category=category_resolve[0])
+            category = None
+        if category:
+            return Item.objects.in_category(section_resolve[0], category)
+        return Item.objects.in_section(section_resolve[0])
 
 
 class SearchResultsView(ListView):
     template_name = "home.html"
     paginate_by = 10
 
-    def get_queryset(self):
-        qs = Item.objects.all()
+    def get_queryset(self, *args, **kwargs):
         query = self.request.GET.get("search")
-        qs_list = qs.filter(
-            Q(title__icontains=query)
-            | Q(category__icontains=query)
-            | Q(color__icontains=query)
-        )
-        return qs_list
+        return Item.objects.search(query)
 
 
 class ItemDetailView(DetailView):
@@ -64,7 +52,7 @@ class ItemDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ItemDetailView, self).get_context_data(**kwargs)
-        context["item_list"] = Item.objects.all()
+        context["item_list"] = Item.objects.active()
         return context
 
 

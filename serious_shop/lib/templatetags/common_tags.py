@@ -1,11 +1,10 @@
 from django import template
 
-from shop.models.item import SubCategory
-
+from items.models import Category
 
 register = template.Library()
 
 
 @register.simple_tag
 def in_cat(category):
-    return SubCategory.objects.filter(item__category=category).distinct()
+    return Category.objects.in_section(category)

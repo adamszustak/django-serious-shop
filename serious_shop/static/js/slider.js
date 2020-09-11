@@ -1,14 +1,14 @@
 const slideList = [{
-    img: '../static/img/main slider/slide1.jpg',
+    img: '../static/img/mainslider/slide1.jpg',
     text: 'section/male',
     dot: 'one'
 },
 {
-    img: '../static/img/main slider/slide2.jpg',
+    img: '../static/img/mainslider/slide2.jpg',
     text: 'section/accessories',
     dot: 'two'
 },{
-    img: '../static/img/main slider/slide3.jpg',
+    img: '../static/img/mainslider/slide3.jpg',
     text: 'section/female',
     dot: 'three'
 }];

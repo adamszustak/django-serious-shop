@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "shop.apps.ShopConfig",
+    "items.apps.ItemsConfig",
     "lib.apps.LibConfig",
+    "cart.apps.CartConfig",
     "ckeditor",
     "django.contrib.sites",
     "allauth",
@@ -52,7 +53,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    # 'django.middleware.locale.LocaleMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -73,14 +74,14 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "lib.context_processors.get_categories",
+                "lib.context_processors.get_section",
                 "lib.context_processors.get_company_info",
-                "lib.context_processors.get_subcategory",
+                "lib.context_processors.get_category",
+                "lib.context_processors.cart",
             ],
         },
     },
 ]
-
 WSGI_APPLICATION = "conf.wsgi.application"
 
 
@@ -106,11 +107,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "en-us"
-# LANGUAGES = (
-#     ('en', _('English')),
-#     ('pl', _('Polish')),
-# )
+LANGUAGE_CODE = "pl-pl"
+LANGUAGES = (
+    ("en", _("English")),
+    ("pl", _("Polish")),
+)
 # LOCALE_PATHS = (
 #     os.path.join(MAIN_DIR, 'locale'),
 # )
@@ -169,6 +170,9 @@ AUTHENTICATION_BACKENDS = [
 
 
 COMPANY_NAME = "Serious Shop"
+
+CART_SESSION_ID = "cart"
+MAX_ITEM_QUANTITY_IN_CART = 10
 
 SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = "email"

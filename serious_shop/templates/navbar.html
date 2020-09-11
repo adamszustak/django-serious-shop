@@ -3,7 +3,7 @@
     {% load common_tags %}
     <nav>
         <p class="number"><span class="nr" type=>{{ company.phone }}</span><span class="nrinfo">(Helpline opening hours: {{ company.start_time }} - {{ company.end_time }})</span></p>
-        <p class="infos"><a href="{% url 'shop:cart_summary' %}" class="basket"><i class="fa fa-shopping-basket" aria-hidden="true"></i>Basket</a><span class="forusers">{% if user.is_authenticated %}<a href="{% url 'shop:profile' request.user %}" class="history">My history</a><a  href="{% url 'account_logout' %}" class="logout">Logout</a>{% else %}<a  href="{% url 'account_login' %}" class="join">Login</a><a href="{% url 'account_signup' %}" class="register">Register</a>{% endif %}</span></p>
+        <p class="infos"><a href="{% url 'cart:cart_detail' %}" class="basket">{% if not cart.is_empty %}<span class="cart_nr">{{ cart|length }}</span>{% endif %}<i class="fa fa-shopping-basket" aria-hidden="true"></i>Basket</a><span class="forusers">{% if user.is_authenticated %}<a href="#" class="history">My history</a><a  href="{% url 'account_logout' %}" class="logout">Logout</a>{% else %}<a  href="{% url 'account_login' %}" class="join">Login</a><a href="{% url 'account_signup' %}" class="register">Register</a>{% endif %}</span></p>
     </nav>
     <header>
         {% if messages %}
@@ -13,11 +13,11 @@
         {% endfor %}
     </ul>
     {% endif %}
-        <a href="{% url 'shop:home' %}" class="logo">
+        <a href="{% url 'items:home' %}" class="logo">
         <p class="name"><span class="first">Serious</span><span class="second">Shop</span><span class="third">We care...</span></p></a>
     </header>
     <section class="search">
-        <form action="{% url 'shop:search_results' %}" method="GET">
+        <form action="{% url 'items:search_results' %}" method="GET">
             <input name='search' type="text" placeholder="What you're looking for?">
             <button type="Submit"><i class="fas fa-search"></i></button>
         </form>
@@ -25,17 +25,19 @@
     <section class="choice">
         <a href=""><i class="fas fa-bars"></i></a>
         <div class="wrapper">
-            {% for tab in categories %}
+            {% for section in sections %}
             <div class="dropdown">
-            <a href="{% url 'shop:category_list_item' tab.1|lower %}" class="category">{{ tab.1 }}</a>
-            <div class="dropdown-content">
-                {% in_cat tab.0 as subcat_list %}
-                {% for subcategory in subcat_list %}
-                <a href="{% url 'shop:category_subcategory_list_item' tab.1|lower subcategory.name|lower %}">{{ subcategory.name }}</a>
-                {% endfor %}
+            <a href="{% url 'items:section_list_item' section.1|lower %}" class="category">{{ section.1 }}</a>
+                <div class="dropdown-content">
+                    {% in_cat section.0 as cat_list %}
+                    {% for category in cat_list %}
+                        <a href="{% url 'items:section_category_list_item' section.1|lower category.slug %}">{{ category.name }}</a>
+                    {% endfor %}
                 </div>
             </div>
             {% endfor %}
         </div>
+        </div>
     </section>
     <!-- /NAVBAR/ -->
+
