@@ -100,7 +100,7 @@ class Cart(object):
         del self.session[settings.CART_SESSION_ID]
         self.session.modified = True
 
-    def serialize_cart(self):
+    def get_cart(self):
         return self.cart
 
     def is_in_cart(self, item, size):

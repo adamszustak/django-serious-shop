@@ -22,11 +22,10 @@ def add_to_cart(request, item_id, size=None):
         return redirect("items:detail_item", slug=item.slug)
     if cart.is_in_cart(item, size) and "csrfmiddlewaretoken" not in request.POST:
         cart.add(item, size)
-        json_cart = cart.serialize_cart()
         item_final_price = cart.get_item_final_price(item, size)
         return JsonResponse(
             {
-                "cart": json_cart,
+                "cart": cart.get_cart(),
                 "item_final_price": item_final_price,
                 "len_cart": len(cart),
                 "final_price": cart.get_final_price(),
@@ -41,13 +40,12 @@ def remove_one_cart(request, item_id, size=None):
     cart = Cart(request)
     item = get_object_or_404(Item, id=item_id)
     quantity = cart.substract(item, size)
-    json_cart = cart.serialize_cart()
     item_final_price = 0
     if quantity:
         item_final_price = cart.get_item_final_price(item, size)
     return JsonResponse(
         {
-            "cart": json_cart,
+            "cart": cart.get_cart(),
             "item_final_price": item_final_price,
             "len_cart": len(cart),
             "final_price": cart.get_final_price(),

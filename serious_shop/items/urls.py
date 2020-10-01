@@ -16,7 +16,7 @@ urlpatterns = [
     path("item/<slug>/", ItemDetailView.as_view(), name="detail_item"),
     path("section/<section>/", SectionListItemView.as_view(), name="section_list_item"),
     path(
-        "section/<section>/<slug>",
+        "section/<section>/<slug:category>",
         SectionListItemView.as_view(),
         name="section_category_list_item",
     ),

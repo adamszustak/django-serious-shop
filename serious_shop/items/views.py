@@ -28,10 +28,7 @@ class SectionListItemView(ListView):
         section_resolve = [
             item[0] for item in Section.choices if item[1] == section.title()
         ]
-        try:
-            category = self.kwargs["slug"]
-        except KeyError:
-            category = None
+        category = self.kwargs.get("category")
         if category:
             return Item.objects.in_category(section_resolve[0], category)
         return Item.objects.in_section(section_resolve[0])
@@ -39,7 +36,7 @@ class SectionListItemView(ListView):
     def get_context_data(self, **kwargs):
         context = super(SectionListItemView, self).get_context_data(**kwargs)
         context["section"] = self.kwargs["section"]
-        context["category"] = self.kwargs.get("slug")
+        context["category"] = self.kwargs.get("category")
         return context
 
 
@@ -55,7 +52,6 @@ class SearchResultsView(ListView):
 class ItemDetailView(DetailView):
     model = Item
     template_name = "detail_item.html"
-    queryset = Item.objects.active()
 
     def get_context_data(self, *args, **kwargs):
         context = super(ItemDetailView, self).get_context_data(**kwargs)
@@ -66,7 +62,7 @@ class ItemDetailView(DetailView):
 class CommonView(View):
     def get(self, *args, **kwargs):
         company = CompanyInfo.objects.get(name=settings.COMPANY_NAME)
-        section = self.kwargs["topic"]
+        section = self.kwargs.get("topic")
         return render(
             self.request, "generic_info.html", {"company": company, "section": section}
         )
