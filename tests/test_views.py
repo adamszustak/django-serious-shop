@@ -86,6 +86,36 @@ def test_commonview_list_GET(start_setup, client):
         assert response.status_code == 200
 
 
+@pytest.mark.django_db
+def test_cart_logged_GET(client, start_setup, base_items, user_client):
+    wear, item, category = base_items
+    client = user_client
+    url1 = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
+    response = client.get(url1)
+    session = client.session
+    cart = session[settings.CART_SESSION_ID]
+    assert response.status_code == 302
+    assert cart
+
+    item_id = str(item.id)
+    key = f"{item_id}-None"
+    assert cart[key] == {
+        "quantity": 1,
+        "price": str(item.actual_price),
+        "size": None,
+    }
+
+    response = client.get(url1)
+    session = client.session
+    cart = session[settings.CART_SESSION_ID]
+    assert response.status_code == 200
+    assert cart[key] == {
+        "quantity": 2,
+        "price": str(item.actual_price),
+        "size": None,
+    }
+
+
 # @pytest.mark.django_db
 # def test_add_to_cart_GET(start_setup, user_client, user_user, cart_helper, client):
 #     item1, wear_size, item2 = cart_helper

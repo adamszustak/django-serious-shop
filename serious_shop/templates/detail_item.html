@@ -6,9 +6,11 @@
         <div class="photos">
             <ul id="lightSlider">
                 {% for img in object.images.all %}
-                <li data-thumb="{{ img.image.url }}">
-                    <img src="{{ img.image.url }}">
+                {% with url=img.image.url %}
+                <li data-thumb="{{ url }}">
+                    <img src="{{ url }}">
                 </li>
+                {% endwith %}
                 {% endfor %}
             </ul>
         </div>
@@ -29,8 +31,10 @@
                 <form action="{% url 'cart:add_to_cart' object.id %}" method="POST" id="addItemForm" data-id="{{ object.id }}">
                     {% csrf_token %}
                     {% for size in object.sizes.all %}
-                    <input type="radio" name="size" value="{{ size.size }}" id="{{ size.size }}" {% if not size.quantity %} disabled {% endif %}>
-                    <label for="{{ size.size }}"><span>{{ size.size }}</span></label>
+                    {% with size_size=size.size %}
+                    <input type="radio" name="size" value="{{ size_size }}" id="{{ size_size }}" {% if not size.quantity %} disabled {% endif %}>
+                    <label for="{{ size_size }}"><span>{{ size_size }}</span></label>
+                    {% endwith %}
                     {% endfor %}
                 {% endif %}
                 <button class='submit' id="sizeBtn" type="submit">Add to cart<i class="fas fa-cart-arrow-down"></i></button>
@@ -72,7 +76,7 @@
         <ul id="responsive">
             {% for item in item_list %}
                 <li class="card">
-                    {% include "item_snippet.html" %}
+                    {% include "snippets/item_snippet.html" %}
                 </li>
             {% endfor %}
         </ul>

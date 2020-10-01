@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load thumbnail %}
+
+{% load i18n %}
+{% block content %}
+<div class="generic-info">
+    {% for item in cart %}
+    {% with cart_item=item.item %}
+    <a href="{{ cart_item.get_absolute_url }}">
+    <div class="window">
+        {% thumbnail cart_item.get_main_photo 280x300 crop="smart" as img %}
+        <img src="{{ img.url }}" alt="">
+        <div class="info">
+            <p class="category">{{ cart_item.get_section_display }}</p>
+            <p class="item-name">{{ cart_item.title }} {% if item.size %} - {{ item.size }}{% endif %}</p>
+            <p class="quantity">{{ item.quantity }} pieces</p>
+            <p class="price">Total: {{ item.total_price }} $</p>
+        </div>
+    </div>
+    </a>
+    <hr>
+    {% endwith %}
+    {% endfor %}
+    <p class='total'>Total price:<span> {{ total }} $</span></p>
+    {% if not request.user.is_authenticated %}
+    <div class="order-option">
+        <div class="guest">
+            <a class="guest" href="{% url 'orders:order' %}">Continue as guest</a>
+        </div>
+        <div class="login">
+            <a class="login" href="{% url 'orders:user_order' %}">Continue as user</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="continue">
+        <a class="continue" href="{% url 'orders:order' %}">Continue</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

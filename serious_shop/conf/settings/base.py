@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "items.apps.ItemsConfig",
     "lib.apps.LibConfig",
     "cart.apps.CartConfig",
+    "orders.apps.OrdersConfig",
+    "easy_thumbnails",
     "ckeditor",
     "django.contrib.sites",
     "allauth",
@@ -179,5 +181,5 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 LOGIN_REDIRECT_URL = "/"
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGOUT_ON_GET = True

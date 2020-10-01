@@ -96,9 +96,6 @@ class Cart(object):
             Decimal(item["price"]) * item["quantity"] for item in self.cart.values()
         )
 
-    def is_empty(self):
-        return len(self.cart) == 0
-
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
         self.session.modified = True

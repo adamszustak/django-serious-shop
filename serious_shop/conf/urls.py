@@ -4,9 +4,10 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("items.urls", namespace="items")),
     path("cart/", include("cart.urls", namespace="cart")),
+    path("orders/", include("orders.urls", namespace="orders")),
     path("accounts/", include("allauth.urls")),
+    path("", include("items.urls", namespace="items")),
 ]
 
 

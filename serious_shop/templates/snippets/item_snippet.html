@@ -1,7 +1,9 @@
+{% load thumbnail %}
 <a href="{{ item.get_absolute_url }}">
     <div class="card">
         <div class="photo">
-            <img src="{{ item.get_main_photo }}" alt="">
+            {% thumbnail item.get_main_photo 280x300 crop="smart" as img %}
+            <img src="{{ img.url }}" alt="">
         </div>
         <div class="body">
             <p class="category">{{ item.get_section_display }}</p>

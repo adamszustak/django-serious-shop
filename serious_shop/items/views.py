@@ -36,6 +36,12 @@ class SectionListItemView(ListView):
             return Item.objects.in_category(section_resolve[0], category)
         return Item.objects.in_section(section_resolve[0])
 
+    def get_context_data(self, **kwargs):
+        context = super(SectionListItemView, self).get_context_data(**kwargs)
+        context["section"] = self.kwargs["section"]
+        context["category"] = self.kwargs.get("slug")
+        return context
+
 
 class SearchResultsView(ListView):
     template_name = "home.html"
@@ -49,6 +55,7 @@ class SearchResultsView(ListView):
 class ItemDetailView(DetailView):
     model = Item
     template_name = "detail_item.html"
+    queryset = Item.objects.active()
 
     def get_context_data(self, *args, **kwargs):
         context = super(ItemDetailView, self).get_context_data(**kwargs)

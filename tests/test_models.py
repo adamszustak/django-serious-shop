@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
-from items.models import Section, Item, Category
+from items.models import Section, Item, Category, ItemImage
 from lib.utils import image_directory_path
 from .factories import (
     ItemAccessoryFactory,
@@ -85,21 +85,6 @@ def test_wearsize_model(start_setup):
 
     with pytest.raises(Exception):
         assert wearsize1.save()
-
-
-# @pytest.mark.django_db(transaction=True)
-# def test_wearproxy_model(start_setup):
-#     wear = WearProxyFactory()
-#     WearSizeFactory(item=wear, size="M", quantity=10)
-#     with pytest.raises(IntegrityError):
-#         WearSizeFactory(item=wear, size="M", quantity=10)
-
-#     wearsize_m = wear.sizes.filter(size="M")[0]
-#     wearsize_m.add_quantity = 23
-#     wearsize_m.save()
-
-#     assert wearsize_m.quantity == 33
-#     assert wearsize_m.add_quantity == 0
 
 
 # @pytest.mark.django_db

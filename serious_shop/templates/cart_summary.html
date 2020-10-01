@@ -14,8 +14,7 @@
         <tr>
             <th>{{ forloop.counter }}</th>
             <td><a href="{{ cart_item.get_absolute_url }}">{{ cart_item.title }}</a>{% if item.size %} - {{ item.size }}{% endif %}</td>
-            <td>{{ cart_item.actual_price }}</td>
-
+            <td>{{ item.price }}</td>
             <td class='quantity' data-objectid="{{ cart_item.id }}" data-size="{{ item.size }}">
             <a class="remove_one" href="#" data-url="{% url 'cart:remove_one_cart' cart_item.id item.size %}"><i class="fas fa-minus"></i></a>
                 <span>{{ item.quantity }}</span>
@@ -42,12 +41,13 @@
                 <b>{{ cart|length }}</b>
             </td>
             <td id='total_cart_price'><b>${{ cart.get_final_price }}</b></td>
+            <td></td>
         </tr>
         </tbody>
     </table>
     <div class="tablebuttons">
         <a class="continue" href='/'>Continue Shopping</a>
-        <a class="checkout" href='#'>Procced to Checkout</a>
+        <a class="checkout" href='{% url "cart:checkout"  %}'>Procced to Checkout</a>
     </div>
 </div>
 {% endblock content %}

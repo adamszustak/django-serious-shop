@@ -30,6 +30,10 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = ("active",)
     inlines = [ItemImageInline, WearSizeInline]
 
+    """
+    JS adjust fields according to given category
+    """
+
     class Media:
         js = (
             "https://code.jquery.com/jquery-3.5.1.min.js",

@@ -14,13 +14,13 @@
 </head>
 <body>
 
-    {% include 'navbar.html' %}
+    {% include 'snippets/navbar.html' %}
 
-    {% if slider %} {% include 'slider.html' %} {% endif %}
+    {% if slider %} {% include 'snippets/slider.html' %} {% endif %}
     <main>
     {% block content %} {% endblock content %}
     </main>
-    {% include 'footer.html' %}
+    {% include 'snippets/footer.html' %}
 
     <script
     src="https://code.jquery.com/jquery-3.5.1.min.js"

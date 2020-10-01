@@ -91,7 +91,7 @@ class Item(models.Model):
 
     def get_main_photo(self):
         try:
-            return self.images.first().image.url
+            return self.images.first().image
         except AttributeError:
             return None
 

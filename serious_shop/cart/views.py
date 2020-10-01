@@ -1,6 +1,11 @@
+import json
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-import json
+from django.contrib import messages
+
+from allauth.account.decorators import verified_email_required
+from allauth.account.forms import LoginForm
 
 
 from items.models import Item
@@ -12,7 +17,10 @@ def add_to_cart(request, item_id, size=None):
     item = get_object_or_404(Item, id=item_id)
     if not size:
         size = request.POST.get("size") or None
-    if cart.is_in_cart(item, size) and not "csrfmiddlewaretoken" in request.POST:
+    if item.is_wear and not size:
+        messages.warning(request, "You need to choose size")
+        return redirect("items:detail_item", slug=item.slug)
+    if cart.is_in_cart(item, size) and "csrfmiddlewaretoken" not in request.POST:
         cart.add(item, size)
         json_cart = cart.serialize_cart()
         item_final_price = cart.get_item_final_price(item, size)
@@ -58,3 +66,12 @@ def remove_item_cart(request, item_id, size=None):
 def cart_detail(request):
     cart = Cart(request)
     return render(request, "cart_summary.html", {"cart": cart})
+
+
+def checkout(request):
+    cart = Cart(request)
+    if len(cart) == 0:
+        messages.warning(request, "Your cart is empty")
+        return redirect("items:home")
+    total = cart.get_final_price()
+    return render(request, "checkout.html", {"cart": cart, "total": total})

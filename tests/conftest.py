@@ -13,6 +13,7 @@ from .factories import (
     ItemAccessoryFactory,
     UserFactory,
     CategoryFactory,
+    WearSizeFactory,
 )
 
 
@@ -38,16 +39,8 @@ def base_items(db):
     category = CategoryFactory(name="glasses")
     wear = ItemWearFactory(section=Section.MALE, category=category)
     item = ItemAccessoryFactory(category=category)
+    wear_size = WearSizeFactory(item=wear, size="M", quantity=10)
     return wear, item, category
-
-
-# @pytest.fixture()
-# def cart_helper():
-#     item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00, category="M")
-#     wear_size = WearSizeFactory(item=item1, size="M", quantity=10)
-#     item1.sizes.add(wear_size)
-#     item2 = ItemFactory(category="A")
-#     return item1, wear_size, item2
 
 
 @pytest.fixture()

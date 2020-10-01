@@ -4,6 +4,10 @@ from .models import WearSize, Item, Category
 
 
 class WearSizeForm(forms.ModelForm):
+    """
+    Form created for adminform, it prepares all fields for given SIZES as initial fields
+    """
+
     class Meta:
         model = WearSize
         fields = [
