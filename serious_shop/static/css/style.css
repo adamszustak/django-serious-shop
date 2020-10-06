@@ -268,17 +268,18 @@ section.choice {
     position: relative;
 }
 
-section.choice div.wrapper {
+section.choice .wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin:0;
 }
 
 section.choice i.fa-bars {
     display: none;
 }
 
-section.choice div.wrapper a {
+section.choice .wrapper a {
     font-size:32px;
     color: white;
     font-family: 'Teko', sans-serif;
@@ -286,11 +287,12 @@ section.choice div.wrapper a {
     padding:0 40px;
 }
 
-section.choice div.wrapper .dropdown {
+section.choice .wrapper .dropdown {
   position: relative;
 }
 
-section.choice div.wrapper .dropdown-content {
+section.choice
+.wrapper .dropdown-content {
     display: none;
     position: absolute;
     background-color: #fff;
@@ -302,7 +304,7 @@ section.choice div.wrapper .dropdown-content {
 }
 
 
-section.choice div.wrapper .dropdown-content a {
+section.choice .wrapper .dropdown-content a {
   color: black;
   padding: 6px 16px;
   display: block;
@@ -311,7 +313,7 @@ section.choice div.wrapper .dropdown-content a {
   transition: .2s;
 }
 
-section.choice div.wrapper .dropdown-content a:hover{
+section.choice .wrapper .dropdown-content a:hover{
     background-color: #ddd;
 }
 
@@ -1007,10 +1009,11 @@ footer div.lower div.social span.instagram {
 
     /*****************SECTION-CHOICE*****************/
 
-    section.choice div.wrapper {
+    section.choice .wrapper {
         display: none;
+        margin:0;
     }
-    section.choice div.wrapper.show {
+    section.choice .wrapper.show {
         display: block;
         display: flex;
         flex-direction: column;
@@ -1023,7 +1026,7 @@ footer div.lower div.social span.instagram {
         font-size: 25px;
     }
 
-    div.dropdown div.dropdown-content {
+    .dropdown .dropdown-content {
         display: none !important;
     }
     /*****************SLIDER*****************/
@@ -1122,11 +1125,12 @@ footer div.lower div.social span.instagram {
     }
 
     /*****************SECTION-CHOICE*****************/
-    section.choice div.wrapper {
+    section.choice .wrapper {
         display: none;
+        margin: 0;
     }
 
-    section.choice div.wrapper.show {
+    section.choice .wrapper.show {
         display: block;
         display: flex;
         flex-direction: column;
@@ -1139,7 +1143,7 @@ footer div.lower div.social span.instagram {
         font-size: 25px;
     }
 
-    div.dropdown div.dropdown-content {
+    .dropdown .dropdown-content {
         display: none !important;
     }
     /*****************SLIDER*****************/

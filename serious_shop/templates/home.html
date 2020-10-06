@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="product-list">
-    <h3 class="category">{% if category %} {{ section|title }} - {{ category|title }} {% elif section %} {{ section|title }} {% else %} {{ title }} {% endif %}</h3>
+    <h3 class="category"></h3>
 </div>
 <div class="row">
     {% for item in object_list %}
         {% include "snippets/item_snippet.html" %}
+    {% empty %}
+    <h1>Unfortunately nothing to see here</h1>
+    <p>Back to <a href="{% url 'items:home' %}"><strong>main page</strong></a></p>
     {% endfor %}
 </div>
 {% include "snippets/pagination.html" %}

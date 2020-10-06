@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from items.models import Item, Section, Category
+from items.models import Item, Category
 from lib.models import CompanyInfo
 
 
@@ -10,34 +11,28 @@ class HomeView(ListView):
     model = Item
     template_name = "home.html"
     paginate_by = 10
-    queryset = Item.objects.active()
+    queryset = Item.objects.active().select_related("category")
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context["slider"] = True
-        context["title"] = "Best Sellers"
         return context
 
 
-class SectionListItemView(ListView):
-    template_name = "home.html"
-    paginate_by = 10
-
-    def get_queryset(self):
-        section = self.kwargs["section"]
-        section_resolve = [
-            item[0] for item in Section.choices if item[1] == section.title()
-        ]
-        category = self.kwargs.get("category")
-        if category:
-            return Item.objects.in_category(section_resolve[0], category)
-        return Item.objects.in_section(section_resolve[0])
-
-    def get_context_data(self, **kwargs):
-        context = super(SectionListItemView, self).get_context_data(**kwargs)
-        context["section"] = self.kwargs["section"]
-        context["category"] = self.kwargs.get("category")
-        return context
+def category_view(request, path, instance):
+    category = Category.objects.get(id=instance.id)
+    items = Item.objects.in_category(category=category)
+    items_list = items.select_related("category")
+    page = request.GET.get("page", 1)
+    paginator = Paginator(items_list, 10)
+    try:
+        items = paginator.page(page)
+    except PageNotAnInteger:
+        items = paginator.page(1)
+    except EmptyPage:
+        items = paginator.page(paginator.num_pages)
+    context = {"object_list": items, "title": category.name}
+    return render(request, "home.html", context)
 
 
 class SearchResultsView(ListView):
@@ -46,16 +41,17 @@ class SearchResultsView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         query = self.request.GET.get("search")
-        return Item.objects.search(query)
+        return Item.objects.search(query).select_related("category")
 
 
 class ItemDetailView(DetailView):
     model = Item
     template_name = "detail_item.html"
+    queryset = Item.objects.select_related("category")
 
     def get_context_data(self, *args, **kwargs):
         context = super(ItemDetailView, self).get_context_data(**kwargs)
-        context["item_list"] = Item.objects.active()
+        context["item_list"] = Item.objects.active().select_related("category")
         return context
 
 

@@ -3,7 +3,9 @@ from django.utils.http import urlencode
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import Category, Item, WearSize, ItemImage, Section
+from mptt.admin import DraggableMPTTAdmin
+
+from .models import Category, Item, WearSize, ItemImage
 from .forms import WearSizeForm
 
 
@@ -24,12 +26,12 @@ class WearSizeInline(admin.TabularInline):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ["title", "section", "price", "discount_price", "category"]
+    list_display = ["title", "category", "price", "discount_price", "active"]
     list_display_links = ["title"]
+    list_editable = ["active"]
     search_fields = ["title", "price", "discount_price", "category"]
     list_filter = ("active",)
     inlines = [ItemImageInline, WearSizeInline]
-
     """
     JS adjust fields according to given category
     """
@@ -41,12 +43,19 @@ class ItemAdmin(admin.ModelAdmin):
         )
 
     class Meta:
-        ordering = ("section", "title")
+        ordering = ("category", "title")
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ["name", "view_items_link"]
+class CategoryAdmin(DraggableMPTTAdmin):
+    mptt_indent_field = "name"
+    list_display = [
+        "tree_actions",
+        "indented_title",
+        "view_items_link",
+        "related_products_cumulative_count",
+    ]
     prepopulated_fields = {"slug": ("name",)}
+    list_display_links = ("indented_title",)
 
     def view_items_link(self, obj):
         count = obj.items.count()
@@ -57,7 +66,20 @@ class CategoryAdmin(admin.ModelAdmin):
         )
         return format_html('<a href="{}">{} Items</a>', url, count)
 
-    view_items_link.short_description = "Items"
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+
+        qs = Category.objects.add_related_count(
+            qs, Item, "category", "products_cumulative_count", cumulative=True
+        )
+        return qs
+
+    def related_products_cumulative_count(self, instance):
+        return instance.products_cumulative_count
+
+    related_products_cumulative_count.short_description = "Related products (in total)"
+
+    view_items_link.short_description = "Items in specific category"
 
 
 admin.site.register(Category, CategoryAdmin)

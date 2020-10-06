@@ -7,38 +7,53 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from ckeditor.fields import RichTextField
+from mptt.models import MPTTModel, TreeForeignKey
 
-from .managers import CategoryManager, ItemManager
+from .managers import ItemManager
 from lib.utils import image_directory_path
 
 
-class Section(models.TextChoices):
-    FEMALE = "F", _("Female")
-    MALE = "M", _("Male")
-    ACCESSORY = "A", _("Accessories")
-
-
-class Category(models.Model):
+class Category(MPTTModel):
     name = models.CharField(_("Name"), max_length=30)
-    slug = models.SlugField(unique=True)
-
-    objects = CategoryManager()
+    parent = TreeForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="children",
+        db_index=True,
+        verbose_name=_("Parent"),
+    )
+    need_sizes = models.BooleanField(_("Need sizes"), default=False)
+    slug = models.SlugField()
 
     class Meta:
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
+        unique_together = (
+            "parent",
+            "slug",
+        )
+        ordering = ["tree_id", "lft"]
+
+    class MPTTMeta:
+        order_insertion_by = ["name"]
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.parent}"
+
+    def get_absolute_url(self):
+        return reverse("items:category_list_item", kwargs={"path": self.get_path()})
 
 
 class Item(models.Model):
-    section = models.CharField(_("Section"), max_length=2, choices=Section.choices)
-    category = models.ForeignKey(
+    category = TreeForeignKey(
         "items.Category",
         on_delete=models.CASCADE,
         related_name="items",
         verbose_name=_("Category"),
+        null=True,
+        blank=True,
     )
     title = models.CharField(_("Title"), max_length=50)
     price = models.DecimalField(_("Price"), max_digits=5, decimal_places=2, default=0)
@@ -68,9 +83,20 @@ class Item(models.Model):
         return self.title
 
     def clean(self):
-        if self.section == "F" or self.section == "M":
+        if self.category.need_sizes:
             if self.quantity > 0:
-                raise ValidationError("Quantity must be set with size!")
+                raise ValidationError(_("Quantity must be set with size!"))
+
+    def _generate_slug(self):
+        value = self.title
+        slug_candidate = slug_original = slugify(value, allow_unicode=True)
+        for i in itertools.count(1):
+            if not self.__class__.objects.filter(
+                category=self.category, slug=slug_candidate
+            ).exists():
+                break
+            slug_candidate = f"{slug_original}-{i}"
+        self.slug = slug_candidate
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -80,26 +106,11 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse("items:detail_item", kwargs={"slug": self.slug})
 
-    def _generate_slug(self):
-        value = self.title
-        slug_candidate = slug_original = slugify(value, allow_unicode=True)
-        for i in itertools.count(1):
-            if not self.__class__.objects.filter(slug=slug_candidate).exists():
-                break
-            slug_candidate = f"{slug_original}-{i}"
-        self.slug = slug_candidate
-
     def get_main_photo(self):
         try:
             return self.images.first().image
         except AttributeError:
             return None
-
-    @property
-    def is_wear(self):
-        if self.section == "M" or self.section == "F":
-            return True
-        return False
 
     @property
     def actual_price(self):
@@ -140,7 +151,7 @@ class WearSize(models.Model):
         return f"{self.item.title} - {self.size}"
 
     def clean(self):
-        if self.item.section == "A":
+        if not self.item.category.need_sizes:
             raise ValidationError("Size is for clothes only!")
 
 
@@ -156,4 +167,4 @@ class ItemImage(models.Model):
     image = models.ImageField(_("Image"), upload_to=image_directory_path)
 
     def __str__(self):
-        return f"{self.image.name}"
+        return f"{self.item.title} - {self.image.name}"

@@ -191,12 +191,36 @@ Django = ">=1.11"
 sqlparse = ">=0.2.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "script tag with additional attributes for django.forms.Media"
 name = "django-js-asset"
 optional = false
 python-versions = "*"
 version = "1.2.2"
+
+[[package]]
+category = "main"
+description = "Utilities for implementing Modified Preorder Tree Traversal with your Django Models and working with trees of Model instances."
+name = "django-mptt"
+optional = false
+python-versions = ">=3.5"
+version = "0.11.0"
+
+[package.dependencies]
+Django = ">=1.11"
+django-js-asset = "*"
+
+[[package]]
+category = "main"
+description = "Django app for creating hierarchical URLs associated with django-MPTT models."
+name = "django-mptt-urls"
+optional = false
+python-versions = "*"
+version = "2.0.4"
+
+[package.dependencies]
+django = ">=1.7"
+django-mptt = ">=0.6.1"
 
 [[package]]
 category = "main"
@@ -636,7 +660,7 @@ docs = ["proselint (>=0.10.2)", "sphinx (>=3)", "sphinx-argparse (>=0.2.5)", "sp
 testing = ["coverage (>=5)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", "pytest (>=4)", "pytest-env (>=0.6.2)", "pytest-freezegun (>=0.4.1)", "pytest-mock (>=2)", "pytest-randomly (>=1)", "pytest-timeout (>=1)", "pytest-xdist (>=1.31.0)", "packaging (>=20.0)", "xonsh (>=0.9.16)"]
 
 [metadata]
-content-hash = "67565d7ce2fa6b8a38517a9133f3794b8fc38651b7ee5acc268a7cc79c7d7df6"
+content-hash = "45fcf0d981a30c67f94c09b8c330c2a13fe2dea8c5febf07d027e3f1ce435d8d"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -747,6 +771,13 @@ django-debug-toolbar = [
 django-js-asset = [
     {file = "django-js-asset-1.2.2.tar.gz", hash = "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"},
     {file = "django_js_asset-1.2.2-py2.py3-none-any.whl", hash = "sha256:8ec12017f26eec524cab436c64ae73033368a372970af4cf42d9354fcb166bdd"},
+]
+django-mptt = [
+    {file = "django-mptt-0.11.0.tar.gz", hash = "sha256:dfdb3af75ad27cdd4458b0544ec8574174f2b90f99bc2cafab6a15b4bc1895a8"},
+    {file = "django_mptt-0.11.0-py2.py3-none-any.whl", hash = "sha256:90eb236eb4f1a92124bd7c37852bbe09c0d21158477cc237556d59842a91c509"},
+]
+django-mptt-urls = [
+    {file = "django-mptt-urls-2.0.4.tar.gz", hash = "sha256:96cac4a5117008feb7dda20692c2adee5919e03ffadd174fd86a584f3b259d60"},
 ]
 easy-thumbnails = [
     {file = "easy-thumbnails-2.7.tar.gz", hash = "sha256:e4e7a0dd4001f56bfd4058428f2c91eafe27d33ef3b8b33ac4e013b159b9ff91"},

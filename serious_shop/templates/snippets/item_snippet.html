@@ -6,7 +6,7 @@
             <img src="{{ img.url }}" alt="">
         </div>
         <div class="body">
-            <p class="category">{{ item.get_section_display }}</p>
+            <p class="category">{{ item.category.name }}</p>
             <p class="item-name">{{ item.title }}</p>
             <hr>
             {% if item.discount_price %}

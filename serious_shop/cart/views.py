@@ -17,7 +17,7 @@ def add_to_cart(request, item_id, size=None):
     item = get_object_or_404(Item, id=item_id)
     if not size:
         size = request.POST.get("size") or None
-    if item.is_wear and not size:
+    if item.category.need_sizes and not size:
         messages.warning(request, "You need to choose size")
         return redirect("items:detail_item", slug=item.slug)
     if cart.is_in_cart(item, size) and "csrfmiddlewaretoken" not in request.POST:

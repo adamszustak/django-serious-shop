@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.template.defaultfilters import slugify
 
-from items.models import Item, Category, Section, ItemImage, WearSize
+from items.models import Item, Category, ItemImage, WearSize
 
 
 FAKE = faker.Faker()
@@ -21,13 +21,13 @@ class CategoryFactory(factory.django.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: "category%d" % n)
     slug = factory.LazyAttribute(lambda a: slugify(a.name))
+    parent = None
 
 
 class ItemAccessoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Item
 
-    section = Section.ACCESSORY
     title = "Product_Acc-" + FAKE.name()
     category = factory.SubFactory(CategoryFactory)
     price = FAKE.pydecimal(positive=True, left_digits=3, right_digits=2)
@@ -51,14 +51,6 @@ class ItemWearFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Item
 
-    section = factory.Iterator(
-        [
-            item
-            for item in Section.choices
-            if item[0] == Section.FEMALE or item[0] == Section.MALE
-        ],
-        getter=lambda c: c[0],
-    )
     title = "Product_Wear-" + FAKE.name()
     category = factory.SubFactory(CategoryFactory)
     price = FAKE.pydecimal(positive=True, left_digits=3, right_digits=2)

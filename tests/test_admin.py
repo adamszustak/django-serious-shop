@@ -22,4 +22,6 @@ def test_categoryadmin(start_setup, admin_client, request):
     url = reverse("admin:items_category_changelist")
     response = admin_client.get(url)
     assert response.status_code == 200
-    assert "Items" in response.context["result_headers"][2].values()
+    assert (
+        "Items in specific category" in response.context["result_headers"][3].values()
+    )

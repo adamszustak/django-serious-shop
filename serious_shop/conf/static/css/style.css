@@ -93,7 +93,7 @@ nav p.infos a.basket span {
     background-color: red;
     border-radius: 50%;
     top:35%;
-    left:0;
+    left:1%;
     line-height: 20px;
     text-align: center;
 }
@@ -753,6 +753,65 @@ table tr.total {
     background: #f7deae;
 }
 
+/* ****************CHECKOUT*****************/
+div.window {
+    height: 110px;
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+div.window img {
+    height: 95%;
+    width: auto;
+    align-self: center;
+}
+
+div.window p {
+    margin:0;
+    text-align: center;
+}
+
+div.window div.info {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+
+div.window p.category {
+    color: grey;
+    font-size: 14px;
+}
+
+div.window p.item-name {
+    font-size:18px;
+    font-weight: 600;
+}
+
+div.window p.price {
+    font-weight: 600;
+}
+
+div.window:hover {
+    background-color: rgb(240, 240, 240);
+}
+
+p.total {
+    font-size: 20px;
+}
+
+p.total span {
+    font-weight: 600;
+}
+
+div.order-option {
+    margin-top:60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
 /* ****************AUTH*****************/
 section.account {
     width: 50%;
@@ -772,7 +831,8 @@ section.account p a.login {
 
 section.account form button,
 section.account form a,
-section.account form input[type=submit] {
+section.account form input[type=submit],
+a.login, a.guest {
     border: none;
     cursor: pointer;
     padding: 10px;
@@ -785,7 +845,8 @@ section.account form a {
     float: right;
 }
 section.account form button:hover,
-section.account form input[type=submit]:hover {
+section.account form input[type=submit]:hover,
+a.login:hover, a.guest:hover {
     background-color: #000;
 }
 /* ****************FOOTER*****************/
@@ -1006,7 +1067,10 @@ footer div.lower div.social span.instagram {
     section.maininfos div.photos {
         height: auto;
     }
-
+    /*****************CHECKOUT*****************/
+    div.window {
+        height:130px;
+    }
     /*****************FOOTER*****************/
     footer div.upper {
         flex-direction: column;
@@ -1127,6 +1191,10 @@ footer div.lower div.social span.instagram {
         width: 80%;
     }
 
+    /*****************CHECKOUT*****************/
+    div.window {
+        height:130px;
+    }
     /*****************FOOTER*****************/
     footer div.upper {
         flex-direction: column;

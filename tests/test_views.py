@@ -1,4 +1,5 @@
 import pytest
+from decimal import Decimal
 
 from django.urls import reverse, resolve
 from django.conf import settings
@@ -6,7 +7,7 @@ from django.db import IntegrityError
 from django.contrib.messages import get_messages
 from django.core.exceptions import ObjectDoesNotExist
 
-from items.models import Category, Item, Section
+from items.models import Category, Item
 from .factories import (
     ItemAccessoryFactory,
     WearSizeFactory,
@@ -29,27 +30,16 @@ def test_homeview_list_GET(start_setup, client):
 
 
 @pytest.mark.django_db
-def test_sectionlistitemview__GET(start_setup, client, base_items):
-    wear, item, category = base_items
-    url = reverse(
-        "items:section_category_list_item",
-        kwargs={"section": "male", "slug": category.slug},
-    )
+def test_categoryview__GET(start_setup, client, base_items):
+    wear, item = base_items
+    category = wear.category
+    url = reverse("items:category_list_item", kwargs={"path": category.get_path()},)
     response = client.get(url)
     assert response.status_code == 200
-    assert response.context["object_list"].count() == 1
     assert "slider" not in response.context
 
-    url2 = reverse("items:section_list_item", kwargs={"section": "male"})
-    response2 = client.get(url2)
-    assert response2.status_code == 200
-    assert response2.context["object_list"].count() == 1
-    assert "slider" not in response.context
-
-    resolver = resolve("/section/male/")
-    resolver1 = resolve("/section/male/glasses")
-    assert resolver.view_name == "items:section_list_item"
-    assert resolver1.view_name == "items:section_category_list_item"
+    resolver = resolve("/category/male/glasses")
+    assert resolver.view_name == "items:category_list_item"
 
 
 @pytest.mark.django_db
@@ -65,7 +55,7 @@ def test_searchresultview_list_GET(start_setup, client, base_items):
 
 @pytest.mark.django_db
 def test_itemdetailview_list_GET(start_setup, client, base_items):
-    wear, item, category = base_items
+    wear, item = base_items
     url = reverse("items:detail_item", kwargs={"slug": wear.slug})
     response = client.get(url)
     assert response.status_code == 200
@@ -87,8 +77,8 @@ def test_commonview_list_GET(start_setup, client):
 
 
 @pytest.mark.django_db
-def test_cart_logged_GET(client, start_setup, base_items, user_client):
-    wear, item, category = base_items
+def test_add_to_cart_GET(client, start_setup, base_items, user_client):
+    wear, item = base_items
     client = user_client
     url1 = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
     response = client.get(url1)
@@ -101,7 +91,7 @@ def test_cart_logged_GET(client, start_setup, base_items, user_client):
     key = f"{item_id}-None"
     assert cart[key] == {
         "quantity": 1,
-        "price": str(item.actual_price),
+        "price": f"{item.actual_price:.2f}",
         "size": None,
     }
 
@@ -111,49 +101,34 @@ def test_cart_logged_GET(client, start_setup, base_items, user_client):
     assert response.status_code == 200
     assert cart[key] == {
         "quantity": 2,
-        "price": str(item.actual_price),
+        "price": f"{item.actual_price:.2f}",
         "size": None,
     }
+    assert list(response.json()["cart"].keys()) == [key]
+    assert Decimal(response.json()["item_final_price"]) == Decimal(
+        item.actual_price * 2
+    )
+    assert int(response.json()["len_cart"]) == 2
+    assert Decimal(response.json()["final_price"]) == Decimal(item.actual_price * 2)
 
+    url2 = reverse("cart:add_to_cart", kwargs={"item_id": wear.id})
+    response = client.get(url2)
+    session = client.session
+    cart = session[settings.CART_SESSION_ID]
+    messages = [m.message for m in get_messages(response.wsgi_request)]
+    assert response.status_code == 302
+    assert f'url="/item/{wear.slug}' in str(response)
+    assert "You need to choose size" == messages[0]
+    assert cart.get(f"{wear.id}-None", None) == None
 
-# @pytest.mark.django_db
-# def test_add_to_cart_GET(start_setup, user_client, user_user, cart_helper, client):
-#     item1, wear_size, item2 = cart_helper
-#     url1 = reverse("items:add_to_cart", kwargs={"slug": item1.slug})
-#     response = user_client.get(url1)
-#     messages = [m.message for m in get_messages(response.wsgi_request)]
-#     assert response.status_code == 302
-#     assert "You have to choose size" == messages[0]
-#     with pytest.raises(ObjectDoesNotExist):
-#         assert not OrderItem.objects.get(user=user_user, ordered=False, item=item1)
-
-#     url2 = reverse(
-#         "items:add_to_cart_size", kwargs={"slug": item1.slug, "size": wear_size.size}
-#     )
-#     response = user_client.get(url2)
-#     messages = [m.message for m in get_messages(response.wsgi_request)]
-#     order_item = OrderItem.objects.get(user=user_user, ordered=False, item=item1)
-#     order = Order.objects.get(user=user_user)
-#     assert "Item has been added to cart" == messages[1]
-#     assert item1 == order_item.item
-#     assert order_item.quantity == 1
-#     assert order_item in order.items.all()
-
-#     response = user_client.get(url2)
-#     messages = [m.message for m in get_messages(response.wsgi_request)]
-#     order_item = OrderItem.objects.get(user=user_user, ordered=False, item=item1)
-#     assert response.status_code == 302
-#     assert "Item quantity has been updated" == messages[2]
-#     assert order_item.quantity == 2
-#     assert order.items.count() == 1
-
-#     url3 = reverse("items:add_to_cart", kwargs={"slug": item2.slug})
-#     response = user_client.get(url3)
-#     messages = [m.message for m in get_messages(response.wsgi_request)]
-#     order = Order.objects.get(user=user_user)
-#     assert response.status_code == 302
-#     assert "This item has been added" == messages[3]
-#     assert order.items.count() == 2
+    url3 = reverse("cart:add_to_cart_size", kwargs={"item_id": wear.id, "size": "M"})
+    key2 = f"{wear.id}-M"
+    response = client.get(url3)
+    session = client.session
+    cart = session[settings.CART_SESSION_ID]
+    assert response.status_code == 302
+    assert 'url="/cart/detail/"' in str(response)
+    assert cart.get(key2, None)
 
 
 # @pytest.mark.django_db

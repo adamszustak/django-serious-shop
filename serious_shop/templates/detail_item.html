@@ -27,7 +27,7 @@
                 {% endif %}
             </p>
             <div class="sizes">
-                {% if object.sizes %}
+                {% if object.category.need_sizes %}
                 <form action="{% url 'cart:add_to_cart' object.id %}" method="POST" id="addItemForm" data-id="{{ object.id }}">
                     {% csrf_token %}
                     {% for size in object.sizes.all %}
@@ -44,11 +44,11 @@
                 <tbody>
                     <tr><th>Availability:</th><td>
                         Shipping in 48 hours</td></tr>
-                    {% if object.is_wear %}
-                    <tr><th>Type:</th><td>{{ object.get_section_display }}</td></tr>
+                    {% if object.category.need_sizes %}
+                    <tr><th>Type:</th><td>{{ object.category.name }}</td></tr>
                     <tr><th>Color:</th><td>{{ object.color }}</td></tr>
                     {% else %}
-                    <tr><th>Type:</th><td>{{ object.get_section_display }}</td></tr>
+                    <tr><th>Type:</th><td>{{ object.category.name }}</td></tr>
                     {% endif %}
                 </tbody>
             </table>

@@ -7,7 +7,6 @@ from django.test.client import Client
 from django.shortcuts import reverse
 
 from lib.models import CompanyInfo
-from items.models import Section
 from .factories import (
     ItemWearFactory,
     ItemAccessoryFactory,
@@ -36,11 +35,12 @@ def start_setup(db):
 
 @pytest.fixture()
 def base_items(db):
-    category = CategoryFactory(name="glasses")
-    wear = ItemWearFactory(section=Section.MALE, category=category)
-    item = ItemAccessoryFactory(category=category)
+    category_wear = CategoryFactory(name="trousers", need_sizes=True)
+    category_item = CategoryFactory(name="glasses")
+    wear = ItemWearFactory(category=category_wear)
+    item = ItemAccessoryFactory(category=category_item)
     wear_size = WearSizeFactory(item=wear, size="M", quantity=10)
-    return wear, item, category
+    return wear, item
 
 
 @pytest.fixture()

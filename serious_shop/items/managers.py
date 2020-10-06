@@ -2,11 +2,6 @@ from django.db import models
 from django.db.models import Q
 
 
-class CategoryManager(models.Manager):
-    def in_section(self, section):
-        return self.filter(items__section=section, items__active=True).distinct()
-
-
 class ItemQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(active=True)
@@ -19,11 +14,8 @@ class ItemQuerySet(models.query.QuerySet):
         )
         return self.filter(lookups)
 
-    def in_section(self, section):
-        return self.filter(section=section)
-
-    def in_category(self, section, category):
-        return self.filter(section=section, category__slug=category)
+    def in_category(self, category):
+        return self.filter(category__in=category.get_descendants(include_self=True))
 
 
 class ItemManager(models.Manager):
@@ -36,8 +28,5 @@ class ItemManager(models.Manager):
     def search(self, query):
         return self.get_queryset().active().search(query)
 
-    def in_section(self, section):
-        return self.get_queryset().active().in_section(section)
-
-    def in_category(self, section, category):
-        return self.get_queryset().active().in_category(section, category)
+    def in_category(self, category):
+        return self.get_queryset().active().in_category(category)

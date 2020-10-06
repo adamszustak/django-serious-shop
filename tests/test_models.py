@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
-from items.models import Section, Item, Category, ItemImage
+from items.models import Item, Category, ItemImage
 from lib.utils import image_directory_path
 from .factories import (
     ItemAccessoryFactory,
@@ -17,38 +17,35 @@ from .factories import (
 
 @pytest.mark.django_db
 def test_category_model(start_setup):
-    category = CategoryFactory()
-    item2 = ItemAccessoryFactory(category=category, section=Section.MALE)
-    item3 = ItemAccessoryFactory()
-    assert Category.objects.in_section(section=Section.MALE).count() == 1
-    assert list(Category.objects.in_section(section=Section.MALE)) == [category]
+    base_cat = CategoryFactory()
+    category1 = CategoryFactory(name="wear", parent=base_cat)
+    item1 = ItemAccessoryFactory(category=category1)
+    assert Category.objects.count() == 2
+    assert category1.items.count() == 1
+    assert list(category1.items.all()) == [item1]
 
-    category1 = CategoryFactory()
-    item3.category, item3.section = category1, Section.MALE
-    item2.save()
-    item3.save()
-    assert Category.objects.in_section(section=Section.MALE).count() == 2
-    assert list(Category.objects.in_section(section=Section.MALE)) == [
-        category,
-        category1,
-    ]
+    item2 = ItemAccessoryFactory(category=category1)
+    assert category1.items.count() == 2
+    assert list(category1.items.all()) == [item1, item2]
+    assert base_cat.items.count() == 0
 
 
 @pytest.mark.django_db
 def test_item_model(start_setup):
-    category = CategoryFactory()
+    category_wear = CategoryFactory(need_sizes=True)
+    category_item = CategoryFactory(need_sizes=False)
     item2 = ItemAccessoryFactory(
-        title="same_title", price=10.00, discount_price=5.00, category=category
+        title="same_title", price=10.00, discount_price=5.00, category=category_item
     )
-    item3 = ItemAccessoryFactory(title="same_title", price=10.00, discount_price=None)
-    wear1 = ItemWearFactory(title="same_title", category=category, color="Blue")
-    wear2 = ItemWearFactory(title="same_title", color="Blue")
+    item3 = ItemAccessoryFactory(
+        title="same_title", price=10.00, discount_price=None, category=category_item
+    )
+    wear1 = ItemWearFactory(title="same_title", category=category_wear, color="Blue")
+    wear2 = ItemWearFactory(title="same_title", category=category_wear, color="Blue")
     assert item2.slug == "same_title"
     assert item3.slug == "same_title-1"
-    assert wear1.slug == "same_title-2"
-    assert wear2.slug == "same_title-3"
-    assert wear1.is_wear == True
-    assert item2.is_wear == False
+    assert wear1.slug == "same_title"
+    assert wear2.slug == "same_title-1"
     assert item2.actual_price == 5.00
     assert item3.actual_price == 10.00
 
@@ -62,18 +59,15 @@ def test_item_model(start_setup):
     assert list(Item.objects.active()) == [item3, wear1, wear2]
     assert Item.objects.search(wear1.color).count() == 2
     assert list(Item.objects.search(wear1.color)) == [wear1, wear2]
-    assert Item.objects.in_section(Section.ACCESSORY).count() == 1
-    assert list(Item.objects.in_section(Section.ACCESSORY)) == [item3]
-    assert Item.objects.in_section(Section.FEMALE).count() == 1
-    assert list(Item.objects.in_section(Section.FEMALE)) == [wear1]
-    assert Item.objects.in_category(Section.ACCESSORY, category).count() == 0
-    assert Item.objects.in_category(Section.FEMALE, category).count() == 1
-    assert list(Item.objects.in_category(Section.FEMALE, category)) == [wear1]
+    assert Item.objects.in_category(category_wear).count() == 2
+    assert Item.objects.in_category(category_item).count() == 1
+    assert list(Item.objects.in_category(category_wear)) == [wear1, wear2]
 
 
 @pytest.mark.django_db
 def test_wearsize_model(start_setup):
-    wear1 = ItemWearFactory()
+    category_wear = CategoryFactory(need_sizes=True)
+    wear1 = ItemWearFactory(category=category_wear)
     item1 = ItemAccessoryFactory()
     wearsize1 = WearSizeFactory(size="M", quantity=10)
     wearsize1.item = item1
