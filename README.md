@@ -13,14 +13,14 @@ The project is still under development, so far without full functionality implem
 ## Todo list
 - [X] add products to the basket
 - [ ] add sorting bar
-- [ ] create connections between quantity and order
-- [ ] create an order summary
+- [X] create connections between quantity and order
+- [X] create an order summary
 - [ ] handle payments
 - [X] add user support
 - [ ] add posibility of creating profile
 - [ ] add historical info
 - [ ] add posibility of following products
-- [ ] support for multiple addresses
+- [X] support for multiple addresses
 - [ ] add localization and internationalization support 
 - [ ] panel for managing refunds and promo codes
 - [ ] and many others

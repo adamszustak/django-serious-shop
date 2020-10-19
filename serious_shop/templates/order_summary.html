@@ -1,4 +1,40 @@
 {% extends "base.html" %}
+{% load thumbnail %}
 {% block content %}
-It works!
+<div class="generic-info order">
+    <div class="payment">
+        <h1>Payment</h1>
+    </div>
+    <div class="order-summary">
+        <h1>Order Summary</h1>
+        <hr>
+        <p class="order-total">Cart <span class="cost">${{ order.get_total }}</span></p>
+        <p class="shipping">Shipping <span class="cost">Free</span></p>
+        <hr>
+        <h3 class="total">Order Total <span class="cost">${{ order.get_total }}</span></h3>
+        <hr>
+        {% for order_item in order.items.all %}
+        {% with item=order_item.item %}
+        <a href="{{ item.get_absolute_url }}">
+        <div class="window">
+            {% thumbnail item.get_main_photo 280x300 crop="smart" as img %}
+            <img src="{{ img.url }}" alt="">
+            <div class="info">
+                <p class="item-name">{{ item.title }} {% if item.size %} - {{ item.size }}{% endif %}</p>
+                <p class="quantity">{{ order_item.quantity }} pieces</p>
+            </div>
+        </div>
+        </a>
+        {% endwith %}
+        {% endfor %}
+        <hr>
+        <h3 class="billing-address">Billing Address</h3>
+        <p>{{order.billing_address.get_short}}</p>
+        <hr>
+        <h3 class="shipping-address">Shipping Address</h3>
+        <p>{{order.shipping_address.get_short}}</p>
+        <hr>
+    </div>
+</div>
+<a class="place-order" href="{% url 'orders:confirmed_order' order.id %}">Place Order</a>
 {% endblock %}

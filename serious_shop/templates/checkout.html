@@ -2,6 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% load thumbnail %}
+{% load crispy_forms_tags %}
 
 {% load i18n %}
 {% block content %}
@@ -26,17 +27,27 @@
     <p class='total'>Total price:<span> {{ total }} $</span></p>
     {% if not request.user.is_authenticated %}
     <div class="order-option">
-        <div class="guest">
-            <a class="guest" href="{% url 'orders:order' %}">Continue as guest</a>
-        </div>
-        <div class="login">
-            <a class="login" href="{% url 'orders:user_order' %}">Continue as user</a>
-        </div>
-    </div>
-    {% else %}
-    <div class="continue">
-        <a class="continue" href="{% url 'orders:order' %}">Continue</a>
+        <a class="login" href="{% url 'account_login' %}?next=/cart/checkout/">Continue as user</a>
     </div>
     {% endif %}
+    <form class="address" method=POST>
+        {% csrf_token %}
+        <div class="input_address">
+        <input type="checkbox" id="addresses" name="addresses" value="The same billing and shipping address">
+        <label for="addresses">Copy data from shipping address to billing address</label>
+        </div>
+        <div class="shipping">
+        <h1>Shipping address</h1>
+        {{ shipping_form|crispy }}
+        </div>
+        <div class="billing">
+        <h1>Billing address</h1>
+        {{ billing_form|crispy }}
+        </div>
+        <button class="submit" id="submit" type="submit">Continue</button>
+    </form>
 </div>
 {% endblock content %}
+{% block extra_body %}
+  <script src="{% static 'js/copy_address.js' %}"></script>
+{% endblock extra_body %}

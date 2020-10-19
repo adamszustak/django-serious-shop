@@ -11,6 +11,8 @@
         </tr>
         {% for item in cart %}
         {% with cart_item=item.item %}
+        <form action="" class="cart">
+        {% csrf_token %}
         <tr>
             <th>{{ forloop.counter }}</th>
             <td><a href="{{ cart_item.get_absolute_url }}">{{ cart_item.title }}</a>{% if item.size %} - {{ item.size }}{% endif %}</td>
@@ -24,6 +26,7 @@
             </td>
             <td><a href="{% url 'cart:remove_item_cart' cart_item.id item.size %} "><i class="far fa-trash-alt"></i></a></td>
         </tr>
+        </form>
         {% endwith %}
         {% empty %}
         <td></td>

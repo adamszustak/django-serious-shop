@@ -200,6 +200,18 @@ version = "1.2.2"
 
 [[package]]
 category = "main"
+description = "Country-specific Django helpers"
+name = "django-localflavor"
+optional = false
+python-versions = "*"
+version = "3.0.1"
+
+[package.dependencies]
+django = ">=2.2"
+python-stdnum = ">=1.6"
+
+[[package]]
+category = "main"
 description = "Utilities for implementing Modified Preorder Tree Traversal with your Django Models and working with trees of Model instances."
 name = "django-mptt"
 optional = false
@@ -518,6 +530,19 @@ six = ">=1.5"
 
 [[package]]
 category = "main"
+description = "Python module to handle standardized numbers and codes"
+name = "python-stdnum"
+optional = false
+python-versions = "*"
+version = "1.14"
+
+[package.extras]
+soap = ["zeep"]
+soap-alt = ["suds"]
+soap-fallback = ["pysimplesoap"]
+
+[[package]]
+category = "main"
 description = "OpenID support for modern servers and consumers."
 name = "python3-openid"
 optional = false
@@ -660,7 +685,7 @@ docs = ["proselint (>=0.10.2)", "sphinx (>=3)", "sphinx-argparse (>=0.2.5)", "sp
 testing = ["coverage (>=5)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", "pytest (>=4)", "pytest-env (>=0.6.2)", "pytest-freezegun (>=0.4.1)", "pytest-mock (>=2)", "pytest-randomly (>=1)", "pytest-timeout (>=1)", "pytest-xdist (>=1.31.0)", "packaging (>=20.0)", "xonsh (>=0.9.16)"]
 
 [metadata]
-content-hash = "45fcf0d981a30c67f94c09b8c330c2a13fe2dea8c5febf07d027e3f1ce435d8d"
+content-hash = "76c8963047a8e25d77be5762520adfeb6da3f391b82505479095b6a6047ecaf4"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -771,6 +796,10 @@ django-debug-toolbar = [
 django-js-asset = [
     {file = "django-js-asset-1.2.2.tar.gz", hash = "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"},
     {file = "django_js_asset-1.2.2-py2.py3-none-any.whl", hash = "sha256:8ec12017f26eec524cab436c64ae73033368a372970af4cf42d9354fcb166bdd"},
+]
+django-localflavor = [
+    {file = "django-localflavor-3.0.1.tar.gz", hash = "sha256:24e9a03bc11ced92365821d3cfdd96eb4e2f3e44a6f40e86c645d3e0ec65ec53"},
+    {file = "django_localflavor-3.0.1-py2.py3-none-any.whl", hash = "sha256:3c3034dc64a1f7e5efd9eb53d653af905c20482d438c0e8b825d02e3121b86fa"},
 ]
 django-mptt = [
     {file = "django-mptt-0.11.0.tar.gz", hash = "sha256:dfdb3af75ad27cdd4458b0544ec8574174f2b90f99bc2cafab6a15b4bc1895a8"},
@@ -917,6 +946,10 @@ pytest-pythonpath = [
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
+]
+python-stdnum = [
+    {file = "python-stdnum-1.14.tar.gz", hash = "sha256:fd3a92b8ec82a159c41dbaa3c5397934d090090c92b04e346412e0fd7e6a1b1c"},
+    {file = "python_stdnum-1.14-py2.py3-none-any.whl", hash = "sha256:6389a1e7658e39c37e4f10b42d7a51ce620e031bdeae05158519c218e14ff3b5"},
 ]
 python3-openid = [
     {file = "python3-openid-3.2.0.tar.gz", hash = "sha256:33fbf6928f401e0b790151ed2b5290b02545e8775f982485205a066f874aaeaf"},

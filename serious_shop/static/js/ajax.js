@@ -11,7 +11,8 @@ $(document).ready(function(){
         const url = $(this).data('url')
         $.ajax({
             url: url,
-            type: 'get',
+            type: 'POST',
+            data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
             success: function(cart) {
                 if (quantity.text() > 1) {
                 key = cart['cart'][id + '-' + size];actualQuantity = key['quantity'];
@@ -38,7 +39,8 @@ $(document).ready(function(){
         const url = $(this).data('url')
         $.ajax({
             url: url,
-            type: 'get',
+            type: 'POST',
+            data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
             success: function(cart) {
                 key = cart['cart'][id + '-' + size];actualQuantity = key['quantity'];
                 quantity.text(actualQuantity)

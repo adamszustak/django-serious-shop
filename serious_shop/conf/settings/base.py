@@ -33,17 +33,19 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
+    "items.apps.ItemsConfig",
+    "lib.apps.LibConfig",
+    "addresses.apps.AddressesConfig",
     "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "items.apps.ItemsConfig",
-    "lib.apps.LibConfig",
-    # "cart.apps.CartConfig",
-    # "orders.apps.OrdersConfig",
+    "cart.apps.CartConfig",
+    "orders.apps.OrdersConfig",
     "mptt",
+    "localflavor",
     "easy_thumbnails",
     "ckeditor",
     "django.contrib.sites",
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "pl-pl"
+LANGUAGE_CODE = "en-us"
 LANGUAGES = (
     ("en", _("English")),
     ("pl", _("Polish")),

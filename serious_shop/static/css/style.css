@@ -563,11 +563,11 @@ section.maininfos div.infos form input:checked + label {
     color: white;
 }
 
-section.maininfos div.infos form input[type=radio].disabled {
+section.maininfos div.sizes form input[type=radio].disabled {
     cursor: none;
 }
 
-section.maininfos div.infos form button {
+section.maininfos div.sizes form button {
     position: absolute;
     left:50%;
     top:56px;
@@ -582,11 +582,11 @@ section.maininfos div.infos form button {
     transition: .2s;
 }
 
-section.maininfos div.infos form button:hover {
+section.maininfos div.sizes form button:hover {
     background-color: black;
 }
 
-section.maininfos div.infos form button i {
+section.maininfos div.sizes form button i {
     position: absolute;
     top:50%;
     left:100%;
@@ -676,7 +676,7 @@ li.card {
 
 /* ****************GENERIC_INFO*****************/
 .generic-info {
-    width:90%;
+    width:100%;
     background-color: #fff;
     padding:50px 30px;
 }
@@ -730,7 +730,6 @@ table tr.total {
 
 .tablebuttons a {
     border: 1px solid #cccccc;
-    margin-left: 20px;
     padding:8px 20px;
     border-radius: 4px;
     font-weight: 600;
@@ -807,13 +806,45 @@ p.total span {
     font-weight: 600;
 }
 
-div.order-option {
-    margin-top:60px;
+div.order-option a.login,
+button.submit,
+a.place-order {
+    display: block;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    text-align: center;
 }
 
+form.address,
+div.input_address  {
+    margin-top: 20px;
+    width: 100%;
+}
+
+div.shipping, div.billing {
+    width: 45%;
+    float: left;
+}
+
+div.shipping {
+    margin-right: 10%;
+}
+
+/* ****************ORDER_SUMMARY*****************/
+div.order {
+    display:flex;
+}
+div.payment {
+    width: 50%;
+}
+div.order-summary {
+    width: 50%;
+    background-color: rgb(221, 221, 221);
+    padding:10px 20px;
+}
+span.cost {
+    float:right;
+    font-weight: 600;
+}
 /* ****************AUTH*****************/
 section.account {
     width: 50%;
@@ -834,7 +865,9 @@ section.account p a.login {
 section.account form button,
 section.account form a,
 section.account form input[type=submit],
-a.login, a.guest {
+a.login, a.guest,
+button.submit,
+a.place-order {
     border: none;
     cursor: pointer;
     padding: 10px;
@@ -848,7 +881,8 @@ section.account form a {
 }
 section.account form button:hover,
 section.account form input[type=submit]:hover,
-a.login:hover, a.guest:hover {
+a.login:hover, a.guest:hover,
+button.submit {
     background-color: #000;
 }
 /* ****************FOOTER*****************/
@@ -1070,7 +1104,7 @@ footer div.lower div.social span.instagram {
     section.maininfos div.photos {
         height: auto;
     }
-    /*****************CHECKOUT*****************/
+    /*****************DETAIL_ITEM*****************/
     div.window {
         height:130px;
     }
@@ -1198,6 +1232,13 @@ footer div.lower div.social span.instagram {
     /*****************CHECKOUT*****************/
     div.window {
         height:130px;
+    }
+    /* ****************ORDER_SUMMARY*****************/
+    div.order {
+        flex-direction: column;
+    }
+    div.payment, div.order-summary {
+        width: 100%;
     }
     /*****************FOOTER*****************/
     footer div.upper {

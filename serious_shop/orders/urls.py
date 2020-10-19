@@ -1,11 +1,11 @@
-# from django.urls import path
+from django.urls import path
 
-# from .views import user_order, order
+from .views import order_summary, confirmed_order
 
 
-# app_name = "orders"
+app_name = "orders"
 
-# urlpatterns = [
-#     path("user/order/", user_order, name="user_order"),
-#     path("order/", order, name="order"),
-# ]
+urlpatterns = [
+    path("order-summary/<int:order_id>", order_summary, name="order-summary"),
+    path("order-confirmed/<int:order_id>", confirmed_order, name="confirmed_order"),
+]

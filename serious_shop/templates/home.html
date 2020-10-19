@@ -7,8 +7,7 @@
     {% for item in object_list %}
         {% include "snippets/item_snippet.html" %}
     {% empty %}
-    <h1>Unfortunately nothing to see here</h1>
-    <p>Back to <a href="{% url 'items:home' %}"><strong>main page</strong></a></p>
+    <h1>Unfortunately nothing to see here. Back to <a href="{% url 'items:home' %}"><strong>main page</strong></a></h1>
     {% endfor %}
 </div>
 {% include "snippets/pagination.html" %}

@@ -27,9 +27,9 @@
                 {% endif %}
             </p>
             <div class="sizes">
-                {% if object.category.need_sizes %}
-                <form action="{% url 'cart:add_to_cart' object.id %}" method="POST" id="addItemForm" data-id="{{ object.id }}">
+                <form action="{% url 'cart:add_to_cart' item_id=object.id %}" method="POST">
                     {% csrf_token %}
+                {% if object.category.need_sizes %}
                     {% for size in object.sizes.all %}
                     {% with size_size=size.size %}
                     <input type="radio" name="size" value="{{ size_size }}" id="{{ size_size }}" {% if not size.quantity %} disabled {% endif %}>

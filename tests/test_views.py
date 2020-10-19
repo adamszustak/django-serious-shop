@@ -77,7 +77,7 @@ def test_commonview_list_GET(start_setup, client):
 
 
 @pytest.mark.django_db
-def test_add_to_cart_GET(client, start_setup, base_items, user_client):
+def test_add_to_cart_GET(start_setup, base_items, user_client):
     wear, item = base_items
     client = user_client
     url1 = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
@@ -131,42 +131,36 @@ def test_add_to_cart_GET(client, start_setup, base_items, user_client):
     assert cart.get(key2, None)
 
 
-# @pytest.mark.django_db
-# def test_remove_from_cart_GET(start_setup, user_client, user_user, cart_helper, client):
-#     item1, wear_size, item2 = cart_helper
-#     url = reverse("items:add_to_cart", kwargs={"slug": item2.slug})
-#     user_client.get(url)
-#     user_client.get(url)
-#     assert (
-#         OrderItem.objects.get(user=user_user, ordered=False, item=item2).quantity == 2
-#     )
-#     url = reverse("items:remove_one_cart", kwargs={"slug": item2.slug})
-#     response = user_client.get(url)
-#     order_item = OrderItem.objects.get(user=user_user, ordered=False, item=item2)
-#     messages = [m.message for m in get_messages(response.wsgi_request)]
-#     assert response.status_code == 302
-#     assert order_item.quantity == 1
+@pytest.mark.django_db
+def test_remove_from_cart_GET(start_setup, base_items, user_client):
+    wear, item = base_items
+    url = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
+    user_client.get(url)
+    response = user_client.get(url)
+    session = user_client.session
+    cart = session[settings.CART_SESSION_ID]
+    assert response.status_code == 200
+    assert cart
+    assert cart[f"{item.id}-None"]["quantity"] == 2
 
-#     response = user_client.get(url)
-#     assert response.status_code == 302
-#     with pytest.raises(ObjectDoesNotExist):
-#         assert not OrderItem.objects.get(user=user_user, ordered=False, item=item2)
-#     with pytest.raises(ObjectDoesNotExist):
-#         assert not Order.objects.get(user=user_user, ordered=False)
+    url2 = reverse("cart:remove_one_cart", kwargs={"item_id": item.id, "size": None})
+    response = user_client.get(url2)
+    session = user_client.session
+    cart = session[settings.CART_SESSION_ID]
+    assert response.status_code == 200
+    assert cart[f"{item.id}-None"]["quantity"] == 1
 
-#     url2 = reverse(
-#         "items:add_to_cart_size", kwargs={"slug": item1.slug, "size": wear_size.size}
-#     )
-#     user_client.get(url2)
-#     user_client.get(url2)
-#     assert (
-#         OrderItem.objects.get(user=user_user, ordered=False, item=item1).quantity == 2
-#     )
-#     url2 = reverse(
-#         "items:remove_item_from_cart_size",
-#         kwargs={"slug": item1.slug, "size": wear_size.size},
-#     )
-#     response = user_client.get(url2)
-#     assert response.status_code == 302
-#     with pytest.raises(ObjectDoesNotExist):
-#         assert not OrderItem.objects.get(user=user_user, ordered=False, item=item1)
+    response = user_client.get(url2)
+    session = user_client.session
+    cart = session[settings.CART_SESSION_ID]
+    assert not cart
+    assert response.status_code == 200
+
+    url = reverse("cart:add_to_cart_size", kwargs={"item_id": wear.id, "size": "M"})
+    user_client.get(url)
+    url3 = reverse("cart:remove_item_cart", kwargs={"item_id": wear.id, "size": "M"})
+    response = user_client.get(url3)
+    session = user_client.session
+    cart = session[settings.CART_SESSION_ID]
+    assert not cart
+    assert response.status_code == 302

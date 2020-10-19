@@ -102,10 +102,3 @@ class Cart(object):
 
     def get_cart(self):
         return self.cart
-
-    def is_in_cart(self, item, size):
-        item_id = str(item.id)
-        key = f"{item_id}-{size}"
-        if key in self.cart:
-            return True
-        return False

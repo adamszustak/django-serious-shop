@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="generic-info">
+<h1>Thank you for placing order!</h1>
+<h2>Your order number is {{ order.id }}</h2>
+<p>Details has been sent to your email: {{order.shipping_address.email }}</p>
+<a href="/">Back to home</a>
+</div>
+{% endblock content %}

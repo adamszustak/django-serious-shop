@@ -1,56 +1,102 @@
-# from django.db import models
-# from django.contrib.auth import get_user_model
-# from django.utils.translation import gettext_lazy as _
-# from django.contrib.auth import get_user_model
+from django.db import models
+from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
-# from items.models import Item, WearSize
+from items.models import Item, WearSize
+from addresses.models import Address
+from lib.utils import get_sentinel_user_deleted, get_sentinel_user_anonymous
 
 
-# class Order(models.Model):
-#     ORDER_STATUS_CHOICES = (
-#     ('created', 'Created'),
-#     ('paid', 'Paid'),
-#     ('shipped', 'Shipped'),
-#     ('refunded', 'Refunded'),
-#     )
-#     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name=_("User"))
-#     items = models.ManyToManyField('items.Item', verbose_name=_("Items"))
-#     created_date = models.DateTimeField(_("Created at"), auto_now_add=True)
-#     ordered_date = models.DateTimeField(_("Ordered at"))
-#     ordered = models.BooleanField(_("Ordered"), default=False)
-#     status = models.CharField(_("Status"), max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
-#     transaction_id = models.CharField(_("Transaction id"), max_length=100, null=True, blank=True)
+class Order(models.Model):
+    CREATED = "created"
+    PAID = "paid"
+    SHIPPED = "shipped"
+    REFUNDED = "refunded"
+    ORDER_STATUS_CHOICES = (
+        (CREATED, _("Created")),
+        (PAID, _("Paid")),
+        (SHIPPED, _("Shipped")),
+        (REFUNDED, _("Refunded")),
+    )
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.SET(get_sentinel_user_deleted),
+        verbose_name=_("User"),
+        blank=True,
+        null=True,
+        default=get_sentinel_user_anonymous,
+    )
+    shipping_address = models.ForeignKey(
+        Address,
+        related_name="shipping_address",
+        on_delete=models.SET_NULL,
+        verbose_name=_("Shipping address"),
+        null=True,
+    )
+    billing_address = models.ForeignKey(
+        Address,
+        related_name="billing_address",
+        on_delete=models.SET_NULL,
+        verbose_name=_("Billing address"),
+        null=True,
+        blank=True,
+    )
+    created_date = models.DateTimeField(_("Created at"), auto_now_add=True)
+    updated_date = models.DateTimeField(_("Ordered at"), auto_now=True)
+    status = models.CharField(
+        _("Status"), max_length=120, default="created", choices=ORDER_STATUS_CHOICES
+    )
+    transaction_id = models.CharField(
+        _("Transaction id"), max_length=100, null=True, blank=True
+    )
+    session = models.CharField(_("Session"), max_length=100)
 
-#     class Meta:
-#         verbose_name = _("Cart")
-#         verbose_name_plural = _("Carts")
+    class Meta:
+        verbose_name = _("Order")
+        verbose_name_plural = _("Orders")
 
-#     def __str__(self):
-#         return f'{self.user.email} - {self.ordered_date.strftime("%m/%d/%Y %H:%M")}'
+    def __str__(self):
+        return f"Order - {self.id}"
 
-#     @property
-#     def get_total(self):
-#         total = 0
-#         for order_item in self.items.all():
-#             total += order_item.get_cost
-#         return total
+    @property
+    def get_total(self):
+        total = 0
+        for order_item in self.items.all():
+            total += order_item.get_cost()
+        return total
 
-#     @property
-#     def items_quantity(self):
-#         total = 0
-#         for order_item in self.items.all():
-#             total += order_item.quantity
-#         return total
+    @property
+    def items_quantity(self):
+        total = 0
+        for order_item in self.items.all():
+            total += order_item.quantity
+        return total
 
-# class OrderItem(models.Model):
-#     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-#     item = models.ForeignKey(Item, related_name='order_items', on_delete=models.CASCADE)
-#     size = models.CharField(max_length=4, choices=WearSize.SIZES, blank=True, null=True)
-#     price = models.DecimalField(max_digits=5, decimal_places=2)
-#     quantity = models.PositiveIntegerField(default=1)
+    @property
+    def get_email(self):
+        if self.user == get_sentinel_user_deleted():
+            return self.shipping_address.email
+        return self.user.email
 
-#     def __str__(self):
-#         return f"{self.quantity} of {self.item.title} - {self.size}"
 
-#     def get_cost(self):
-#         return self.price * self.quantity
+class OrderItem(models.Model):
+    order = models.ForeignKey(
+        Order, related_name="items", on_delete=models.CASCADE, verbose_name=_("Order")
+    )
+    item = models.ForeignKey(
+        Item,
+        related_name="order_items",
+        on_delete=models.CASCADE,
+        verbose_name=_("Item"),
+    )
+    size = models.CharField(
+        _("Size"), max_length=4, choices=WearSize.SIZES, blank=True, null=True
+    )
+    price = models.DecimalField(_("Price"), max_digits=5, decimal_places=2)
+    quantity = models.PositiveIntegerField(_("Quantity"), default=1)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.item.title} - {self.size}"
+
+    def get_cost(self):
+        return self.price * self.quantity
