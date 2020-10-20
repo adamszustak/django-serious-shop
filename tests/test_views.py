@@ -13,11 +13,12 @@ from .factories import (
     WearSizeFactory,
     ItemWearFactory,
     CategoryFactory,
+    CompanyFactory,
 )
 
 
 @pytest.mark.django_db
-def test_homeview_list_GET(start_setup, client):
+def test_homeview_list_GET(client):
     ItemAccessoryFactory.create_batch(2)
     url = reverse("items:home")
     response = client.get(url)
@@ -30,7 +31,7 @@ def test_homeview_list_GET(start_setup, client):
 
 
 @pytest.mark.django_db
-def test_categoryview__GET(start_setup, client, base_items):
+def test_categoryview__GET(client, base_items):
     wear, item = base_items
     category = wear.category
     url = reverse("items:category_list_item", kwargs={"path": category.get_path()},)
@@ -43,7 +44,7 @@ def test_categoryview__GET(start_setup, client, base_items):
 
 
 @pytest.mark.django_db
-def test_searchresultview_list_GET(start_setup, client, base_items):
+def test_searchresultview_list_GET(client, base_items):
     url = reverse("items:search_results")
     response = client.get(url, {"search": "Wear-"})
     assert response.status_code == 200
@@ -54,7 +55,7 @@ def test_searchresultview_list_GET(start_setup, client, base_items):
 
 
 @pytest.mark.django_db
-def test_itemdetailview_list_GET(start_setup, client, base_items):
+def test_itemdetailview_list_GET(client, base_items):
     wear, item = base_items
     url = reverse("items:detail_item", kwargs={"slug": wear.slug})
     response = client.get(url)
@@ -68,7 +69,8 @@ def test_itemdetailview_list_GET(start_setup, client, base_items):
 
 
 @pytest.mark.django_db
-def test_commonview_list_GET(start_setup, client):
+def test_commonview_list_GET(client):
+    CompanyFactory()
     generics = ["delivery", "privacy", "returns", " contact_us", " jobs", "about-us"]
     for generic in generics:
         url = reverse("items:generic_info", kwargs={"topic": generic})
@@ -77,11 +79,11 @@ def test_commonview_list_GET(start_setup, client):
 
 
 @pytest.mark.django_db
-def test_add_to_cart_GET(start_setup, base_items, user_client):
+def test_add_to_cart_POST(base_items, user_client):
     wear, item = base_items
     client = user_client
     url1 = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
-    response = client.get(url1)
+    response = client.post(url1)
     session = client.session
     cart = session[settings.CART_SESSION_ID]
     assert response.status_code == 302
@@ -95,7 +97,7 @@ def test_add_to_cart_GET(start_setup, base_items, user_client):
         "size": None,
     }
 
-    response = client.get(url1)
+    response = client.post(url1, **{"HTTP_X_REQUESTED_WITH": "XMLHttpRequest"})
     session = client.session
     cart = session[settings.CART_SESSION_ID]
     assert response.status_code == 200
@@ -112,7 +114,7 @@ def test_add_to_cart_GET(start_setup, base_items, user_client):
     assert Decimal(response.json()["final_price"]) == Decimal(item.actual_price * 2)
 
     url2 = reverse("cart:add_to_cart", kwargs={"item_id": wear.id})
-    response = client.get(url2)
+    response = client.post(url2)
     session = client.session
     cart = session[settings.CART_SESSION_ID]
     messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -123,20 +125,23 @@ def test_add_to_cart_GET(start_setup, base_items, user_client):
 
     url3 = reverse("cart:add_to_cart_size", kwargs={"item_id": wear.id, "size": "M"})
     key2 = f"{wear.id}-M"
-    response = client.get(url3)
+    response = client.post(url3)
     session = client.session
     cart = session[settings.CART_SESSION_ID]
     assert response.status_code == 302
     assert 'url="/cart/detail/"' in str(response)
     assert cart.get(key2, None)
 
+    response = client.get(url3)
+    assert response.status_code == 302
+
 
 @pytest.mark.django_db
-def test_remove_from_cart_GET(start_setup, base_items, user_client):
+def test_remove_from_cart_POST(base_items, user_client):
     wear, item = base_items
     url = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
-    user_client.get(url)
-    response = user_client.get(url)
+    user_client.post(url)
+    response = user_client.post(url, **{"HTTP_X_REQUESTED_WITH": "XMLHttpRequest"})
     session = user_client.session
     cart = session[settings.CART_SESSION_ID]
     assert response.status_code == 200
@@ -144,13 +149,13 @@ def test_remove_from_cart_GET(start_setup, base_items, user_client):
     assert cart[f"{item.id}-None"]["quantity"] == 2
 
     url2 = reverse("cart:remove_one_cart", kwargs={"item_id": item.id, "size": None})
-    response = user_client.get(url2)
+    response = user_client.post(url2, **{"HTTP_X_REQUESTED_WITH": "XMLHttpRequest"})
     session = user_client.session
     cart = session[settings.CART_SESSION_ID]
     assert response.status_code == 200
     assert cart[f"{item.id}-None"]["quantity"] == 1
 
-    response = user_client.get(url2)
+    response = user_client.post(url2, **{"HTTP_X_REQUESTED_WITH": "XMLHttpRequest"})
     session = user_client.session
     cart = session[settings.CART_SESSION_ID]
     assert not cart
@@ -159,8 +164,30 @@ def test_remove_from_cart_GET(start_setup, base_items, user_client):
     url = reverse("cart:add_to_cart_size", kwargs={"item_id": wear.id, "size": "M"})
     user_client.get(url)
     url3 = reverse("cart:remove_item_cart", kwargs={"item_id": wear.id, "size": "M"})
-    response = user_client.get(url3)
+    response = user_client.post(url3)
     session = user_client.session
     cart = session[settings.CART_SESSION_ID]
     assert not cart
     assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_checkout_GET(base_items, user_client):
+    wear, item = base_items
+    url = reverse("cart:checkout")
+    response = user_client.get(url)
+    messages = [m.message for m in get_messages(response.wsgi_request)]
+    assert "Your cart is empty" == messages[0]
+    assert response.status_code == 302
+
+    url = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
+    response = user_client.post(url)
+    url = reverse("cart:checkout")
+    response = user_client.get(url)
+    session = user_client.session
+    cart = session[settings.CART_SESSION_ID]
+    assert response.status_code == 200
+    assert response.context["cart"]
+    assert response.context["shipping_form"]
+    assert response.context["billing_form"]
+    assert response.context["total"]

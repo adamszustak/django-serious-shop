@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.views.generic import TemplateView
-from django.views.decorators.http import require_POST
 
 from allauth.account.decorators import verified_email_required
 from allauth.account.forms import LoginForm
@@ -40,9 +39,11 @@ def add_to_cart(request, item_id, size=None):
             },
             status=200,
         )
-    else:
+    elif request.method == "POST":
         cart.add(item, size)
         return redirect("cart:cart_detail")
+    else:
+        return redirect("items:detail_item", slug=item.slug)
 
 
 def remove_one_cart(request, item_id, size=None):

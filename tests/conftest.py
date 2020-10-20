@@ -17,23 +17,6 @@ from .factories import (
 
 
 @pytest.fixture()
-def start_setup(db):
-    company = CompanyInfo.objects.create(
-        name=settings.COMPANY_NAME,
-        phone="1",
-        email="mm@wp.pl",
-        start_time=datetime.time(10, 33, 45),
-        end_time=datetime.time(10, 33, 45),
-        about="lol",
-        delivery="lol",
-        privacy="lol",
-        returns="lol",
-        contact_us="lol",
-        jobs="lol",
-    )
-
-
-@pytest.fixture()
 def base_items(db):
     category_wear = CategoryFactory(name="trousers", need_sizes=True)
     category_item = CategoryFactory(name="glasses")

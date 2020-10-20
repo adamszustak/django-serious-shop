@@ -6,17 +6,22 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
 from items.models import Item, Category, ItemImage
-from lib.utils import image_directory_path
+from addresses.models import Address
+from lib.utils import image_directory_path, get_sentinel_user_anonymous
 from .factories import (
     ItemAccessoryFactory,
     ItemWearFactory,
     WearSizeFactory,
     CategoryFactory,
+    AddressFactory,
+    UserFactory,
+    OrderFactory,
+    OrderItemFactory,
 )
 
 
 @pytest.mark.django_db
-def test_category_model(start_setup):
+def test_category_model():
     base_cat = CategoryFactory()
     category1 = CategoryFactory(name="wear", parent=base_cat)
     item1 = ItemAccessoryFactory(category=category1)
@@ -31,7 +36,7 @@ def test_category_model(start_setup):
 
 
 @pytest.mark.django_db
-def test_item_model(start_setup):
+def test_item_model():
     category_wear = CategoryFactory(need_sizes=True)
     category_item = CategoryFactory(need_sizes=False)
     item2 = ItemAccessoryFactory(
@@ -65,7 +70,7 @@ def test_item_model(start_setup):
 
 
 @pytest.mark.django_db
-def test_wearsize_model(start_setup):
+def test_wearsize_model():
     category_wear = CategoryFactory(need_sizes=True)
     wear1 = ItemWearFactory(category=category_wear)
     item1 = ItemAccessoryFactory()
@@ -81,8 +86,46 @@ def test_wearsize_model(start_setup):
         assert wearsize1.save()
 
 
+@pytest.mark.django_db
+def test_address_model():
+    user = UserFactory()
+    billing_address = AddressFactory(
+        address_type="billing", is_default=False, user=user
+    )
+    shipping_address = AddressFactory(
+        address_type="shipping", is_default=False, user=get_sentinel_user_anonymous()
+    )
+    assert billing_address.is_default == True
+    assert shipping_address.is_default == False
+
+    billing_address2 = AddressFactory(
+        address_type="billing", is_default=True, user=user
+    )
+    assert billing_address2.is_default == True
+    assert (
+        not Address.objects.filter(user=user, address_type="billing", is_default=True)
+        .exclude(id=billing_address2.id)
+        .exists()
+    )
+
+
+@pytest.mark.django_db
+def test_orderitem_model():
+    order_item = OrderItemFactory(price=10, quantity=5)
+    order_item2 = OrderItemFactory(price=10, quantity=20)
+    assert order_item.get_cost() == 50
+    assert order_item2.get_cost() == 200
+
+    order = OrderFactory()
+    order.items.add(order_item, order_item2)
+    order.save()
+    assert order.get_total == 250
+    assert order.items_quantity == 25
+    assert order.get_email == order.user.email
+
+
 # @pytest.mark.django_db
-# def test_orderitem_model(start_setup):
+# def test_orderitem_model():
 #     item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00)
 #     item1.sizes.add(WearSizeFactory(item=item1, size="M", quantity=10))
 #     order_item1 = OrderItemFactory(
@@ -95,7 +138,7 @@ def test_wearsize_model(start_setup):
 
 
 # @pytest.mark.django_db
-# def test_order_model(start_setup):
+# def test_order_model():
 #     item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00)
 #     item2 = ItemFactory(quantity=10, price=50.00, discount_price=25.00)
 #     item1.sizes.add(WearSizeFactory(item=item1, size="M", quantity=10))
