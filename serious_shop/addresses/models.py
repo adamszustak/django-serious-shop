@@ -1,13 +1,12 @@
+from django.contrib.auth import get_user_model
+from django.db import models, transaction
+from django.utils.translation import gettext_lazy as _
+
+from lib.utils import get_sentinel_user_anonymous, get_sentinel_user_deleted
 from localflavor.pl.pl_administrativeunits import (
     ADMINISTRATIVE_UNIT_CHOICES as provinces,
 )
 
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
-from django.db import transaction
-
-from lib.utils import get_sentinel_user_deleted, get_sentinel_user_anonymous
 from .managers import AddressQuerySet
 
 

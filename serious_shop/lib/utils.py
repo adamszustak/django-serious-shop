@@ -1,5 +1,5 @@
-from django.utils.timezone import now
 from django.contrib.auth import get_user_model
+from django.utils.timezone import now
 
 
 def image_directory_path(instance, filename):

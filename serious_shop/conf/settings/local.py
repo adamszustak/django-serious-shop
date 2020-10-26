@@ -1,3 +1,5 @@
+import braintree
+
 from .base import *
 
 DEBUG = True
@@ -15,3 +17,14 @@ INTERNAL_IPS = [
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+BRAINTREE_MERCHANT_ID = get_secret("BRAINTREE_MERCHANT_ID")
+BRAINTREE_PUBLIC_KEY = get_secret("BRAINTREE_PUBLIC_KEY")
+BRAINTREE_PRIVATE_KEY = get_secret("BRAINTREE_PRIVATE_KEY")
+
+BRAINTREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY,
+)

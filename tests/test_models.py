@@ -1,22 +1,22 @@
-import pytest
-
-from django.urls import reverse, resolve
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+from django.urls import resolve, reverse
 
-from items.models import Item, Category, ItemImage
+import pytest
 from addresses.models import Address
-from lib.utils import image_directory_path, get_sentinel_user_anonymous
+from items.models import Category, Item, ItemImage
+from lib.utils import get_sentinel_user_anonymous, image_directory_path
+
 from .factories import (
+    AddressFactory,
+    CategoryFactory,
     ItemAccessoryFactory,
     ItemWearFactory,
-    WearSizeFactory,
-    CategoryFactory,
-    AddressFactory,
-    UserFactory,
     OrderFactory,
     OrderItemFactory,
+    UserFactory,
+    WearSizeFactory,
 )
 
 

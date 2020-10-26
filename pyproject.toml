@@ -16,6 +16,8 @@ easy_thumbnails = "^2.7"
 django-mptt = "^0.11.0"
 django-mptt-urls = "^2.0.4"
 django-localflavor = "^3.0.1"
+celery = "^5.0.1"
+braintree = "^4.4.0"
 
 [tool.poetry.dev-dependencies]
 django-debug-toolbar = "^2.2"
@@ -31,6 +33,3 @@ django-ckeditor = "^5.9.0"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
-
-
-

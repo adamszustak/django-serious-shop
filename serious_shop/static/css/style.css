@@ -845,6 +845,42 @@ span.cost {
     float:right;
     font-weight: 600;
 }
+form div.field {
+    font-size:17px;
+    color:#666;
+    width:70%;
+    height:30px;
+    margin-bottom:10px;
+    padding:6px 12px;
+    border:0;
+    background:#efefef;
+    color:#666;
+    border-radius:4px;
+}
+
+form#payment label {
+    font-weight: 600;
+    font-size: 17px;
+    margin-top: 10px
+}
+
+form#payment input[type=submit] {
+    width: 70%;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 4px 6px;
+    text-align: center;
+    font-weight: 600;
+    border:none;
+    transition: 0.3s;
+    margin-top:20px;
+}
+
+form#payment input[type=submit]:hover {
+    background-color: grey;
+}
+
 /* ****************AUTH*****************/
 section.account {
     width: 50%;
@@ -867,7 +903,7 @@ section.account form a,
 section.account form input[type=submit],
 a.login, a.guest,
 button.submit,
-a.place-order {
+input#addresses {
     border: none;
     cursor: pointer;
     padding: 10px;

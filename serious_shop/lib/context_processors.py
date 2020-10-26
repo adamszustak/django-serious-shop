@@ -1,8 +1,8 @@
 from django.conf import settings
 
+from cart.cart import Cart
 from items.models import Category
 from lib.models import CompanyInfo
-from cart.cart import Cart
 
 
 def get_category(request):

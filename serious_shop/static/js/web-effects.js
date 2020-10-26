@@ -27,15 +27,3 @@ $(document).ready(function() {
         baner.style.opacity = 0
     });
 });
-
-// accept checkout
-$(document).ready(function() {
-    $('button#submit').one('click', function(e) {
-        e.preventDefault();
-        $("div.generic-info").prepend("<b style='color:red;font-size:22px;display:block;width:100%;text-align:center;margin-bottom:30px;'>Check your order before submitting</b>");
-        window.scrollTo({
-            top: 0, behavior: 'smooth'
-        });
-        $(this).text('Order');
-    });
-});

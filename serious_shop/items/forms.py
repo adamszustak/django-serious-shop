@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import WearSize, Item, Category
+from .models import Category, Item, WearSize
 
 
 class WearSizeForm(forms.ModelForm):

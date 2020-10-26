@@ -1,19 +1,18 @@
-import factory
-import pytest
 import random
-from factory.faker import faker
 
-from django.utils import timezone
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.template.defaultfilters import slugify
-from django.conf import settings
+from django.utils import timezone
 
-from items.models import Item, Category, ItemImage, WearSize
+import factory
+import pytest
 from addresses.models import Address
-from orders.models import OrderItem, Order
+from factory.faker import faker
+from items.models import Category, Item, ItemImage, WearSize
 from lib.models import CompanyInfo
-
+from orders.models import Order, OrderItem
 
 FAKE = faker.Faker()
 

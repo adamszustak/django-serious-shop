@@ -1,5 +1,8 @@
-from .base import *
 from pathlib import Path
+
+import braintree
+
+from .base import *
 
 MAIN_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
@@ -26,3 +29,14 @@ TEMPLATES = [
         },
     },
 ]
+
+BRAINTREE_MERCHANT_ID = get_secret("BRAINTREE_MERCHANT_ID")
+BRAINTREE_PUBLIC_KEY = get_secret("BRAINTREE_PUBLIC_KEY")
+BRAINTREE_PRIVATE_KEY = get_secret("BRAINTREE_PRIVATE_KEY")
+
+BRAINTREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY,
+)

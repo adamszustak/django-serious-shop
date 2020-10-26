@@ -1,17 +1,18 @@
-import pytest
 import datetime
 
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
-from django.test.client import Client
 from django.shortcuts import reverse
+from django.test.client import Client
 
+import pytest
 from lib.models import CompanyInfo
+
 from .factories import (
-    ItemWearFactory,
-    ItemAccessoryFactory,
-    UserFactory,
     CategoryFactory,
+    ItemAccessoryFactory,
+    ItemWearFactory,
+    UserFactory,
     WearSizeFactory,
 )
 

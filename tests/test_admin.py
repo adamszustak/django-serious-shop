@@ -1,12 +1,17 @@
-import pytest
-
-from django.contrib.admin.sites import AdminSite
 from django.conf import settings
+from django.contrib.admin.sites import AdminSite
 from django.urls import reverse
 
-from items.models import Item, WearSize
+import pytest
 from addresses.admin import AddressAdmin
-from .factories import AddressFactory, OrderFactory, OrderItemFactory, CompanyFactory
+from items.models import Item, WearSize
+
+from .factories import (
+    AddressFactory,
+    CompanyFactory,
+    OrderFactory,
+    OrderItemFactory,
+)
 
 
 @pytest.mark.django_db

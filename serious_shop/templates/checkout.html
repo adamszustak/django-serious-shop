@@ -29,12 +29,12 @@
     <div class="order-option">
         <a class="login" href="{% url 'account_login' %}?next=/cart/checkout/">Continue as user</a>
     </div>
+    <hr>
     {% endif %}
     <form class="address" method=POST>
         {% csrf_token %}
         <div class="input_address">
-        <input type="checkbox" id="addresses" name="addresses" value="The same billing and shipping address">
-        <label for="addresses">Copy data from shipping address to billing address</label>
+        <input type="button" id="addresses" name="addresses" value="Copy data from shipping address to billing address">
         </div>
         <div class="shipping">
         <h1>Shipping address</h1>

@@ -1,12 +1,12 @@
 from django.contrib import admin
-from django.utils.http import urlencode
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.http import urlencode
 
 from mptt.admin import DraggableMPTTAdmin
 
-from .models import Category, Item, WearSize, ItemImage
 from .forms import WearSizeForm
+from .models import Category, Item, ItemImage, WearSize
 
 
 class ItemImageInline(admin.TabularInline):

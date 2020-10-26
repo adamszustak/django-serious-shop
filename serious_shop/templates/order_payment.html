@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block content %}
+<div class="generic-info order">
+    <div class="payment">
+        <h1>Payment</h1>
+          <form id="payment" method="post">
+            <label for="card-number">Card Number</label>
+            <div id="card-number" class="field"></div>
+            <label for="cvv">CVV</label>
+            <div id="cvv" class="field"></div>
+            <label for="expiration-date">Expiration Date</label>
+            <div id="expiration-date" class="field"></div>
+            <input type="hidden" id="nonce" name="payment_method_nonce" value="">
+            {% csrf_token %}
+            <input type="submit" value="Pay">
+        </form>
+    </div>
+    <div class="order-summary">
+        <h1>Order Summary</h1>
+        <hr>
+        <p class="order-total">Cart <span class="cost">${{ order.get_total }}</span></p>
+        <p class="shipping">Shipping <span class="cost">Free</span></p>
+        <hr>
+        <h3 class="total">Order Total <span class="cost">${{ order.get_total }}</span></h3>
+        <hr>
+        {% for order_item in order.items.all %}
+        {% with item=order_item.item %}
+        <a href="{{ item.get_absolute_url }}">
+        <div class="window">
+            {% thumbnail item.get_main_photo 280x300 crop="smart" as img %}
+            <img src="{{ img.url }}" alt="">
+            <div class="info">
+                <p class="item-name">{{ item.title }} {% if item.size %} - {{ item.size }}{% endif %}</p>
+                <p class="quantity">{{ order_item.quantity }} pieces</p>
+            </div>
+        </div>
+        </a>
+        {% endwith %}
+        {% endfor %}
+        <hr>
+        <h3 class="billing-address">Billing Address</h3>
+        <p>{{order.billing_address.get_short}}</p>
+        <hr>
+        <h3 class="shipping-address">Shipping Address</h3>
+        <p>{{order.shipping_address.get_short}}</p>
+        <hr>
+    </div>
+</div>
+{% endblock %}
+{% block extra_body %}
+  <script src="https://js.braintreegateway.com/web/3.44.2/js/client.min.js"></script>
+  <script src="https://js.braintreegateway.com/web/3.44.2/js/hosted-fields.min.js"></script>
+  <script>
+    var form = document.querySelector('#payment');
+    var submit = document.querySelector('input[type="submit"]');
+    braintree.client.create({
+      authorization: '{{ client_token }}'
+    }, function (clientErr, clientInstance) {
+      if (clientErr) {
+        console.error(clientErr);
+        return;
+      }
+      braintree.hostedFields.create({
+        client: clientInstance,
+        styles: {
+          'input': {'font-size': '13px'},
+          'input.invalid': {'color': 'red'},
+          'input.valid': {'color': 'green'}
+        },
+        fields: {
+          number: {selector: '#card-number'},
+          cvv: {selector: '#cvv'},
+          expirationDate: {selector: '#expiration-date'}
+        }
+      }, function (hostedFieldsErr, hostedFieldsInstance) {
+        if (hostedFieldsErr) {
+          console.error(hostedFieldsErr);
+          return;
+        }
+        submit.removeAttribute('disabled');
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+            if (tokenizeErr) {
+              console.error(tokenizeErr);
+              return;
+            }
+            document.getElementById('nonce').value = payload.nonce;
+            document.getElementById('payment').submit();
+          });
+        }, false);
+      });
+    });
+  </script>
+{% endblock extra_body %}

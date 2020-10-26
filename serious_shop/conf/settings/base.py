@@ -1,12 +1,17 @@
-from pathlib import Path
-import os
 import json
+import os
+from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-with open("serious_shop/conf/settings/config.json") as config_file:
+MAIN_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+
+
+file_path = str(BASE_DIR) + "\\settings\\config.json"
+with open(file_path) as config_file:
     secrets = json.load(config_file)
 
 
@@ -17,11 +22,6 @@ def get_secret(setting, secrets=secrets):
     except KeyError:
         error_msg = "Set the {0} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
-
-
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
-MAIN_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 
 SECRET_KEY = get_secret("SECRET_KEY")
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "items.apps.ItemsConfig",
     "lib.apps.LibConfig",
     "addresses.apps.AddressesConfig",
+    "payments.apps.PaymentsConfig",
     "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.auth",
@@ -174,6 +175,7 @@ AUTHENTICATION_BACKENDS = [
 
 
 COMPANY_NAME = "Serious Shop"
+EMAIL = get_secret("EMAIL")
 
 CART_SESSION_ID = "cart"
 MAX_ITEM_QUANTITY_IN_CART = 10

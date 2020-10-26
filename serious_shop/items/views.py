@@ -1,9 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, View
 from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import DetailView, ListView, View
 
-from items.models import Item, Category
+from items.models import Category, Item
 from lib.models import CompanyInfo
 
 

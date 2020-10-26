@@ -1,20 +1,22 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from items.models import Item, WearSize
 from addresses.models import Address
-from lib.utils import get_sentinel_user_deleted, get_sentinel_user_anonymous
+from items.models import Item, WearSize
+from lib.utils import get_sentinel_user_anonymous, get_sentinel_user_deleted
 
 
 class Order(models.Model):
     CREATED = "created"
     PAID = "paid"
+    UNPAID = "unpaid"
     SHIPPED = "shipped"
     REFUNDED = "refunded"
     ORDER_STATUS_CHOICES = (
         (CREATED, _("Created")),
         (PAID, _("Paid")),
+        (UNPAID, _("Unpaid")),
         (SHIPPED, _("Shipped")),
         (REFUNDED, _("Refunded")),
     )
@@ -46,9 +48,7 @@ class Order(models.Model):
     status = models.CharField(
         _("Status"), max_length=120, default="created", choices=ORDER_STATUS_CHOICES
     )
-    transaction_id = models.CharField(
-        _("Transaction id"), max_length=100, null=True, blank=True
-    )
+    braintree_id = models.CharField(max_length=150, blank=True)
     session = models.CharField(_("Session"), max_length=100)
 
     class Meta:
@@ -74,7 +74,7 @@ class Order(models.Model):
 
     @property
     def get_email(self):
-        if self.user == get_sentinel_user_deleted():
+        if self.user == get_sentinel_user_anonymous():
             return self.shipping_address.email
         return self.user.email
 

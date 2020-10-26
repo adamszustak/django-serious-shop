@@ -1,16 +1,16 @@
 import itertools
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.shortcuts import reverse
-from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from ckeditor.fields import RichTextField
+from lib.utils import image_directory_path
 from mptt.models import MPTTModel, TreeForeignKey
 
 from .managers import ItemManager
-from lib.utils import image_directory_path
 
 
 class Category(MPTTModel):

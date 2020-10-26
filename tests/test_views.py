@@ -1,19 +1,20 @@
-import pytest
 from decimal import Decimal
 
-from django.urls import reverse, resolve
 from django.conf import settings
-from django.db import IntegrityError
 from django.contrib.messages import get_messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
+from django.urls import resolve, reverse
 
+import pytest
 from items.models import Category, Item
+
 from .factories import (
-    ItemAccessoryFactory,
-    WearSizeFactory,
-    ItemWearFactory,
     CategoryFactory,
     CompanyFactory,
+    ItemAccessoryFactory,
+    ItemWearFactory,
+    WearSizeFactory,
 )
 
 
@@ -174,7 +175,7 @@ def test_remove_from_cart_POST(base_items, user_client):
 @pytest.mark.django_db
 def test_checkout_GET(base_items, user_client):
     wear, item = base_items
-    url = reverse("cart:checkout")
+    url = reverse("orders:checkout")
     response = user_client.get(url)
     messages = [m.message for m in get_messages(response.wsgi_request)]
     assert "Your cart is empty" == messages[0]
@@ -182,7 +183,7 @@ def test_checkout_GET(base_items, user_client):
 
     url = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
     response = user_client.post(url)
-    url = reverse("cart:checkout")
+    url = reverse("orders:checkout")
     response = user_client.get(url)
     session = user_client.session
     cart = session[settings.CART_SESSION_ID]

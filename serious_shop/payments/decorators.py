@@ -1,10 +1,12 @@
 from django.core.exceptions import PermissionDenied
-from .models import Order
+
+from orders.models import Order
 
 
 def user_is_order_author(function):
     def wrap(request, *args, **kwargs):
-        order = Order.objects.get(id=kwargs["order_id"])
+        order_id = kwargs["order_id"]
+        order = Order.objects.get(id=order_id)
         if order.user == request.user or request.session.session_key == order.session:
             return function(request, *args, **kwargs)
         else:

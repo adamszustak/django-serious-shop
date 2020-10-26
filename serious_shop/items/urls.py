@@ -3,11 +3,11 @@ from django.urls import path, re_path
 import mptt_urls
 
 from .views import (
+    CommonView,
     HomeView,
-    category_view,
     ItemDetailView,
     SearchResultsView,
-    CommonView,
+    category_view,
 )
 
 app_name = "items"

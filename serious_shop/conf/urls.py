@@ -1,11 +1,12 @@
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
+from django.contrib import admin
+from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("cart/", include("cart.urls", namespace="cart")),
     path("orders/", include("orders.urls", namespace="orders")),
+    path("payments/", include("payments.urls", namespace="payments")),
     path("accounts/", include("allauth.urls")),
     path("", include("items.urls", namespace="items")),
 ]
