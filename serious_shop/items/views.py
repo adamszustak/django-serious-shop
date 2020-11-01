@@ -6,42 +6,34 @@ from django.views.generic import DetailView, ListView, View
 from items.models import Category, Item
 from lib.models import CompanyInfo
 
+from .filters import ItemFilter
 
-class HomeView(ListView):
-    model = Item
-    template_name = "home.html"
-    paginate_by = 10
-    queryset = Item.objects.active().select_related("category")
 
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
+def item_list_view(request, path=None, instance=None):
+    context = {}
+    if instance:
+        category = Category.objects.get(id=instance.id)
+        items = Item.objects.in_category(category=category)
+        items_list = items.select_related("category")
+        context["title"] = category.name
+    elif request.GET.get("search"):
+        query = request.GET.get("search")
+        items_list = Item.objects.search(query).select_related("category")
+    else:
+        items_list = Item.objects.active().select_related("category")
         context["slider"] = True
-        return context
-
-
-def category_view(request, path, instance):
-    category = Category.objects.get(id=instance.id)
-    items = Item.objects.in_category(category=category)
-    items_list = items.select_related("category")
-    page = request.GET.get("page", 1)
+    items_filter = ItemFilter(request.GET, queryset=items_list)
+    items_list = items_filter.qs
     paginator = Paginator(items_list, 10)
+    page = request.GET.get("page", 1)
     try:
         items = paginator.page(page)
     except PageNotAnInteger:
         items = paginator.page(1)
     except EmptyPage:
         items = paginator.page(paginator.num_pages)
-    context = {"object_list": items, "title": category.name}
+    context.update({"paginagor": paginator, "filter": items_filter, "items": items})
     return render(request, "home.html", context)
-
-
-class SearchResultsView(ListView):
-    template_name = "home.html"
-    paginate_by = 10
-
-    def get_queryset(self, *args, **kwargs):
-        query = self.request.GET.get("search")
-        return Item.objects.search(query).select_related("category")
 
 
 class ItemDetailView(DetailView):

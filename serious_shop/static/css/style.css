@@ -90,7 +90,6 @@ nav p.infos a.basket span {
     position: absolute;
     height: 20px;
     width: 20px;
-    background-color: red;
     border-radius: 50%;
     top:35%;
     left:1%;
@@ -357,12 +356,16 @@ section.slider .dots span.active {
 }
 
 /* ****************MAIN*****************/
+form#sort p {
+    float: right;
+    margin-top:10px;
+}
+
 main div.product-list {
     height: 50px;
-    background-color: #fff;
     z-index: 1;
     border-bottom: 1px solid grey;
-    text-align: center;
+    text-align: start;
     padding: 10px;
     font-weight: 700;
 }

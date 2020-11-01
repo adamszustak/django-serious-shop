@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import models, transaction
+from django.db.models import F
 from django.utils.translation import gettext_lazy as _
 
 from addresses.models import Address
@@ -97,6 +99,17 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} of {self.item.title} - {self.size}"
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            try:
+                item = WearSize.objects.get(item=self.item.id, size=self.size)
+            except ObjectDoesNotExist:
+                item = self.item
+            item.quantity = F("quantity") - self.quantity
+            item.save()
+        super(OrderItem, self).save(*args, **kwargs)
 
     def get_cost(self):
         return self.price * self.quantity

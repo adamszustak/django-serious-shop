@@ -6,10 +6,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.urls import resolve, reverse
 
+import factory
 import pytest
+from addresses.forms import BillingAddressForm, ShippingAddressForm
 from items.models import Category, Item
 
 from .factories import (
+    AddressFactory,
     CategoryFactory,
     CompanyFactory,
     ItemAccessoryFactory,
@@ -19,37 +22,32 @@ from .factories import (
 
 
 @pytest.mark.django_db
-def test_homeview_list_GET(client):
+def test_item_list_GET(client, base_items):
     ItemAccessoryFactory.create_batch(2)
     url = reverse("items:home")
     response = client.get(url)
     assert response.status_code == 200
-    assert response.context["object_list"].count() == 2
+    assert response.context["filter"].qs.count() == 4
     assert response.context["slider"] is True
 
     resolver = resolve("/")
     assert resolver.view_name == "items:home"
 
-
-@pytest.mark.django_db
-def test_categoryview__GET(client, base_items):
     wear, item = base_items
     category = wear.category
     url = reverse("items:category_list_item", kwargs={"path": category.get_path()},)
     response = client.get(url)
     assert response.status_code == 200
+    assert response.context["filter"].qs.count() == 1
     assert "slider" not in response.context
 
     resolver = resolve("/category/male/glasses")
     assert resolver.view_name == "items:category_list_item"
 
-
-@pytest.mark.django_db
-def test_searchresultview_list_GET(client, base_items):
     url = reverse("items:search_results")
     response = client.get(url, {"search": "Wear-"})
     assert response.status_code == 200
-    assert response.context["object_list"].count() == 1
+    assert response.context["filter"].qs.count() == 1
 
     resolver = resolve("/search/")
     assert resolver.view_name == "items:search_results"
@@ -182,13 +180,29 @@ def test_checkout_GET(base_items, user_client):
     assert response.status_code == 302
 
     url = reverse("cart:add_to_cart", kwargs={"item_id": item.id})
-    response = user_client.post(url)
+    user = user_client
+    response = user.post(url)
     url = reverse("orders:checkout")
-    response = user_client.get(url)
-    session = user_client.session
+    response = user.get(url)
+    session = user.session
     cart = session[settings.CART_SESSION_ID]
     assert response.status_code == 200
     assert response.context["cart"]
-    assert response.context["shipping_form"]
     assert response.context["billing_form"]
+    assert response.context["shipping_form"]
     assert response.context["total"]
+
+    # billing_data = AddressFactory(address_type='billing').__dict__
+    # shipping_data = AddressFactory(address_type='shipping').__dict__
+    # data = {}
+    # for e in ['_state', 'id', '_uncommitted_filefields', 'user_id']:
+    #     billing_data.pop(e, None)
+    #     shipping_data.pop(e, None)
+    # for key, value in shipping_data.items():
+    #     data['shipping-' + str(key)] = [value]
+    # for key, value in billing_data.items():
+    #     data['billing-' + str(key)] = [value]
+
+    # url = reverse("orders:checkout")
+    # print(user.post(url, data=data))
+    # assert response.status_code == 302

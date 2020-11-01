@@ -31,7 +31,7 @@
             {% thumbnail item.get_main_photo 280x300 crop="smart" as img %}
             <img src="{{ img.url }}" alt="">
             <div class="info">
-                <p class="item-name">{{ item.title }} {% if item.size %} - {{ item.size }}{% endif %}</p>
+                <p class="item-name">{{ item.title }} {% if order_item.size %} - {{ order_item.size }}{% endif %}</p>
                 <p class="quantity">{{ order_item.quantity }} pieces</p>
             </div>
         </div>

@@ -15,15 +15,17 @@ Django-serious-shop is an e-commerce website project built using the Django fram
 * Comprehensively covered with tests to make sure everything is working properly
 
 ## Todo list
-- [ ] add sorting bar
-- [ ] create connections between quantity in the warehouse and order
+- [X] add sorting bar
+- [X] create connections between quantity in the warehouse and order
 - [ ] handle bank transfers and other paying methods
 - [ ] add posibility of creating and managing own profile
 - [ ] add historical info
 - [ ] add localization and internationalization support 
 - [ ] add extra functionality for confirmed users e.g. wish list
 - [ ] panel for managing refunds and promo codes
-- [ ] and many others
+- [ ] allow customers to track the package
+- [ ] add the ability to generate PDF invoices
+- [ ] and many others :alien:
 
 ## Small Piece of Work
 
@@ -45,6 +47,7 @@ ___
 * [django-ckeditor](https://github.com/django-ckeditor/django-ckeditor)
 * [django-allauth](https://github.com/pennersr/django-allauth)
 * [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
+* [django-filter](https://github.com/carltongibson/django-filter)
 * [Braintree](https://github.com/braintree/braintree_python)
 
 ### Clone Project

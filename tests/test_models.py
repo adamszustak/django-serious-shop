@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
@@ -58,6 +60,7 @@ def test_item_model():
     with pytest.raises(ValidationError):
         assert wear1.full_clean()
 
+    # testing custom manager
     item2.active = False
     item2.save()
     assert Item.objects.active().count() == 3
@@ -108,45 +111,44 @@ def test_address_model():
         .exists()
     )
 
+    # testing custom manager
+    shipping_address.user = user
+    shipping_address.save()
+    assert Address.objects.default_shipping(user)[0] == shipping_address
+    assert Address.objects.default_billing(user)[0] == billing_address2
+
+    billing_address.user = user
+    billing_address.save()
+    assert Address.objects.default_billing(user)[0] == billing_address
+
 
 @pytest.mark.django_db
 def test_orderitem_model():
-    order_item = OrderItemFactory(price=10, quantity=5)
-    order_item2 = OrderItemFactory(price=10, quantity=20)
+    wear = ItemWearFactory(quantity=10)
+    acc = ItemAccessoryFactory(quantity=10)
+    order_item = OrderItemFactory(item=wear, price=10, quantity=5)
+    order_item2 = OrderItemFactory(item=acc, price=10, quantity=20)
     assert order_item.get_cost() == 50
     assert order_item2.get_cost() == 200
-
-    order = OrderFactory()
-    order.items.add(order_item, order_item2)
-    order.save()
-    assert order.get_total == 250
-    assert order.items_quantity == 25
-    assert order.get_email == order.user.email
+    assert Item.objects.get(id=wear.id).quantity == 5
+    assert Item.objects.get(id=acc.id).quantity == -10
 
 
-# @pytest.mark.django_db
-# def test_orderitem_model():
-#     item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00)
-#     item1.sizes.add(WearSizeFactory(item=item1, size="M", quantity=10))
-#     order_item1 = OrderItemFactory(
-#         item=item1, size=item1.sizes.first().size, quantity=5
-#     )
-#     assert order_item1.get_total_item_price == 125
-#     assert order_item1.get_total_discount_item_price == 50
-#     assert order_item1.get_amount_saved == 75
-#     assert order_item1.get_final_price == 50
-
-
-# @pytest.mark.django_db
-# def test_order_model():
-#     item1 = ItemFactory(quantity=5, price=25.00, discount_price=10.00)
-#     item2 = ItemFactory(quantity=10, price=50.00, discount_price=25.00)
-#     item1.sizes.add(WearSizeFactory(item=item1, size="M", quantity=10))
-#     order_item1 = OrderItemFactory(
-#         item=item1, size=item1.sizes.first().size, quantity=5
-#     )
-#     order_item2 = OrderItemFactory(item=item2)
-#     order = OrderFactory()
-#     order.items.add(order_item1, order_item2)
-#     assert order.get_total == 75
-#     assert order.items_quantity == 6
+@pytest.mark.django_db
+def test_order_model():
+    item1 = ItemWearFactory(price=25.00, discount_price=10.00)
+    item2 = ItemAccessoryFactory(quantity=10, price=50.00, discount_price=25.00)
+    item1.sizes.add(WearSizeFactory(size="M", quantity=10))
+    order_item1 = OrderItemFactory(
+        item=item1, size=item1.sizes.first().size, quantity=5, price=item1.actual_price
+    )
+    order_item2 = OrderItemFactory(item=item2, price=item2.actual_price, quantity=1)
+    user = UserFactory(email="userlol@wp.pl")
+    order = OrderFactory(user=user)
+    address = AddressFactory(address_type="shipping", email="lol@wp.pl")
+    order2 = OrderFactory(user=get_sentinel_user_anonymous(), shipping_address=address)
+    order.items.add(order_item1, order_item2)
+    assert order.get_total == Decimal(75)
+    assert order.items_quantity == 6
+    assert order.get_email == "userlol@wp.pl"
+    assert order2.get_email == "lol@wp.pl"

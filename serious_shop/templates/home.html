@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+{% include 'snippets/sort_bar.html' %}
 <div class="product-list">
-    <h3 class="category"></h3>
+    <h3 class="category">{{ title }}</h3>
 </div>
 <div class="row">
-    {% for item in object_list %}
+    {% for item in items %}
         {% include "snippets/item_snippet.html" %}
     {% empty %}
     <h1>Unfortunately nothing to see here. Back to <a href="{% url 'items:home' %}"><strong>main page</strong></a></h1>

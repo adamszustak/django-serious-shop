@@ -1,0 +1,10 @@
+<form method="GET" id="sort">
+    {{ filter.form.as_p }}
+</form>
+{% block extra_body %}
+<script>
+document.querySelector("select[name=ordering]").addEventListener('change', function(){
+    document.querySelector("form#sort").submit();
+})
+</script>
+{% endblock extra_body %}
