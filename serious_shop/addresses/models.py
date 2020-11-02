@@ -42,7 +42,7 @@ class Address(models.Model):
     objects = AddressQuerySet.as_manager()
 
     def __str__(self):
-        return f"{self.city} {self.street} {self.flat_nr}"
+        return f"{self.first_name} {self.last_name}, {self.province} {self.city} {self.zip_code} {self.street}/{self.flat_nr}"
 
     class Meta:
         verbose_name = _("Address")
@@ -67,6 +67,3 @@ class Address(models.Model):
             else:
                 default_shipping.update(is_default=False)
         super(Address, self).save(*args, **kwargs)
-
-    def get_short(self):
-        return f"{self.first_name} {self.last_name}, {self.province} {self.city} {self.zip_code} {self.street}/{self.flat_nr}"
