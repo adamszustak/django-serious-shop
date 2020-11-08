@@ -31,7 +31,7 @@ class Address(models.Model):
     )
     first_name = models.CharField(_("First name"), max_length=50)
     last_name = models.CharField(_("Last name"), max_length=50)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     street = models.CharField(_("Street"), max_length=50)
     flat_nr = models.IntegerField(_("Flat number"))
     zip_code = models.CharField(_("zip code"), max_length=20)

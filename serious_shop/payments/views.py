@@ -6,7 +6,7 @@ from cart.cart import Cart
 from orders.models import Order
 
 from .decorators import user_is_order_author
-from .tasks import order_created
+from .tasks import order_confirmation
 
 gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
 
@@ -22,6 +22,7 @@ def order_payment(request, order_id):
         status="created",
     )
     total_cost = order.get_total
+    path = request.build_absolute_uri()
     if request.method == "POST":
         nonce = request.POST.get("payment_method_nonce", None)
         result = gateway.transaction.sale(
@@ -36,13 +37,13 @@ def order_payment(request, order_id):
             order.braintree_id = result.transaction.id
             order.save()
             cart.clear()
-            order_created.delay(order.id, order.status)
+            order_confirmation.delay(order.id, order.status, path)
             return redirect("payments:confirmed_order", order_id=order_id)
         else:
             order.status = "unpaid"
             order.save()
             cart.clear()
-            order_created.delay(order.id, order.status)
+            order_confirmation.delay(order.id, order.status, path)
             return redirect("payments:unconfirmed_order", order_id=order_id)
     else:
         client_token = gateway.client_token.generate()

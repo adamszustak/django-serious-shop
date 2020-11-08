@@ -47,6 +47,7 @@ Main Page         |  Product Details | Cart | Payment
 * [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
 * [django-filter](https://github.com/carltongibson/django-filter)
 * [celery](https://github.com/celery/celery)
+* [weasyprint](https://github.com/Kozea/WeasyPrint)
 * [Braintree](https://github.com/braintree/braintree_python)
 
 ### Clone Project

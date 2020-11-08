@@ -90,7 +90,6 @@ nav p.infos a.basket span {
     position: absolute;
     height: 20px;
     width: 20px;
-    background-color: red;
     border-radius: 50%;
     top:35%;
     left:1%;
@@ -268,17 +267,18 @@ section.choice {
     position: relative;
 }
 
-section.choice div.wrapper {
+section.choice .wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin:0;
 }
 
 section.choice i.fa-bars {
     display: none;
 }
 
-section.choice div.wrapper a {
+section.choice .wrapper a {
     font-size:32px;
     color: white;
     font-family: 'Teko', sans-serif;
@@ -286,11 +286,12 @@ section.choice div.wrapper a {
     padding:0 40px;
 }
 
-section.choice div.wrapper .dropdown {
+section.choice .wrapper .dropdown {
   position: relative;
 }
 
-section.choice div.wrapper .dropdown-content {
+section.choice
+.wrapper .dropdown-content {
     display: none;
     position: absolute;
     background-color: #fff;
@@ -302,7 +303,7 @@ section.choice div.wrapper .dropdown-content {
 }
 
 
-section.choice div.wrapper .dropdown-content a {
+section.choice .wrapper .dropdown-content a {
   color: black;
   padding: 6px 16px;
   display: block;
@@ -311,7 +312,7 @@ section.choice div.wrapper .dropdown-content a {
   transition: .2s;
 }
 
-section.choice div.wrapper .dropdown-content a:hover{
+section.choice .wrapper .dropdown-content a:hover{
     background-color: #ddd;
 }
 
@@ -355,12 +356,16 @@ section.slider .dots span.active {
 }
 
 /* ****************MAIN*****************/
+form#sort p {
+    float: right;
+    margin-top:10px;
+}
+
 main div.product-list {
     height: 50px;
-    background-color: #fff;
     z-index: 1;
     border-bottom: 1px solid grey;
-    text-align: center;
+    text-align: start;
     padding: 10px;
     font-weight: 700;
 }
@@ -561,11 +566,11 @@ section.maininfos div.infos form input:checked + label {
     color: white;
 }
 
-section.maininfos div.infos form input[type=radio].disabled {
+section.maininfos div.sizes form input[type=radio].disabled {
     cursor: none;
 }
 
-section.maininfos div.infos form button {
+section.maininfos div.sizes form button {
     position: absolute;
     left:50%;
     top:56px;
@@ -580,11 +585,11 @@ section.maininfos div.infos form button {
     transition: .2s;
 }
 
-section.maininfos div.infos form button:hover {
+section.maininfos div.sizes form button:hover {
     background-color: black;
 }
 
-section.maininfos div.infos form button i {
+section.maininfos div.sizes form button i {
     position: absolute;
     top:50%;
     left:100%;
@@ -674,7 +679,7 @@ li.card {
 
 /* ****************GENERIC_INFO*****************/
 .generic-info {
-    width:90%;
+    width:100%;
     background-color: #fff;
     padding:50px 30px;
 }
@@ -728,7 +733,6 @@ table tr.total {
 
 .tablebuttons a {
     border: 1px solid #cccccc;
-    margin-left: 20px;
     padding:8px 20px;
     border-radius: 4px;
     font-weight: 600;
@@ -805,11 +809,79 @@ p.total span {
     font-weight: 600;
 }
 
-div.order-option {
-    margin-top:60px;
+div.order-option a.login,
+button.submit,
+a.place-order {
+    display: block;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    text-align: center;
+}
+
+form.address,
+div.input_address  {
+    margin-top: 20px;
+    width: 100%;
+}
+
+div.shipping, div.billing {
+    width: 45%;
+    float: left;
+}
+
+div.shipping {
+    margin-right: 10%;
+}
+
+/* ****************ORDER_SUMMARY*****************/
+div.order {
+    display:flex;
+}
+div.payment {
+    width: 50%;
+}
+div.order-summary {
+    width: 50%;
+    background-color: rgb(221, 221, 221);
+    padding:10px 20px;
+}
+span.cost {
+    float:right;
+    font-weight: 600;
+}
+form div.field {
+    font-size:17px;
+    color:#666;
+    width:70%;
+    height:30px;
+    margin-bottom:10px;
+    padding:6px 12px;
+    border:0;
+    background:#efefef;
+    color:#666;
+    border-radius:4px;
+}
+
+form#payment label {
+    font-weight: 600;
+    font-size: 17px;
+    margin-top: 10px
+}
+
+form#payment input[type=submit] {
+    width: 70%;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 4px 6px;
+    text-align: center;
+    font-weight: 600;
+    border:none;
+    transition: 0.3s;
+    margin-top:20px;
+}
+
+form#payment input[type=submit]:hover {
+    background-color: grey;
 }
 
 /* ****************AUTH*****************/
@@ -832,7 +904,9 @@ section.account p a.login {
 section.account form button,
 section.account form a,
 section.account form input[type=submit],
-a.login, a.guest {
+a.login, a.guest,
+button.submit,
+input#addresses {
     border: none;
     cursor: pointer;
     padding: 10px;
@@ -846,7 +920,8 @@ section.account form a {
 }
 section.account form button:hover,
 section.account form input[type=submit]:hover,
-a.login:hover, a.guest:hover {
+a.login:hover, a.guest:hover,
+button.submit {
     background-color: #000;
 }
 /* ****************FOOTER*****************/
@@ -1007,10 +1082,11 @@ footer div.lower div.social span.instagram {
 
     /*****************SECTION-CHOICE*****************/
 
-    section.choice div.wrapper {
+    section.choice .wrapper {
         display: none;
+        margin:0;
     }
-    section.choice div.wrapper.show {
+    section.choice .wrapper.show {
         display: block;
         display: flex;
         flex-direction: column;
@@ -1023,7 +1099,7 @@ footer div.lower div.social span.instagram {
         font-size: 25px;
     }
 
-    div.dropdown div.dropdown-content {
+    .dropdown .dropdown-content {
         display: none !important;
     }
     /*****************SLIDER*****************/
@@ -1067,7 +1143,7 @@ footer div.lower div.social span.instagram {
     section.maininfos div.photos {
         height: auto;
     }
-    /*****************CHECKOUT*****************/
+    /*****************DETAIL_ITEM*****************/
     div.window {
         height:130px;
     }
@@ -1122,11 +1198,12 @@ footer div.lower div.social span.instagram {
     }
 
     /*****************SECTION-CHOICE*****************/
-    section.choice div.wrapper {
+    section.choice .wrapper {
         display: none;
+        margin: 0;
     }
 
-    section.choice div.wrapper.show {
+    section.choice .wrapper.show {
         display: block;
         display: flex;
         flex-direction: column;
@@ -1139,7 +1216,7 @@ footer div.lower div.social span.instagram {
         font-size: 25px;
     }
 
-    div.dropdown div.dropdown-content {
+    .dropdown .dropdown-content {
         display: none !important;
     }
     /*****************SLIDER*****************/
@@ -1194,6 +1271,13 @@ footer div.lower div.social span.instagram {
     /*****************CHECKOUT*****************/
     div.window {
         height:130px;
+    }
+    /* ****************ORDER_SUMMARY*****************/
+    div.order {
+        flex-direction: column;
+    }
+    div.payment, div.order-summary {
+        width: 100%;
     }
     /*****************FOOTER*****************/
     footer div.upper {

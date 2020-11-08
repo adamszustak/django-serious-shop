@@ -19,6 +19,7 @@ django-localflavor = "^3.0.1"
 celery = "^5.0.1"
 braintree = "^4.4.0"
 django-filter = "^2.4.0"
+weasyprint = "^52.1"
 
 [tool.poetry.dev-dependencies]
 django-debug-toolbar = "^2.2"

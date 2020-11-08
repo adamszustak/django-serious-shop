@@ -40,3 +40,6 @@ BRAINTREE_CONF = braintree.Configuration(
     BRAINTREE_PUBLIC_KEY,
     BRAINTREE_PRIVATE_KEY,
 )
+
+CELERY_ALWAYS_EAGER = True
+TEST_RUNNER = "djcelery.contrib.test_runner.CeleryTestSuiteRunner"

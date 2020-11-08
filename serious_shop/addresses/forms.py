@@ -15,11 +15,12 @@ class AddressForm(forms.ModelForm):
         labels = {"is_default": "Set as default"}
 
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop("request", None)
-        self.user = self.request.user
+        self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
         if not self.user.is_authenticated:
             del self.fields["is_default"]
+        else:
+            del self.fields["email"]
 
 
 class ShippingAddressForm(AddressForm):

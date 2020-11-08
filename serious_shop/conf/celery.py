@@ -6,7 +6,7 @@ from celery import Celery
 
 # if settings.DEBUG:
 #     settings =
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conf.settings.local")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conf.settings.production")
 
 app = Celery("serious_shop")
 

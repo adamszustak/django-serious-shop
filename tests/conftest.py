@@ -49,11 +49,11 @@ def admin_client(db, admin_user):
 @pytest.fixture
 def user_user(db, django_user_model, django_username_field):
     user = UserFactory(
-        username="user",
+        username="user_user",
         password=make_password("secret"),
-        first_name="Normal",
-        last_name="User",
         is_active=True,
+        is_staff=False,
+        is_superuser=False,
     )
     return user
 
@@ -63,3 +63,15 @@ def user_client(db, user_user):
     client = Client()
     client.login(username=user_user.username, password="secret")
     return client
+
+
+normalized_data = {
+    "address_type": "billing",
+    "first_name": "Adam",
+    "last_name": "Szustak",
+    "street": "Jagiellońska",
+    "flat_nr": "12",
+    "zip_code": "05-825",
+    "city": "Grodzisk Mazowiecki",
+    "province": "slubicki",
+}

@@ -9,6 +9,7 @@ import pytest
 from addresses.models import Address
 from items.models import Category, Item, ItemImage
 from lib.utils import get_sentinel_user_anonymous, image_directory_path
+from orders.models import Order
 
 from .factories import (
     AddressFactory,
@@ -152,3 +153,10 @@ def test_order_model():
     assert order.items_quantity == 6
     assert order.get_email == "userlol@wp.pl"
     assert order2.get_email == "lol@wp.pl"
+    assert order.paid() == False
+
+    # testing custom manager
+    order2 = OrderFactory(user=user)
+    Order.objects.filter(user=user).update(status="paid")
+    assert list(Order.objects.search_by_user(user)) == [order2, order]
+    assert Order.objects.latest("id").paid() == True

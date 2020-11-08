@@ -8,6 +8,8 @@ from addresses.models import Address
 from items.models import Item, WearSize
 from lib.utils import get_sentinel_user_anonymous, get_sentinel_user_deleted
 
+from .managers import OrderQuerySet
+
 
 class Order(models.Model):
     CREATED = "created"
@@ -53,6 +55,8 @@ class Order(models.Model):
     braintree_id = models.CharField(max_length=150, blank=True)
     session = models.CharField(_("Session"), max_length=100)
 
+    objects = OrderQuerySet.as_manager()
+
     class Meta:
         verbose_name = _("Order")
         verbose_name_plural = _("Orders")
@@ -79,6 +83,11 @@ class Order(models.Model):
         if self.user == get_sentinel_user_anonymous():
             return self.shipping_address.email
         return self.user.email
+
+    def paid(self):
+        if self.status == "paid":
+            return True
+        return False
 
 
 class OrderItem(models.Model):

@@ -1,0 +1,104 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Invoice order {{ order.id }}</title>
+</head>
+
+<body>
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <img src="{% static 'img/logo.png' %}" style="width:100%; max-width:300px;">
+                            </td>
+                            <td>
+                                Invoice #: 123<br>
+                                Invoice Date: {{ order.created_date|date:"M d, Y" }}<br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="information">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>
+                                <strong>Issue By</strong><br>
+                                {{ company.name }}<br>
+                                {{ company.street }}<br>
+                                {{ company.zip_city }}
+                            </td>
+
+                            <td>
+                                <strong>Bill To</strong><br>
+                                {% with order.billing_address as billing %}
+                                {{ billing.first_name }} {{ billing.last_name }}<br>
+                                {{ billing.street }} {{ billing.flat_nr }}<br>
+                                {{ billing.zip_code }}, {{ billing.city }}
+                                {% endwith %}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td>
+                    Payment Method
+                </td>
+
+                <td>
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td>
+                    Card
+                </td>
+
+                <td>
+                    ${{ order.get_total }}
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td>
+                    Item
+                </td>
+
+                <td>
+                    Price
+                </td>
+            </tr>
+
+            <tr class="item">
+                {% for order_item in order.items.all %}
+                {% with item=order_item.item %}
+                <td>
+                    {{ item.title }} {% if order_item.size %} - {{ order_item.size }}{% endif %} - {{ order_item.quantity }}
+                </td>
+
+                <td>
+                    ${{ order_item.get_cost }}
+                </td>
+            </tr>
+                {% endwith %}
+                {% endfor %}
+            <tr class="total">
+                <td></td>
+
+                <td>
+                   Total: ${{ order.get_total }}
+                </td>
+            </tr>
+        </table>
+        Status: <strong>{% if order.paid %} PAID {% else %} UNPAID {% endif %}</strong>
+    </div>
+</body>
+</html>

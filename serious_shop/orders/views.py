@@ -13,30 +13,31 @@ def checkout(request):
     if len(cart) == 0 or not cart:
         messages.warning(request, "Your cart is empty")
         return redirect("items:home")
+    user = request.user
     def_billing_address = (
         def_shipping_address
     ) = shipping_initial = billing_initial = None
     if request.user.is_authenticated:
         try:
-            def_billing_address = Address.objects.default_billing(request.user)[0]
-            def_shipping_address = Address.objects.default_shipping(request.user)[0]
+            def_billing_address = Address.objects.default_billing(user)[0]
+            def_shipping_address = Address.objects.default_shipping(user)[0]
             shipping_initial = def_shipping_address.__dict__
             billing_initial = def_billing_address.__dict__
         except (ObjectDoesNotExist, IndexError):
             pass
     if request.method == "POST":
         billing_form = BillingAddressForm(
-            request.POST, prefix="billing", request=request, initial=billing_initial
+            request.POST, prefix="billing", user=user, initial=billing_initial
         )
         shipping_form = ShippingAddressForm(
-            request.POST, prefix="shipping", request=request, initial=shipping_initial
+            request.POST, prefix="shipping", user=user, initial=shipping_initial
         )
         if billing_form.is_valid() and shipping_form.is_valid():
             billing = billing_form.save(commit=False)
             shipping = shipping_form.save(commit=False)
             order = Order()
-            if request.user.is_authenticated:
-                billing.user = shipping.user = order.user = request.user
+            if user.is_authenticated:
+                billing.user = shipping.user = order.user = user
             if def_billing_address and not billing_form.has_changed():
                 order.billing_address = def_billing_address
             else:
@@ -63,10 +64,10 @@ def checkout(request):
             "cart": cart,
             "total": cart.get_final_price(),
             "shipping_form": ShippingAddressForm(
-                prefix="shipping", initial=shipping_initial, request=request
+                prefix="shipping", initial=shipping_initial, user=user
             ),
             "billing_form": BillingAddressForm(
-                prefix="billing", initial=billing_initial, request=request
+                prefix="billing", initial=billing_initial, user=user
             ),
         }
         return render(request, "checkout.html", context)

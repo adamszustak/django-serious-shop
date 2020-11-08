@@ -3,7 +3,7 @@
     {% load mptt_tags %}
     <nav>
         <p class="number"><span class="nr" type=>{{ company.phone }}</span><span class="nrinfo">(Helpline opening hours: {{ company.start_time }} - {{ company.end_time }})</span></p>
-        <p class="infos"><a href="{% url 'cart:cart_detail' %}" class="basket">{% if not cart.is_empty %}<span class="cart_nr">{{ cart|length }}</span>{% endif %}<i class="fa fa-shopping-basket" aria-hidden="true"></i>Basket</a><span class="forusers">{% if user.is_authenticated %}<a href="#" class="history">My history</a><a  href="{% url 'account_logout' %}" class="logout">Logout</a>{% else %}<a  href="{% url 'account_login' %}" class="join">Login</a><a href="{% url 'account_signup' %}" class="register">Register</a>{% endif %}</span></p>
+        <p class="infos"><a href="{% url 'cart:cart_detail' %}" class="basket">{% if not cart.is_empty %}<span class="cart_nr">{{ cart|length }}</span>{% endif %}<i class="fa fa-shopping-basket" aria-hidden="true"></i>Basket</a><span class="forusers">{% if user.is_authenticated %}<a href="{% url 'users:history' %}" class="history">My history</a><a  href="{% url 'account_logout' %}" class="logout">Logout</a>{% else %}<a  href="{% url 'account_login' %}" class="join">Login</a><a href="{% url 'account_signup' %}" class="register">Register</a>{% endif %}</span></p>
     </nav>
     <header>
         {% if messages %}
