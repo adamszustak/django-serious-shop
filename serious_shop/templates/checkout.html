@@ -24,7 +24,29 @@
     <hr>
     {% endwith %}
     {% endfor %}
-    <p class='total'>Total price:<span> {{ total }} $</span></p>
+    <div class="window" id='code' {% if not cart.coupon %} style="display:none" {% endif %}>
+        {% if cart.coupon %}
+        <img src="{{ cart.coupon.get_image }}" alt="">
+        <div class="info">
+            <p class="item-name">Coupon - {{ cart.coupon.code }}</p>
+            <p class="quantity">Coupon for {{ cart.coupon.discount }}% off</p>
+            <p class="price">- {{ cart.get_discount }} $</p>
+        </div>
+        {% endif %}
+    </div>
+    <p class="message" id="message-coupon" style="display:none">Coupon doesn't exists or is expired</p>
+    <p class='total'>Total price:<span> ${{ cart.get_final_price }} {% if cart.coupon %} - <span style="color:red;">${{ cart.get_discount|floatformat:2 }}</span> = ${{ cart.get_final_discount_price|floatformat:2 }} {% endif %}</p>
+    <div class="formsets">
+    <form data-url="{% url 'coupons:apply' %}" method="Post" class="promo" id="code_form" >
+        {{ coupon_form }}
+        <input type="submit" value="Apply" name="apply">
+        {% csrf_token %}
+    </form>
+    <form action="{% url 'coupons:delete' %}" method="Post" class="delete-promo">
+        <input type="submit" value="Delete" name="delete">
+        {% csrf_token %}
+    </form>
+    </div>
     {% if not request.user.is_authenticated %}
     <div class="order-option">
         <a class="login" href="{% url 'account_login' %}?next=/cart/checkout/">Continue as user</a>

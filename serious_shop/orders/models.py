@@ -5,6 +5,7 @@ from django.db.models import F
 from django.utils.translation import gettext_lazy as _
 
 from addresses.models import Address
+from coupons.models import Coupon
 from items.models import Item, WearSize
 from lib.utils import get_sentinel_user_anonymous, get_sentinel_user_deleted
 
@@ -47,6 +48,12 @@ class Order(models.Model):
         null=True,
         blank=True,
     )
+    coupon = models.ForeignKey(
+        Coupon, related_name="orders", null=True, blank=True, on_delete=models.SET_NULL
+    )
+    discount = models.DecimalField(
+        _("Discount"), max_digits=5, decimal_places=2, blank=True, null=True, default=0,
+    )
     created_date = models.DateTimeField(_("Created at"), auto_now_add=True)
     updated_date = models.DateTimeField(_("Ordered at"), auto_now=True)
     status = models.CharField(
@@ -66,10 +73,8 @@ class Order(models.Model):
 
     @property
     def get_total(self):
-        total = 0
-        for order_item in self.items.all():
-            total += order_item.get_cost()
-        return total
+        total = sum(item.get_cost() for item in self.items.all())
+        return total - self.discount
 
     @property
     def items_quantity(self):

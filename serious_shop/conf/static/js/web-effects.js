@@ -27,3 +27,10 @@ $(document).ready(function() {
         baner.style.opacity = 0
     });
 });
+
+// promo-code
+$(document).on('submit', '#code_form',function(e){
+    console.log(
+        'ok'
+    )
+})

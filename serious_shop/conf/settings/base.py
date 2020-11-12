@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "addresses.apps.AddressesConfig",
     "payments.apps.PaymentsConfig",
     "users.apps.UsersConfig",
+    "coupons.apps.CouponsConfig",
     "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.auth",

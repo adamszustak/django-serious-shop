@@ -280,6 +280,9 @@ def test_order_payment_GET(base_items, user_client, user_user):
     assert response.status_code == 200
     assert response.context["client_token"]
 
+    response = Client().get(url3)
+    assert response.status_code == 403
+
 
 @pytest.mark.django_db
 def test_order_payment_POST(base_items, user_client, user_user):

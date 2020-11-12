@@ -1,7 +1,9 @@
 from decimal import Decimal
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
+from coupons.models import Coupon
 from items.models import Item
 
 
@@ -15,6 +17,7 @@ class Cart(object):
         if not cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
+        self.coupon_id = self.session.get("coupon_id")
 
     def __iter__(self):
         """
@@ -102,3 +105,21 @@ class Cart(object):
 
     def get_cart(self):
         return self.cart
+
+    @property
+    def coupon(self):
+        if self.coupon_id:
+            try:
+                return Coupon.objects.get(id=self.coupon_id)
+            except ObjectDoesNotExist:
+                pass
+        return None
+
+    def get_discount(self):
+        if self.coupon:
+            discount = (self.coupon.discount / Decimal(100)) * self.get_final_price()
+            return Decimal(f"{discount:.2f}")
+        return Decimal(0)
+
+    def get_final_discount_price(self):
+        return self.get_final_price() - self.get_discount()

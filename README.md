@@ -23,6 +23,7 @@ Django-serious-shop is an e-commerce website project built using the Django fram
 - [ ] add localization and internationalization support 
 - [ ] add extra functionality for confirmed users e.g. wish list
 - [ ] panel for managing refunds and promo codes
+- [X] panel for managing refunds and promo codes
 - [ ] allow customers to track the package
 - [ ] add the ability to generate PDF invoices
 - [ ] and many others :alien:

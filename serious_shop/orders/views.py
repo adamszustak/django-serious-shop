@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 from addresses.forms import BillingAddressForm, ShippingAddressForm
 from addresses.models import Address
 from cart.cart import Cart
+from coupons.forms import CouponForm
 from orders.models import Order, OrderItem
 
 
@@ -49,6 +50,9 @@ def checkout(request):
                 shipping.save()
                 order.shipping_address = shipping
             order.session = request.session.session_key
+            if cart.coupon:
+                order.coupon = cart.coupon
+                order.discount = cart.get_discount()
             order.save()
             for item in cart:
                 OrderItem.objects.create(
@@ -60,14 +64,15 @@ def checkout(request):
                 )
             return redirect("payments:order_payment", order_id=order.id)
     else:
+        coupon_form = CouponForm()
         context = {
             "cart": cart,
-            "total": cart.get_final_price(),
             "shipping_form": ShippingAddressForm(
                 prefix="shipping", initial=shipping_initial, user=user
             ),
             "billing_form": BillingAddressForm(
                 prefix="billing", initial=billing_initial, user=user
             ),
+            "coupon_form": coupon_form,
         }
         return render(request, "checkout.html", context)
