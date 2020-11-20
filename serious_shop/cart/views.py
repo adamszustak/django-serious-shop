@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 
 from addresses.forms import BillingAddressForm, ShippingAddressForm
@@ -22,7 +23,7 @@ def add_to_cart(request, item_id, size=None):
     if not size:
         size = request.POST.get("size") or None
     if item.category.need_sizes and not size:
-        messages.warning(request, "You need to choose size")
+        messages.warning(request, _("You need to choose size"))
         return redirect("items:detail_item", slug=item.slug)
     if request.is_ajax() and request.method == "POST":
         cart.add(item, size)

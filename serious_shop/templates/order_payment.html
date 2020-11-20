@@ -1,28 +1,32 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load thumbnail %}
+
+{% block head_title %} {% trans 'Payment' %} {% endblock head_title %}
+
 {% block content %}
 <div class="generic-info order">
     <div class="payment">
-        <h1>Payment</h1>
+        <h1>{% trans 'Payment for order' %}</h1>
           <form id="payment" method="post">
-            <label for="card-number">Card Number</label><p>test: 2223000048400011</p>
+            <label for="card-number">{% trans 'Card Number' %}</label><p>test: 2223000048400011</p>
             <div id="card-number" class="field"></div>
             <label for="cvv">CVV</label>
             <div id="cvv" class="field"></div>
-            <label for="expiration-date">Expiration Date</label>
+            <label for="expiration-date">{% trans 'Expiration Date' %}</label>
             <div id="expiration-date" class="field"></div>
             <input type="hidden" id="nonce" name="payment_method_nonce" value="">
             {% csrf_token %}
-            <input type="submit" value="Pay">
+            <input type="submit" value="{% trans 'Pay' %}">
         </form>
     </div>
     <div class="order-summary">
-        <h1>Order Summary</h1>
+        <h1>{% trans 'Order Summary' %}</h1>
         <hr>
-        <p class="order-total">Cart <span class="cost">${{ order.get_total }}</span></p>
-        <p class="shipping">Shipping <span class="cost">Free</span></p>
+        <p class="order-total">{% trans 'Cart' %} <span class="cost">${{ order.get_total }}</span></p>
+        <p class="shipping">{% trans 'Shipping' %} <span class="cost">{% trans 'Free' %}</span></p>
         <hr>
-        <h3 class="total">Order Total <span class="cost">${{ order.get_total }}</span></h3>
+        <h3 class="total">{% trans 'Order Total' %} <span class="cost">${{ order.get_total }}</span></h3>
         <hr>
         {% for order_item in order.items.all %}
         {% with item=order_item.item %}
@@ -32,17 +36,22 @@
             <img src="{{ img.url }}" alt="">
             <div class="info">
                 <p class="item-name">{{ item.title }} {% if order_item.size %} - {{ order_item.size }}{% endif %}</p>
-                <p class="quantity">{{ order_item.quantity }} pieces</p>
+                <p class="quantity">
+                {% blocktrans count quantity=order_item.quantity %}
+                  1 piece
+                {% plural %}
+                  {{ quantity }} pieces
+                {% endblocktrans %}</p>
             </div>
         </div>
         </a>
         {% endwith %}
         {% endfor %}
         <hr>
-        <h3 class="billing-address">Billing Address</h3>
+        <h3 class="billing-address">{% trans 'Billing Address' %}</h3>
         <p>{{order.billing_address }}</p>
         <hr>
-        <h3 class="shipping-address">Shipping Address</h3>
+        <h3 class="shipping-address">{% trans 'Shipping Address' %}</h3>
         <p>{{order.shipping_address }}</p>
         <hr>
     </div>

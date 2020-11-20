@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from ckeditor.fields import RichTextField
 from lib.utils import image_directory_path
@@ -146,6 +146,8 @@ class WearSize(models.Model):
     class Meta:
         unique_together = (("item", "size"),)
         ordering = ["item__title"]
+        verbose_name = _("Wear size")
+        verbose_name_plural = _("Wear sizes")
 
     def __str__(self):
         return f"{self.item.title} - {self.size}"
@@ -165,6 +167,10 @@ class ItemImage(models.Model):
         verbose_name=_("Item"),
     )
     image = models.ImageField(_("Image"), upload_to=image_directory_path)
+
+    class Meta:
+        verbose_name = _("Image")
+        verbose_name_plural = _("Images")
 
     def __str__(self):
         return f"{self.item.title} - {self.image.name}"

@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models, transaction
 from django.db.models import F
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from addresses.models import Address
 from coupons.models import Coupon
@@ -49,7 +49,12 @@ class Order(models.Model):
         blank=True,
     )
     coupon = models.ForeignKey(
-        Coupon, related_name="orders", null=True, blank=True, on_delete=models.SET_NULL
+        Coupon,
+        related_name="orders",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name=_("Coupon"),
     )
     discount = models.DecimalField(
         _("Discount"), max_digits=5, decimal_places=2, blank=True, null=True, default=0,
@@ -59,7 +64,7 @@ class Order(models.Model):
     status = models.CharField(
         _("Status"), max_length=120, default="created", choices=ORDER_STATUS_CHOICES
     )
-    braintree_id = models.CharField(max_length=150, blank=True)
+    braintree_id = models.CharField(_("Braintree id"), max_length=150, blank=True)
     session = models.CharField(_("Session"), max_length=100)
 
     objects = OrderQuerySet.as_manager()
@@ -110,6 +115,10 @@ class OrderItem(models.Model):
     )
     price = models.DecimalField(_("Price"), max_digits=5, decimal_places=2)
     quantity = models.PositiveIntegerField(_("Quantity"), default=1)
+
+    class Meta:
+        verbose_name = _("Order Item")
+        verbose_name_plural = _("Order Items")
 
     def __str__(self):
         return f"{self.quantity} of {self.item.title} - {self.size}"

@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "crispy_forms",
     "django_filters",
+    "rosetta",
 ]
 
 MIDDLEWARE = [
@@ -115,14 +116,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
 LANGUAGES = (
     ("en", _("English")),
     ("pl", _("Polish")),
 )
-# LOCALE_PATHS = (
-#     os.path.join(MAIN_DIR, 'locale'),
-# )
+LOCALE_PATHS = (os.path.join(MAIN_DIR, "locale"),)
 
 TIME_ZONE = "UTC"
 

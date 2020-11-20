@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.timezone import now
 
@@ -18,3 +19,19 @@ def get_sentinel_user_anonymous():
 
 def create_order_id(order_id):
     return f"SeS/{order_id}"
+
+
+def switch_lang_code(path, language):
+    lang_codes = [c for (c, name) in settings.LANGUAGES]
+    if path == "":
+        raise Exception("URL path for language switch is empty")
+    elif path[0] != "/":
+        raise Exception('URL path for language switch does not start with "/"')
+    elif language not in lang_codes:
+        raise Exception("%s is not a supported language code" % language)
+    parts = path.split("/")
+    if parts[1] in lang_codes:
+        parts[1] = language
+    else:
+        parts[0] = "/" + language
+    return "/".join(parts)

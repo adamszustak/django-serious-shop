@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from ckeditor.fields import RichTextField
 
@@ -18,6 +18,10 @@ class CompanyInfo(models.Model):
     returns = RichTextField(verbose_name=_("Returns"),)
     contact_us = RichTextField(verbose_name=_("Contact us"),)
     jobs = RichTextField(verbose_name=_("Jobs"),)
+
+    class Meta:
+        verbose_name = _("Company information")
+        verbose_name_plural = _("Company informations")
 
     def __str__(self):
         return f"Company {self.name} - Details"

@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-20 10:19+0100\n"
+"PO-Revision-Date: 2020-11-12 21:42+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: .\orders\admin.py:52
+msgid "Export to CSV"
+msgstr "Pobierz jako CSV"
+
+#: .\orders\apps.py:7 .\orders\models.py:69
+msgid "Orders"
+msgstr "Zamówienia"
+
+#: .\orders\models.py:22
+msgid "Created"
+msgstr "Stworzony"
+
+#: .\orders\models.py:23
+msgid "Paid"
+msgstr "Zapłacony"
+
+#: .\orders\models.py:24
+msgid "Unpaid"
+msgstr "Niezapłacony"
+
+#: .\orders\models.py:25
+msgid "Shipped"
+msgstr "Dostarczony"
+
+#: .\orders\models.py:26
+msgid "Refunded"
+msgstr "Zwrócony"
+
+#: .\orders\models.py:31
+msgid "User"
+msgstr "Użytkownik"
+
+#: .\orders\models.py:40
+msgid "Shipping address"
+msgstr "Adres dostawy"
+
+#: .\orders\models.py:47
+msgid "Billing address"
+msgstr "Adres rozliczeniowy"
+
+#: .\orders\models.py:52
+msgid "Coupon"
+msgstr "Kupon"
+
+#: .\orders\models.py:55
+msgid "Discount"
+msgstr "Zniżka"
+
+#: .\orders\models.py:57
+msgid "Created at"
+msgstr "Stworzony"
+
+#: .\orders\models.py:58
+msgid "Ordered at"
+msgstr "Zamówiony"
+
+#: .\orders\models.py:60
+msgid "Status"
+msgstr "Status"
+
+#: .\orders\models.py:62
+msgid "Braintree id"
+msgstr "Identyfikator Braintree"
+
+#: .\orders\models.py:63
+msgid "Session"
+msgstr "Sesja"
+
+#: .\orders\models.py:68 .\orders\models.py:100
+msgid "Order"
+msgstr "Zamówienie"
+
+#: .\orders\models.py:106
+msgid "Item"
+msgstr "Przedmiot"
+
+#: .\orders\models.py:109
+msgid "Size"
+msgstr "Rozmiar"
+
+#: .\orders\models.py:111
+msgid "Price"
+msgstr "Cena"
+
+#: .\orders\models.py:112
+msgid "Quantity"
+msgstr "Ilość"
+
+#: .\orders\models.py:115
+msgid "Order Item"
+msgstr "Przedmiot zamówienia"
+
+#: .\orders\models.py:116
+msgid "Order Items"
+msgstr "Przedmioty zamówienia"
+
+#: .\orders\views.py:16
+msgid "Your cart is empty"
+msgstr ""

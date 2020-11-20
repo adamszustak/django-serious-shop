@@ -1,5 +1,6 @@
 import csv
 import io
+import re
 
 from django.conf import settings
 from django.contrib.admin.sites import AdminSite
@@ -24,17 +25,21 @@ from .factories import (
 
 @pytest.mark.django_db
 def test_categoryadmin(admin_client, request):
-    url = reverse("admin:items_item_add")
+    url = reverse("admin:items_category_changelist")
     response = admin_client.get(url)
     category = CategoryFactory()
     ItemWearFactory(category=category)
     category_modeladmin = CategoryAdmin(category, AdminSite())
     admin_function_result = category_modeladmin.view_items_link(category)
+    url1 = re.findall(r'["](.*?)["]', admin_function_result)[0]
+    response_admin_function = admin_client.get(url1)
     assert response.status_code == 200
+    assert "Related products (in total)" in str(response.context)
     assert (
         admin_function_result
-        == '<a href="/admin/items/item/?category__id=1">1 Items</a>'
+        == '<a href="/en/admin/items/item/?category__id=1">1 Items</a>'
     )
+    assert response_admin_function.status_code == 200
 
 
 @pytest.mark.django_db

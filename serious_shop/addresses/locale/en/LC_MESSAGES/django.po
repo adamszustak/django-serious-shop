@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-20 10:19+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\addresses\admin.py:33
+msgid "ID orders"
+msgstr ""
+
+#: .\addresses\apps.py:7 .\addresses\models.py:49
+msgid "Addresses"
+msgstr ""
+
+#: .\addresses\forms.py:16
+msgid "Set as default"
+msgstr ""
+
+#: .\addresses\models.py:17
+msgid "Billing address"
+msgstr ""
+
+#: .\addresses\models.py:18
+msgid "Shipping address"
+msgstr ""
+
+#: .\addresses\models.py:21
+msgid "Address type"
+msgstr ""
+
+#: .\addresses\models.py:27
+msgid "User"
+msgstr ""
+
+#: .\addresses\models.py:32
+msgid "First name"
+msgstr ""
+
+#: .\addresses\models.py:33
+msgid "Last name"
+msgstr ""
+
+#: .\addresses\models.py:34
+msgid "Email"
+msgstr ""
+
+#: .\addresses\models.py:35
+msgid "Street"
+msgstr ""
+
+#: .\addresses\models.py:36
+msgid "Flat number"
+msgstr ""
+
+#: .\addresses\models.py:37
+msgid "Zip Code"
+msgstr ""
+
+#: .\addresses\models.py:38
+msgid "City"
+msgstr ""
+
+#: .\addresses\models.py:39
+msgid "Province"
+msgstr ""
+
+#: .\addresses\models.py:40
+msgid "Is default"
+msgstr ""
+
+#: .\addresses\models.py:48
+msgid "Address"
+msgstr ""

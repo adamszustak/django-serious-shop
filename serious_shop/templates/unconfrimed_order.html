@@ -1,8 +1,15 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %} {% blocktrans with id=order.id %} Order {{ id }} {% endblocktrans %} {% endblock head_title %}
+
 {% block content %}
 <div class="generic-info">
-<h1>Thank you for placing order!</h1>
-<h2>Your order nr: {{ order.id }} has not been paid. Refresh</h2>
-<a href="/">Back to home</a>
+<h1>{% trans "Thank you for placing order!" %}</h1>
+<h2>{% blocktrans with id=order.id %}
+  Your order-{{ id }} has not been paid
+{% endblocktrans %}
+{% trans 'Try again!' %}</h2>
+<a href="/">{% trans "Back to home" %}</a>
 </div>
 {% endblock content %}

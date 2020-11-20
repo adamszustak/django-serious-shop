@@ -1,0 +1,608 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-20 10:19+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\conf\settings\base.py:121
+msgid "English"
+msgstr ""
+
+#: .\conf\settings\base.py:122
+msgid "Polish"
+msgstr ""
+
+#: .\templates\account\email_confirm.html:6
+#: .\templates\account\email_confirm.html:11
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: .\templates\account\email_confirm.html:17
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: .\templates\account\email_confirm.html:21
+msgid "Confirm"
+msgstr ""
+
+#: .\templates\account\email_confirm.html:28
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: .\templates\account\login.html:6 .\templates\account\login.html:10
+#: .\templates\account\login.html:19
+msgid "Sign In"
+msgstr ""
+
+#: .\templates\account\login.html:11
+#, python-format
+msgid ""
+"If you have not created an account yet, then please\n"
+"<a class=\"signup\" href=\"%(signup_url)s\">sign up</a> first."
+msgstr ""
+
+#: .\templates\account\login.html:17
+msgid "Forgot Password?"
+msgstr ""
+
+#: .\templates\account\messages\cannot_delete_primary_email.txt:2
+#, python-format
+msgid "You cannot remove your primary e-mail address (%(email)s)."
+msgstr ""
+
+#: .\templates\account\messages\email_confirmation_sent.txt:2
+#, python-format
+msgid "Confirmation e-mail sent to %(email)s."
+msgstr ""
+
+#: .\templates\account\messages\email_confirmed.txt:2
+#, python-format
+msgid "You have confirmed %(email)s."
+msgstr ""
+
+#: .\templates\account\messages\email_deleted.txt:2
+#, python-format
+msgid "Removed e-mail address %(email)s."
+msgstr ""
+
+#: .\templates\account\messages\logged_in.txt:4
+#, python-format
+msgid "Successfully signed in as %(name)s."
+msgstr ""
+
+#: .\templates\account\messages\logged_out.txt:2
+msgid "You have signed out."
+msgstr ""
+
+#: .\templates\account\messages\password_changed.txt:2
+msgid "Password successfully changed."
+msgstr ""
+
+#: .\templates\account\messages\password_set.txt:2
+msgid "Password successfully set."
+msgstr ""
+
+#: .\templates\account\messages\primary_email_set.txt:2
+msgid "Primary e-mail address set."
+msgstr ""
+
+#: .\templates\account\messages\unverified_primary_email.txt:2
+msgid "Your primary e-mail address must be verified."
+msgstr ""
+
+#: .\templates\account\password_change.html:5
+#: .\templates\account\password_change.html:9
+#: .\templates\account\password_change.html:14
+#: .\templates\account\password_reset_from_key.html:5
+#: .\templates\account\password_reset_from_key.html:9
+#: .\templates\account\password_reset_from_key_done.html:4
+#: .\templates\account\password_reset_from_key_done.html:8
+msgid "Change Password"
+msgstr ""
+
+#: .\templates\account\password_reset.html:5
+#: .\templates\account\password_reset.html:9
+#: .\templates\account\password_reset_done.html:6
+#: .\templates\account\password_reset_done.html:10
+msgid "Password Reset"
+msgstr ""
+
+#: .\templates\account\password_reset.html:14
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: .\templates\account\password_reset.html:19
+msgid "Reset My Password"
+msgstr ""
+
+#: .\templates\account\password_reset.html:22
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: .\templates\account\password_reset_done.html:16
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: .\templates\account\password_reset_from_key.html:9
+msgid "Bad Token"
+msgstr ""
+
+#: .\templates\account\password_reset_from_key.html:13
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: .\templates\account\password_reset_from_key.html:19
+msgid "change password"
+msgstr ""
+
+#: .\templates\account\password_reset_from_key.html:22
+#: .\templates\account\password_reset_from_key_done.html:9
+msgid "Your password is now changed."
+msgstr ""
+
+#: .\templates\account\password_set.html:6
+#: .\templates\account\password_set.html:11
+#: .\templates\account\password_set.html:16
+msgid "Set Password"
+msgstr ""
+
+#: .\templates\account\signup.html:7
+msgid "Signup"
+msgstr ""
+
+#: .\templates\account\signup.html:11 .\templates\account\signup.html:18
+msgid "Sign Up"
+msgstr ""
+
+#: .\templates\account\signup.html:13
+#, python-format
+msgid ""
+"Already have an account? Then please <a class=\"login\" href=\"%(login_url)s"
+"\">sign in</a>."
+msgstr ""
+
+#: .\templates\account\snippets\already_logged_in.html:5
+msgid "Note"
+msgstr ""
+
+#: .\templates\account\snippets\already_logged_in.html:5
+#, python-format
+msgid "you are already logged in as %(user_display)s."
+msgstr ""
+
+#: .\templates\account\verification_sent.html:4
+#: .\templates\account\verification_sent.html:8
+#: .\templates\account\verified_email_required.html:5
+#: .\templates\account\verified_email_required.html:9
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: .\templates\account\verification_sent.html:10
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: .\templates\account\verified_email_required.html:13
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: .\templates\account\verified_email_required.html:17
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: .\templates\account\verified_email_required.html:21
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: .\templates\admin\base_site.html:18
+msgid "Documentation"
+msgstr ""
+
+#: .\templates\admin\base_site.html:22
+msgid "Change password"
+msgstr ""
+
+#: .\templates\admin\base_site.html:24
+msgid "Log out"
+msgstr ""
+
+#: .\templates\cart_summary.html:4 .\templates\snippets\navbar.html:7
+msgid "Basket"
+msgstr ""
+
+#: .\templates\cart_summary.html:10
+msgid "Item title"
+msgstr ""
+
+#: .\templates\cart_summary.html:11 .\templates\detail_item.html:25
+msgid "Price"
+msgstr ""
+
+#: .\templates\cart_summary.html:12
+msgid "Quantity"
+msgstr ""
+
+#: .\templates\cart_summary.html:13
+msgid "Total Item Price"
+msgstr ""
+
+#: .\templates\cart_summary.html:38
+msgid "Your cart is empty"
+msgstr ""
+
+#: .\templates\cart_summary.html:44 .\templates\order_payment.html:29
+msgid "Order Total"
+msgstr ""
+
+#: .\templates\cart_summary.html:55
+msgid "Continue Shopping"
+msgstr ""
+
+#: .\templates\cart_summary.html:56
+msgid "Procced to Checkout"
+msgstr ""
+
+#: .\templates\checkout.html:8
+msgid "Checkout"
+msgstr ""
+
+#: .\templates\checkout.html:22
+#, python-format
+msgid ""
+" \n"
+"              1 piece\n"
+"            "
+msgid_plural ""
+"\n"
+"              %(quantity)s pieces\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\checkout.html:27
+msgid "Total"
+msgstr ""
+
+#: .\templates\checkout.html:38
+msgid "Coupon"
+msgstr ""
+
+#: .\templates\checkout.html:40
+#, python-format
+msgid ""
+" \n"
+"              Coupon for %(discount)s%% off</p>\n"
+"            "
+msgstr ""
+
+#: .\templates\checkout.html:47
+msgid "Coupon doesn't exists or is expired"
+msgstr ""
+
+#: .\templates\checkout.html:48
+msgid "Total price"
+msgstr ""
+
+#: .\templates\checkout.html:52
+msgid "Apply"
+msgstr ""
+
+#: .\templates\checkout.html:56
+msgid "Delete"
+msgstr ""
+
+#: .\templates\checkout.html:62
+msgid "Continue as user"
+msgstr ""
+
+#: .\templates\checkout.html:69
+msgid "Copy data from shipping address to billing address"
+msgstr ""
+
+#: .\templates\checkout.html:72
+msgid "Shipping address"
+msgstr ""
+
+#: .\templates\checkout.html:76
+msgid "Billing address"
+msgstr ""
+
+#: .\templates\checkout.html:79
+msgid "Continue"
+msgstr ""
+
+#: .\templates\confirmed_order.html:4 .\templates\unconfrimed_order.html:4
+#, python-format
+msgid " Order %(id)s "
+msgstr ""
+
+#: .\templates\confirmed_order.html:8 .\templates\unconfrimed_order.html:8
+msgid "Thank you for placing order!"
+msgstr ""
+
+#: .\templates\confirmed_order.html:9
+#, python-format
+msgid "Your order-%(id)s has been paid "
+msgstr ""
+
+#: .\templates\confirmed_order.html:10
+#, python-format
+msgid "Details has been sent to your email: %(email)s"
+msgstr ""
+
+#: .\templates\confirmed_order.html:11 .\templates\unconfrimed_order.html:13
+msgid "Back to home"
+msgstr ""
+
+#: .\templates\detail_item.html:43
+msgid "Add to cart"
+msgstr ""
+
+#: .\templates\detail_item.html:48
+msgid "Availability"
+msgstr ""
+
+#: .\templates\detail_item.html:49
+msgid "Shipping in 48 hours"
+msgstr ""
+
+#: .\templates\detail_item.html:51 .\templates\detail_item.html:54
+msgid "Type"
+msgstr ""
+
+#: .\templates\detail_item.html:52
+msgid "Color"
+msgstr ""
+
+#: .\templates\detail_item.html:61
+msgid "Description"
+msgstr ""
+
+#: .\templates\detail_item.html:62
+msgid "Shipment and Returns"
+msgstr ""
+
+#: .\templates\detail_item.html:78
+msgid "Others"
+msgstr ""
+
+#: .\templates\home.html:4
+msgid "Home"
+msgstr ""
+
+#: .\templates\home.html:15
+msgid "Unfortunately nothing to see here. Back to"
+msgstr ""
+
+#: .\templates\home.html:15
+msgid "main page"
+msgstr ""
+
+#: .\templates\order_payment.html:5
+msgid "Payment"
+msgstr ""
+
+#: .\templates\order_payment.html:10
+msgid "Payment for order"
+msgstr ""
+
+#: .\templates\order_payment.html:12
+msgid "Card Number"
+msgstr ""
+
+#: .\templates\order_payment.html:16
+msgid "Expiration Date"
+msgstr ""
+
+#: .\templates\order_payment.html:20
+msgid "Pay"
+msgstr ""
+
+#: .\templates\order_payment.html:24
+msgid "Order Summary"
+msgstr ""
+
+#: .\templates\order_payment.html:26
+msgid "Cart"
+msgstr ""
+
+#: .\templates\order_payment.html:27
+msgid "Shipping"
+msgstr ""
+
+#: .\templates\order_payment.html:27
+msgid "Free"
+msgstr ""
+
+#: .\templates\order_payment.html:40
+#, python-format
+msgid ""
+" \n"
+"                  1 piece \n"
+"                "
+msgid_plural ""
+"\n"
+"                  %(quantity)s pieces\n"
+"                "
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\order_payment.html:51
+msgid "Billing Address"
+msgstr ""
+
+#: .\templates\order_payment.html:54
+msgid "Shipping Address"
+msgstr ""
+
+#: .\templates\snippets\footer.html:5
+msgid "ABOUT ECCOMERCE"
+msgstr ""
+
+#: .\templates\snippets\footer.html:7
+msgid "About Us"
+msgstr ""
+
+#: .\templates\snippets\footer.html:8
+msgid "Contact Us"
+msgstr ""
+
+#: .\templates\snippets\footer.html:11
+msgid "CUSTOMER SERVICES"
+msgstr ""
+
+#: .\templates\snippets\footer.html:13
+msgid "My Account"
+msgstr ""
+
+#: .\templates\snippets\footer.html:14
+msgid "Delivery Information"
+msgstr ""
+
+#: .\templates\snippets\footer.html:15
+msgid "Privacy Policy"
+msgstr ""
+
+#: .\templates\snippets\footer.html:16
+msgid "Returns & complaints"
+msgstr ""
+
+#: .\templates\snippets\footer.html:17
+msgid "Contact us"
+msgstr ""
+
+#: .\templates\snippets\footer.html:18
+msgid "Jobs & recruitment"
+msgstr ""
+
+#: .\templates\snippets\footer.html:23
+msgid "NO. 1 ecommerce in the Poland"
+msgstr ""
+
+#: .\templates\snippets\footer.html:24
+msgid "Over 10,000 items in stock available from top suppliers"
+msgstr ""
+
+#: .\templates\snippets\footer.html:25
+msgid "Competitive prices, price-checked daily for the best value"
+msgstr ""
+
+#: .\templates\snippets\footer.html:26
+msgid "Free delivery available for all orders over 10PLN"
+msgstr ""
+
+#: .\templates\snippets\footer.html:29
+msgid "CONTACT INFORMATION"
+msgstr ""
+
+#: .\templates\snippets\footer.html:30
+#, python-format
+msgid " Contact us (%(phone)s) "
+msgstr ""
+
+#: .\templates\snippets\navbar.html:6
+msgid "Helpline opening hours"
+msgstr ""
+
+#: .\templates\snippets\navbar.html:7
+msgid "My history"
+msgstr ""
+
+#: .\templates\snippets\navbar.html:7
+msgid "Logout"
+msgstr ""
+
+#: .\templates\snippets\navbar.html:7
+msgid "Login"
+msgstr ""
+
+#: .\templates\snippets\navbar.html:7
+msgid "Register"
+msgstr ""
+
+#: .\templates\snippets\navbar.html:22
+msgid "What you're looking for?"
+msgstr ""
+
+#: .\templates\snippets\pagination.html:9
+msgid "current"
+msgstr ""
+
+#: .\templates\unconfrimed_order.html:9
+#, python-format
+msgid ""
+"\n"
+"  Your order-%(id)s has not been paid \n"
+msgstr ""
+
+#: .\templates\unconfrimed_order.html:12
+msgid "Try again!"
+msgstr ""
+
+#: .\templates\user_history.html:4
+msgid "History"
+msgstr ""
+
+#: .\templates\user_history.html:11
+#, python-format
+msgid ""
+" \n"
+"          Order %(id)s</strong> from %(date)s \n"
+"        "
+msgstr ""
+
+#: .\templates\user_history.html:14
+#, python-format
+msgid ""
+" \n"
+"          1 piece \n"
+"        "
+msgid_plural ""
+" \n"
+"          %(quantity)s pieces\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\templates\user_profile.html:4
+msgid "Profil"
+msgstr ""

@@ -40,6 +40,7 @@ local_settings.py
 venv/
 ENV/
 .vscode
+js_test/
 .DS_Store
 *.sqlite3
 media/
@@ -49,3 +50,4 @@ media/
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+todo

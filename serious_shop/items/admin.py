@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
+from django.utils.translation import ugettext_lazy as _
 
 from mptt.admin import DraggableMPTTAdmin
 
@@ -74,12 +75,14 @@ class CategoryAdmin(DraggableMPTTAdmin):
         )
         return qs
 
-    def related_products_cumulative_count(self, instance):
-        return instance.products_cumulative_count
+    def related_products_cumulative_count(self, obj):
+        return obj.products_cumulative_count
 
-    related_products_cumulative_count.short_description = "Related products (in total)"
+    related_products_cumulative_count.short_description = _(
+        "Related products (in total)"
+    )
 
-    view_items_link.short_description = "Items in specific category"
+    view_items_link.short_description = _("Items in specific category")
 
 
 admin.site.register(Category, CategoryAdmin)

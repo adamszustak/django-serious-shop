@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Address
 
@@ -28,6 +29,8 @@ class AddressAdmin(admin.ModelAdmin):
         return ",".join(
             [str(k.id) for k in obj.shipping_address.all() | obj.billing_address.all()]
         )
+
+    order_ids.short_description = _("ID orders")
 
 
 admin.site.register(Address, AddressAdmin)

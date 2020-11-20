@@ -389,6 +389,18 @@ python-stdnum = ">=1.6"
 
 [[package]]
 category = "main"
+description = "Translates Django models using a registration approach."
+name = "django-modeltranslation"
+optional = false
+python-versions = "*"
+version = "0.16"
+
+[package.dependencies]
+Django = ">=2.2"
+six = "*"
+
+[[package]]
+category = "main"
 description = "Utilities for implementing Modified Preorder Tree Traversal with your Django Models and working with trees of Model instances."
 name = "django-mptt"
 optional = false
@@ -410,6 +422,20 @@ version = "2.0.4"
 [package.dependencies]
 django = ">=1.7"
 django-mptt = ">=0.6.1"
+
+[[package]]
+category = "main"
+description = "A Django application that eases the translation of Django projects"
+name = "django-rosetta"
+optional = false
+python-versions = "*"
+version = "0.9.5"
+
+[package.dependencies]
+Django = ">=2.0"
+polib = ">=1.1.0"
+requests = ">=2.1.0"
+six = ">=1.2.0"
 
 [[package]]
 category = "main"
@@ -610,6 +636,14 @@ version = "0.13.1"
 
 [package.extras]
 dev = ["pre-commit", "tox"]
+
+[[package]]
+category = "main"
+description = "A library to manipulate gettext files (po and mo files)."
+name = "polib"
+optional = false
+python-versions = "*"
+version = "1.1.0"
 
 [[package]]
 category = "dev"
@@ -987,7 +1021,7 @@ python-versions = "*"
 version = "0.5.1"
 
 [metadata]
-content-hash = "ab626b2c9b309abf70f90f82228a5e6402fd779cd331289fd4acaf2317bc01e4"
+content-hash = "96978bde064cc9f192825b56f0aea14929d525fc6ba7cce5a520fce3e3fff378"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -1179,12 +1213,19 @@ django-localflavor = [
     {file = "django-localflavor-3.0.1.tar.gz", hash = "sha256:24e9a03bc11ced92365821d3cfdd96eb4e2f3e44a6f40e86c645d3e0ec65ec53"},
     {file = "django_localflavor-3.0.1-py2.py3-none-any.whl", hash = "sha256:3c3034dc64a1f7e5efd9eb53d653af905c20482d438c0e8b825d02e3121b86fa"},
 ]
+django-modeltranslation = [
+    {file = "django-modeltranslation-0.16.tar.gz", hash = "sha256:93613fad41927e2849672cf75cf5bd7f6ed7c487b362e49a07ce3236c7ade474"},
+]
 django-mptt = [
     {file = "django-mptt-0.11.0.tar.gz", hash = "sha256:dfdb3af75ad27cdd4458b0544ec8574174f2b90f99bc2cafab6a15b4bc1895a8"},
     {file = "django_mptt-0.11.0-py2.py3-none-any.whl", hash = "sha256:90eb236eb4f1a92124bd7c37852bbe09c0d21158477cc237556d59842a91c509"},
 ]
 django-mptt-urls = [
     {file = "django-mptt-urls-2.0.4.tar.gz", hash = "sha256:96cac4a5117008feb7dda20692c2adee5919e03ffadd174fd86a584f3b259d60"},
+]
+django-rosetta = [
+    {file = "django-rosetta-0.9.5.tar.gz", hash = "sha256:ebc39c50f2bf0429822ff5b5a7f63144536ad4683c62dee169dbd5f6e683ed3c"},
+    {file = "django_rosetta-0.9.5-py3-none-any.whl", hash = "sha256:046ae8f8b14d3ba21da9a49b3f12a624cb20e36d0d78b48b17344eb514c0e506"},
 ]
 easy-thumbnails = [
     {file = "easy-thumbnails-2.7.tar.gz", hash = "sha256:e4e7a0dd4001f56bfd4058428f2c91eafe27d33ef3b8b33ac4e013b159b9ff91"},
@@ -1276,6 +1317,10 @@ pillow = [
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
     {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
+]
+polib = [
+    {file = "polib-1.1.0-py2.py3-none-any.whl", hash = "sha256:93b730477c16380c9a96726c54016822ff81acfa553977fdd131f2b90ba858d7"},
+    {file = "polib-1.1.0.tar.gz", hash = "sha256:fad87d13696127ffb27ea0882d6182f1a9cf8a5e2b37a587751166c51e5a332a"},
 ]
 pre-commit = [
     {file = "pre_commit-2.8.2-py2.py3-none-any.whl", hash = "sha256:22e6aa3bd571debb01eb7d34483f11c01b65237be4eebbf30c3d4fb65762d315"},

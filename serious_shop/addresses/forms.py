@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from localflavor.pl.forms import PLPostalCodeField
 
@@ -12,7 +13,7 @@ class AddressForm(forms.ModelForm):
         model = Address
         exclude = ["user"]
         widgets = {"address_type": forms.HiddenInput()}
-        labels = {"is_default": "Set as default"}
+        labels = {"is_default": _("Set as default")}
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user", None)

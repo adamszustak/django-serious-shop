@@ -1,0 +1,167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-20 10:19+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
+#: .\items\admin.py:81
+msgid "Related products (in total)"
+msgstr "Powiązane produkty (sumarycznie)"
+
+#: .\items\admin.py:83
+msgid "Items in specific category"
+msgstr "Przedmioty w danej kategorii"
+
+#: .\items\apps.py:7 .\items\models.py:80
+msgid "Items"
+msgstr "Przedmioty"
+
+#: .\items\filters.py:15
+msgid "Low Price"
+msgstr "Niska Cena"
+
+#: .\items\filters.py:16
+msgid "High Price"
+msgstr "Wysoka Cena"
+
+#: .\items\filters.py:17
+msgid "Newest"
+msgstr "Nowe"
+
+#: .\items\filters.py:18
+msgid "Most Popular"
+msgstr "Najbardziej popularne"
+
+#: .\items\filters.py:21
+msgid "Order By"
+msgstr "Sortuj według"
+
+#: .\items\models.py:17
+msgid "Name"
+msgstr "Nazwa"
+
+#: .\items\models.py:25
+msgid "Parent"
+msgstr "Rodzic"
+
+#: .\items\models.py:27
+msgid "Need sizes"
+msgstr "Potrzebne rozmiary"
+
+#: .\items\models.py:31 .\items\models.py:54
+msgid "Category"
+msgstr "Kategoria"
+
+#: .\items\models.py:32
+msgid "Categories"
+msgstr "Kategorie"
+
+#: .\items\models.py:58
+msgid "Title"
+msgstr "Tytuł"
+
+#: .\items\models.py:59
+msgid "Price"
+msgstr "Cena"
+
+#: .\items\models.py:61
+msgid "Discount price"
+msgstr "Zniżka"
+
+#: .\items\models.py:68
+msgid "Description"
+msgstr "Opis"
+
+#: .\items\models.py:69
+msgid "Color"
+msgstr "Kolor"
+
+#: .\items\models.py:70
+msgid "Item quantity"
+msgstr "Ilość przedmiotu"
+
+#: .\items\models.py:72
+msgid "Updated at"
+msgstr "Zmienione"
+
+#: .\items\models.py:73
+msgid "Created at"
+msgstr "Stworzone"
+
+#: .\items\models.py:74
+msgid "Active"
+msgstr "Aktywne"
+
+#: .\items\models.py:79 .\items\models.py:141 .\items\models.py:167
+msgid "Item"
+msgstr "Przedmiot"
+
+#: .\items\models.py:88
+msgid "Quantity must be set with size!"
+msgstr "Ilość musi być powiązana z rozmiarem"
+
+#: .\items\models.py:129
+msgid "Small"
+msgstr "Mały"
+
+#: .\items\models.py:130
+msgid "Medium"
+msgstr "Średni"
+
+#: .\items\models.py:131
+msgid "Large"
+msgstr "Duży"
+
+#: .\items\models.py:132
+msgid "X Large"
+msgstr "Extra duży"
+
+#: .\items\models.py:133
+msgid "XX Large"
+msgstr "Extra extra duży"
+
+#: .\items\models.py:143
+msgid "Size"
+msgstr "Rozmiar"
+
+#: .\items\models.py:144
+msgid "Size quantity"
+msgstr "Ilość rozmiaru"
+
+#: .\items\models.py:149
+#, fuzzy
+#| msgid "Need sizes"
+msgid "Wear size"
+msgstr "Potrzebne rozmiary"
+
+#: .\items\models.py:150
+#, fuzzy
+#| msgid "Need sizes"
+msgid "Wear sizes"
+msgstr "Potrzebne rozmiary"
+
+#: .\items\models.py:169 .\items\models.py:172
+msgid "Image"
+msgstr "Obraz"
+
+#: .\items\models.py:173
+#, fuzzy
+#| msgid "Image"
+msgid "Images"
+msgstr "Obraz"

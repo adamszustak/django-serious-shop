@@ -3,6 +3,7 @@ import datetime
 
 from django.contrib import admin
 from django.http import HttpResponse
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Order, OrderItem
 
@@ -48,7 +49,7 @@ class OrderAdmin(admin.ModelAdmin):
         writer.writerows(data)
         return response
 
-    export_to_csv.short_description = "Export to CSV"
+    export_to_csv.short_description = _("Export to CSV")
 
     def show_email(self, obj):
         return obj.get_email

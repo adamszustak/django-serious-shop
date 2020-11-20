@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models, transaction
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from lib.utils import get_sentinel_user_anonymous, get_sentinel_user_deleted
 from localflavor.pl.pl_administrativeunits import (
@@ -31,13 +31,13 @@ class Address(models.Model):
     )
     first_name = models.CharField(_("First name"), max_length=50)
     last_name = models.CharField(_("Last name"), max_length=50)
-    email = models.EmailField(blank=True)
+    email = models.EmailField(_("Email"), blank=True)
     street = models.CharField(_("Street"), max_length=50)
     flat_nr = models.IntegerField(_("Flat number"))
-    zip_code = models.CharField(_("zip code"), max_length=20)
+    zip_code = models.CharField(_("Zip Code"), max_length=20)
     city = models.CharField(_("City"), max_length=50)
     province = models.CharField(_("Province"), max_length=50, choices=provinces)
-    is_default = models.BooleanField(default=False)
+    is_default = models.BooleanField(_("Is default"), default=False)
 
     objects = AddressQuerySet.as_manager()
 

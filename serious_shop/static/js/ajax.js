@@ -56,6 +56,26 @@ $(document).ready(function(){
 });
 
 // promo-code
+// $(document).on('submit', '#code_form',function(e){
+//     e.preventDefault();
+//     $.ajax({
+//         type: 'POST',
+//         url: $(this).data('url'),
+//         data:{
+//             code: $('#id_code').val(),
+//             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+//         },
+//         success:function(json){
+//             $('#id_code').val('');
+//             $('#code').empty().show(500).prepend('<img src="' + json.image + '"><div class="info"><p class="item-name">Coupon - ' + json.code + '</p><p class="quantity">Coupon for ' + json.discount + '% off</p><p class="price">- ' + json.get_discount + ' $</p></div>');
+//             $('#message-coupon').hide()
+//             $('p.total').empty().html('Total price:<span> $'+ json.get_total + ' - <span style="color:red;">$' + json.get_discount +'</span> = $' + json.get_final_price)
+//         },
+//         error: function() {
+//             $('#message-coupon').show()
+//         }
+//     })
+// })
 $(document).on('submit', '#code_form',function(e){
     e.preventDefault();
     $.ajax({
@@ -66,10 +86,12 @@ $(document).on('submit', '#code_form',function(e){
             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
         },
         success:function(json){
+            let trans = gettext('off')
+            let trans1 = gettext('Coupon for ')
             $('#id_code').val('');
-            $('#code').empty().show(500).prepend('<img src="' + json.image + '"><div class="info"><p class="item-name">Coupon - ' + json.code + '</p><p class="quantity">Coupon for ' + json.discount + '% off</p><p class="price">- ' + json.get_discount + ' $</p></div>');
+            $('#code').empty().show(500).prepend(`<img src="${json.image}"><div class="info"><p class="item-name">${gettext('Coupon')} - ${json.code}</p><p class="quantity">${gettext(trans1)} ${json.discount}% ${gettext(trans)}</p><p class="price">- ${json.get_discount} $</p></div>`);
             $('#message-coupon').hide()
-            $('p.total').empty().html('Total price:<span> $'+ json.get_total + ' - <span style="color:red;">$' + json.get_discount +'</span> = $' + json.get_final_price)
+            $('p.total').empty().html(gettext('Total price') +':<span> $'+ json.get_total + ' - <span style="color:red;">$' + json.get_discount +'</span> = $' + json.get_final_price)
         },
         error: function() {
             $('#message-coupon').show()

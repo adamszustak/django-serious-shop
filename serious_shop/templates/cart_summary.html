@@ -1,13 +1,16 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %} {% trans 'Basket' %} {% endblock head_title %}
 {% block content %}
 <div class="generic-info">
     <table class="table">
         <tr>
             <th>#</th>
-            <th>Item title</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total Item Price</th>
+            <th>{% trans "Item title" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th>{% trans "Quantity" %}</th>
+            <th>{% trans "Total Item Price" %}</th>
         </tr>
         {% for item in cart %}
         {% with cart_item=item.item %}
@@ -32,13 +35,13 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>Your cart is empty</td>
+        <td>{% trans "Your cart is empty" %}</td>
         <td></td>
         <td></td>
         {% endfor %}
         <tr class="total">
             <td></td>
-            <td><b>Order Total</b></td>
+            <td><b>{% trans "Order Total" %}</b></td>
             <td></td>
             <td class='tot-quantity' id='total_cart_quantity'>
                 <b>{{ cart|length }}</b>
@@ -49,8 +52,8 @@
         </tbody>
     </table>
     <div class="tablebuttons">
-        <a class="continue" href='{% url "items:home"  %}'>Continue Shopping</a>
-        <a class="checkout" href='{% url "orders:checkout"  %}'>Procced to Checkout</a>
+        <a class="continue" href='{% url "items:home"  %}'>{% trans "Continue Shopping" %}</a>
+        <a class="checkout" href='{% url "orders:checkout"  %}'>{% trans "Procced to Checkout" %}</a>
     </div>
 </div>
 {% endblock content %}

@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.utils.translation import ugettext_lazy as _
 
 import django_filters
 
@@ -11,13 +12,13 @@ class ItemFilter(django_filters.FilterSet):
         fields = ["ordering"]
 
     CHOICES = (
-        ("low_price", "Low Price"),
-        ("high_price", "High Price"),
-        ("newest", "Newest"),
-        ("popular", "Most Popular"),
+        ("low_price", _("Low Price")),
+        ("high_price", _("High Price")),
+        ("newest", _("Newest")),
+        ("popular", _("Most Popular")),
     )
     ordering = django_filters.ChoiceFilter(
-        label="Order By", choices=CHOICES, method="filter_by_order"
+        label=_("Order By"), choices=CHOICES, method="filter_by_order"
     )
 
     def filter_by_order(self, queryset, name, value):

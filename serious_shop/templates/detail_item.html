@@ -1,5 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
+
+{% block head_title %} {{ object.title }} {% endblock head_title %}
 
 {% block content %}
     <section class="maininfos">
@@ -19,7 +22,7 @@
                 {{ object.title }}
             </p>
             <p class="price">
-                Price:
+                {% trans 'Price' %}:
                 {% if object.discount_price %}
                 <span class="amount">{{ object.discount_price }}$</span>
                 {% else %}
@@ -37,26 +40,26 @@
                     {% endwith %}
                     {% endfor %}
                 {% endif %}
-                <button class='submit' id="sizeBtn" type="submit">Add to cart<i class="fas fa-cart-arrow-down"></i></button>
+                <button class='submit' id="sizeBtn" type="submit">{% trans 'Add to cart' %}<i class="fas fa-cart-arrow-down"></i></button>
                 </form>
             </div>
             <table>
                 <tbody>
-                    <tr><th>Availability:</th><td>
-                        Shipping in 48 hours</td></tr>
+                    <tr><th>{% trans 'Availability' %}:</th><td>
+                        {% trans 'Shipping in 48 hours' %}</td></tr>
                     {% if object.category.need_sizes %}
-                    <tr><th>Type:</th><td>{{ object.category.name }}</td></tr>
-                    <tr><th>Color:</th><td>{{ object.color }}</td></tr>
+                    <tr><th>{% trans 'Type' %}:</th><td>{{ object.category.name }}</td></tr>
+                    <tr><th>{% trans 'Color' %}:</th><td>{{ object.color }}</td></tr>
                     {% else %}
-                    <tr><th>Type:</th><td>{{ object.category.name }}</td></tr>
+                    <tr><th>{% trans 'Type' %}:</th><td>{{ object.category.name }}</td></tr>
                     {% endif %}
                 </tbody>
             </table>
         </div>
     </section>
     <section class="tabs">
-        <button class="tablinks active">Description</button>
-        <button class="tablinks">Shipment and Returns</button>
+        <button class="tablinks active">{% trans 'Description' %}</button>
+        <button class="tablinks">{% trans 'Shipment and Returns' %}</button>
     </section>
     <div class="decription-shipment">
         <div class="description active">
@@ -72,7 +75,7 @@
         </div>
     </div>
     <div class="others">
-        <button class="active">Others</button>
+        <button class="active">{% trans 'Others' %}</button>
         <ul id="responsive">
             {% for item in item_list %}
                 <li class="card">

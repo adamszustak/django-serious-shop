@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% load i18n_switcher %}
+
+{% block userlinks %}
+    <a href="{{ request|switch_i18n:'en' }}">
+        <img class="i18n_flag" src="{% static 'img/gb.jpg' %}"/>
+    </a> /
+    <a href="{{ request|switch_i18n:'pl' }}">
+        <img class="i18n_flag" src="{% static 'img/pl.jpg' %}"/>
+    </a> /
+    {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}
+            <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+        {% endif %}
+    {% endif %}
+    {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+    {% endif %}
+    <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+{% endblock %}

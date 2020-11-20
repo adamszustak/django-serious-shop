@@ -9,7 +9,7 @@ Django-serious-shop is an e-commerce website project built using the Django fram
 * Key company information (e.g. Delivery or About us section) stored in a database (PostgreSQL) for faster changes
 * Added WYSIWYM content editor - ckeditor to create better and prettier product descriptions
 * Fully support AnonymousUser thanks to sessions
-* Suport boths billing and shipping addresses
+* Support boths billing and shipping addresses
 * Orders can be paid by paying cards
 * Email notification are send using asynchronous tasks in order to ensure the best possible user-experience
 * Comprehensively covered with tests to make sure everything is working properly
@@ -22,8 +22,8 @@ Django-serious-shop is an e-commerce website project built using the Django fram
 - [ ] add historical info
 - [ ] add localization and internationalization support 
 - [ ] add extra functionality for confirmed users e.g. wish list
-- [ ] panel for managing refunds and promo codes
-- [X] panel for managing refunds and promo codes
+- [ ] panel for managing refunds
+- [X] panel for managing promo codes
 - [ ] allow customers to track the package
 - [ ] add the ability to generate PDF invoices
 - [ ] and many others :alien:

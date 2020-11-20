@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.utils.translation import ugettext as _
 
 from addresses.forms import BillingAddressForm, ShippingAddressForm
 from addresses.models import Address
@@ -12,7 +13,7 @@ from orders.models import Order, OrderItem
 def checkout(request):
     cart = Cart(request)
     if len(cart) == 0 or not cart:
-        messages.warning(request, "Your cart is empty")
+        messages.warning(request, _("Your cart is empty"))
         return redirect("items:home")
     user = request.user
     def_billing_address = (

@@ -1,9 +1,22 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %} {% trans 'History' %} {% endblock head_title %}
+
 {% block content %}
   <div class="generic-info">
       <ul>
     {% for order in object_list %}
-        <li><strong>Order {{ order.id }}</strong> from {{ order.created_date }} - {{ order.items_quantity }} items / <strong>${{ order.get_total }}</strong></li><strong><a href="{% url 'users:pdf' order.id %}">PDF <i class="far fa-file-pdf"></i></a></strong>
+        <li><strong>
+        {% blocktrans with id=order.id date=order.created_date %}
+          Order {{ id }}</strong> from {{ date }}
+        {% endblocktrans %} -
+        {% blocktrans count quantity=order.items_quantity %}
+          1 piece
+        {% plural %}
+          {{ quantity }} pieces
+        {% endblocktrans %}</p>
+        </li><strong><a href="{% url 'users:pdf' order.id %}">PDF <i class="far fa-file-pdf"></i></a></strong>
         <hr>
     {% endfor %}
     </ul>

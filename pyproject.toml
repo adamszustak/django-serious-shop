@@ -20,6 +20,8 @@ celery = "^5.0.1"
 braintree = "^4.4.0"
 django-filter = "^2.4.0"
 weasyprint = "^52.1"
+django-rosetta = "^0.9.5"
+django-modeltranslation = "^0.16"
 
 [tool.poetry.dev-dependencies]
 django-debug-toolbar = "^2.2"

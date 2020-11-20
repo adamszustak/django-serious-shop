@@ -2,20 +2,25 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 from .managers import CouponQuerySet
 
 
 class Coupon(models.Model):
-    code = models.CharField(max_length=50, unique=True)
-    valid_from = models.DateTimeField()
-    valid_to = models.DateTimeField()
+    code = models.CharField(_("Code"), max_length=50, unique=True)
+    valid_from = models.DateTimeField(_("Valid from"))
+    valid_to = models.DateTimeField(_("Valid to"))
     discount = models.IntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(100)]
+        _("Discount"), validators=[MinValueValidator(0), MaxValueValidator(100)]
     )
-    active = models.BooleanField()
+    active = models.BooleanField(_("Active"))
 
     objects = CouponQuerySet.as_manager()
+
+    class Meta:
+        verbose_name = _("Coupon")
+        verbose_name_plural = _("Coupons")
 
     def __str__(self):
         return f"{self.code}"

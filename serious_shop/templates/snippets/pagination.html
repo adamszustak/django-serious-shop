@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if items.has_other_pages %}
   <ul class="pagination">
     {% if items.has_previous %}
@@ -5,7 +6,7 @@
     {% endif %}
     {% for i in items.paginator.page_range %}
       {% if items.number == i %}
-        <li class="active"><a href='#'><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
+        <li class="active"><a href='#'><span>{{ i }} <span class="sr-only">({% trans "current" %})</span></span></a></li>
       {% else %}
         <li><a href="?page={{ i }}">{{ i }}</a></li>
       {% endif %}

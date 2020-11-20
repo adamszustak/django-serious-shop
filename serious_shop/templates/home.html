@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %} {% trans 'Home' %} {% endblock head_title %}
+
 {% block content %}
 {% include 'snippets/sort_bar.html' %}
 <div class="product-list">
@@ -8,7 +12,7 @@
     {% for item in items %}
         {% include "snippets/item_snippet.html" %}
     {% empty %}
-    <h1>Unfortunately nothing to see here. Back to <a href="{% url 'items:home' %}"><strong>main page</strong></a></h1>
+    <h1>{% trans 'Unfortunately nothing to see here. Back to' %} <a href="{% url 'items:home' %}"><strong>{% trans 'main page' %}</strong></a></h1>
     {% endfor %}
 </div>
 {% include "snippets/pagination.html" %}
