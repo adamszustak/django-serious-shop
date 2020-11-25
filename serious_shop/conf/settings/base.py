@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "payments.apps.PaymentsConfig",
     "users.apps.UsersConfig",
     "coupons.apps.CouponsConfig",
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.auth",

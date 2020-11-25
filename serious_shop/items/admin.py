@@ -4,6 +4,7 @@ from django.utils.html import format_html
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 
+from modeltranslation.admin import TranslationAdmin
 from mptt.admin import DraggableMPTTAdmin
 
 from .forms import WearSizeForm
@@ -47,6 +48,10 @@ class ItemAdmin(admin.ModelAdmin):
         ordering = ("category", "title")
 
 
+class TranslatedItemAdmin(ItemAdmin, TranslationAdmin):
+    pass
+
+
 class CategoryAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "name"
     list_display = [
@@ -85,5 +90,9 @@ class CategoryAdmin(DraggableMPTTAdmin):
     view_items_link.short_description = _("Items in specific category")
 
 
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Item, ItemAdmin)
+class TranslatedCategoryAdmin(CategoryAdmin, TranslationAdmin):
+    pass
+
+
+admin.site.register(Category, TranslatedCategoryAdmin)
+admin.site.register(Item, TranslatedItemAdmin)

@@ -145,7 +145,7 @@ class WearSize(models.Model):
 
     class Meta:
         unique_together = (("item", "size"),)
-        ordering = ["item__title"]
+        ordering = ["id"]
         verbose_name = _("Wear size")
         verbose_name_plural = _("Wear sizes")
 

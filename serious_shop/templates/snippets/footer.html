@@ -1,4 +1,7 @@
 {% load i18n %}
+{% load i18n_switcher %}
+{% load static %}
+
 <footer>
     <div class="upper">
         <div class="about">
@@ -29,6 +32,12 @@
             <h3>{% trans "CONTACT INFORMATION" %}</h3>
             <p>{% blocktrans with phone=company.phone %} Contact us ({{ phone }}) {% endblocktrans %}</p>
             <p>{{ company.email }}</p>
+            <a href="{{ request|switch_i18n:'en' }}">
+                <img class="i18n_flag" src="{% static 'img/gb.jpg' %}"/>
+            </a> /
+            <a href="{{ request|switch_i18n:'pl' }}">
+                <img class="i18n_flag" src="{% static 'img/pl.jpg' %}"/>
+            </a>
         </div>
     </div>
     <hr>
